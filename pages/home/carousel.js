@@ -1,5 +1,6 @@
 import CarouselComponent from "../../components/Carousel";
+import Layout from "../../components/Layout";
 
 export default function Carousel () {
-  return <CarouselComponent />
+  return <Layout><CarouselComponent /></Layout>
 }

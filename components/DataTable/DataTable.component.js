@@ -378,7 +378,9 @@ const RenderTableHeaderCell = ({
       };
 
       return function cleanup() {
-        resizeRef.current.removeEventListener("mousedown", resize, false);
+        if (resizeRef && resizeRef.current) {
+          resizeRef.current.removeEventListener("mousedown", resize, false);
+        }
       };
     }
   }, []);

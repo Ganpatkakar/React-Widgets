@@ -5,10 +5,7 @@ const Sidebar = () => {
   const sideNav = [
     { link: "/home/tooltip", name: "Tooltip" },
     {link: "/home/carousel", name: "Carousel"},
-    { link: "/home/tooltip", name: "Sidebar" },
-    { link: "/home/tooltip", name: "DropDown" },
-    { link: "/home/tooltip", name: "AutoSiggestion" },
-    { link: "/home/tooltip", name: "DataTable" }
+    { link: "/home/datatable", name: "DataTable" }
   ];
   return (
     <div className={styles.sidebarContainer}>
