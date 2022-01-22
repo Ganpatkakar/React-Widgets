@@ -37,6 +37,25 @@
     }
   }
 
+  .paginationContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.5rem;
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      color: #000;
+
+      .deactive {
+        color: #ddd;
+      }
+    }
+  }
+
   .tableContainer {
     position: relative;
     width: 100%;
@@ -163,24 +182,6 @@
             .tableRowItem {
               flex: 1;
               margin: 0.5rem;
-            }
-          }
-        }
-        .paginationContainer {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          padding: 0.5rem;
-
-          .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem;
-            color: #000;
-
-            .deactive {
-              color: #ddd;
             }
           }
         }

@@ -155,7 +155,9 @@ export default function DataTable({
               tableData={tableRowsData}
               tableHeaders={tableHeaderData}
             />
-            {paginationEnabled && (
+          </div>
+        </div>
+        {paginationEnabled && (
               <RenderPagination
                 pageSize={pageSize}
                 setPageSize={setPageSize}
@@ -164,8 +166,6 @@ export default function DataTable({
                 totalContentLen={tableData.length}
               />
             )}
-          </div>
-        </div>
       </div>
     </div>
   );
