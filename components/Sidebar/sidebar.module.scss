@@ -1,0 +1,19 @@
+.sidebarContainer {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  z-index: 1;
+
+  .sidebarList {
+    list-style: none;
+    padding: 0px;
+
+    .sidebarListItem {
+      padding: 6px 8px 6px 16px;
+    }
+  }
+}
