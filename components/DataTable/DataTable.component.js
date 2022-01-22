@@ -373,7 +373,6 @@ const RenderTableHeaderCell = ({
       }, false);
 
       const mouseUpHandler = function () {
-        // Remove the handlers of `mousemove` and `mouseup`
         document.removeEventListener('mousemove', resize);
         document.removeEventListener('mouseup', mouseUpHandler);
       };
