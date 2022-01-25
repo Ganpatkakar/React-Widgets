@@ -1,0 +1,1 @@
+_N_E=(window.webpackJsonp_N_E=window.webpackJsonp_N_E||[]).push([[12],{GOSe:function(n,o,t){"use strict";t.r(o);var e=t("5Yp1"),_=t("BUpc"),c=t("nKUr");o.default=function(){return Object(c.jsx)(e.a,{children:Object(c.jsx)(_.a,{})})}},f7Sx:function(n,o,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/home/tooltip",function(){return t("GOSe")}])}},[["f7Sx",0,2,1,3,4]]]);
