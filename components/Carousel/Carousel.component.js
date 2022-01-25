@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Carousel.module.scss";
+import Image from 'next/image';
 
 const getHeightAndWidth = (width, height) => {
   const res = {}
@@ -54,7 +55,7 @@ export default function Carousel({ carouselList, container, showDotControls }) {
                 {
                   mediaSection ? (
                     <div className={styles.carouselMediaSection}>
-                      {(image && <img src={image} alt="carousel-image" className={styles.mediaControls} />) ||
+                      {(image && <Image src={image} alt="carousel-image" className={styles.mediaControls} />) ||
                         (video && <video src={video} controls className={styles.mediaControls}/>)}
                     </div>
                   ) : null

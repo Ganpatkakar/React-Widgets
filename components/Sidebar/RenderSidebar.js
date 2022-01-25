@@ -7,7 +7,7 @@ export default function RenderSidebarList ({sideNav}) {
       {
         sideNav.map(({link, name}) => (
           <li key={name} className={styles.sidebarListItem}>
-            <Link href={link}>{name}</Link>
+            <Link href={link} as={ process.env.BACKEND_URL + `/${link}`}>{name}</Link>
           </li>
         ))
       }
