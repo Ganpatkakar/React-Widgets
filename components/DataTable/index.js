@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "./DataTable.component";
+import { movies } from "../../src/data";
 
 // const tableData = [
 //   {
@@ -157,7 +158,8 @@ export default function DataTableComponent(props) {
       return response.json();
     })
     .then(data => {
-      setTableData(data);
+      // setTableData(data);
+      setTableData(movies);
     })
     .catch(err => {
       console.error(err);

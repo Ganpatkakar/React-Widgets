@@ -1,4 +1,4 @@
-var data = [
+export const data = [
   {
       "id": "67185660-65da-4a4f-9082-356fc33a4c8c",
       "name": "Laverne Murazik",
