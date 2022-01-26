@@ -50,7 +50,7 @@ export default function CarouselComponent () {
       <Carousel carouselList={carouselList} container={{width: 700, height: 300}} showDotControls={true}/>
 
       <h3>How to call Carousel component</h3>
-      <p>import tooltip component and call it</p>
+      <p>import carousel component and call it</p>
 
       <SyntaxHighlighter language="javascript" style={materialOceanic}>
   {`
