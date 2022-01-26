@@ -145,7 +145,7 @@ const tableHeaders2 = {
 };
 
 export default function DataTableComponent(props) {
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(movies);
   useEffect(() => {
     fetch("/api/movies", {
       "method": "GET",
