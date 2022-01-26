@@ -1,0 +1,1 @@
+_N_E=(window.webpackJsonp_N_E=window.webpackJsonp_N_E||[]).push([[13],{FDnd:function(n,o,t){"use strict";t.r(o);t("q1tI");var _=t("5Yp1"),i=t("nKUr");o.default=function(){return Object(i.jsx)(_.a,{children:"Poll Widget"})}},"nj+C":function(n,o,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/home/poll",function(){return t("FDnd")}])}},[["nj+C",0,2,1,3,4]]]);
