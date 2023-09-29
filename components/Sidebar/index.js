@@ -6,6 +6,7 @@ const Sidebar = () => {
     { link: "/home/tooltip", name: "Tooltip" },
     {link: "/home/carousel", name: "Carousel"},
     { link: "/home/datatable", name: "DataTable" },
+    { link: "/home/editor", name: "Wysiwgy Editor" },
     { link: "/home/calendar", name: "Calendar" },
     { link: "/home/typeahead", name: "Typeahead" },
     { link: "/home/poll", name: "Poll widget" },
