@@ -10,6 +10,7 @@ const Sidebar = () => {
     { link: "/home/calendar", name: "Calendar" },
     { link: "/home/typeahead", name: "Typeahead" },
     { link: "/home/poll", name: "Poll widget" },
+    { link: "/home/tictactoe", name: "Tic Tac Toe" },
   ];
   return (
     <div className={styles.sidebarContainer}>
