@@ -1,19 +1,8 @@
 import * as React from 'react';
 import ToolTipRenderComponent from './components/Tooltip';
 
-interface Props {
-   name: string
+export default function App() {
+  return (
+      <div><ToolTipRenderComponent /></div>
+  );
 }
-
-class App extends React.Component<Props> {
-  render() {
-    const { name } = this.props;
-    return (
-      <>
-        <ToolTipRenderComponent />
-      </>
-    );
-  }
-}
-
-export default App;

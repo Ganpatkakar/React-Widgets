@@ -1,8 +1,12 @@
 import * as React from 'react';
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import App from './App';
-import "./styles/globals.scss";
 
-var mountNode = document.getElementById("app");
-ReactDOM.render(<App name="Jane" />, mountNode);
+const node: Element | DocumentFragment = document.getElementById("root")!;
+const root = createRoot(node);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

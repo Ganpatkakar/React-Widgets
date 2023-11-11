@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from 'react'
 
 interface IProps {
-  onClick: (...args: any) => {},
+  onClick: (...args: any[]) => {},
   value: string | undefined
   initialState: boolean
 }

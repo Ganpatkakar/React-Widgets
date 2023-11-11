@@ -1,5 +1,5 @@
-export function Debounce(fn, timer) {
-  return function (...args) {
+export function Debounce(fn: (...args: any[]) => {}, timer: any) {
+  return function (...args: any[]) {
     if (timer) {
       clearTimeout(timer);
     }
