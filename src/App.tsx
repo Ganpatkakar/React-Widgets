@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import ModelPopover from "./components/ModelPopOver";
-import { Noop } from "./components/noop";
+import DataTableComponent from "./components/DataTable";
 
 function App() {
   const [show, setShow] = useState(true);
@@ -11,12 +10,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello React..!</h1>
-      <ModelPopover
-        show={show}
-        handleClose={handleClose}
-      >
-        <div>Model internal content</div>
-      </ModelPopover>
+      <DataTableComponent />
     </div>
   );
 }
