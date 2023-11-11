@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './tooltip.scss';
 
-function getPositionClassName (position: any) {
+function getPositionClassName (position: string) {
   switch (position) {
     case "top":
       return "top";
@@ -16,7 +16,13 @@ function getPositionClassName (position: any) {
   }
 }
 
-const Tooltip = (props: any) => {
+interface ITooltip {
+  position: string;
+  text: string;
+  children: any
+}
+
+const Tooltip = (props: ITooltip) => {
   let { children, text, position } = props;
   position = position.toString()?.toLowerCase();
   const toolTipPosition = getPositionClassName(position);
