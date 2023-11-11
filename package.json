@@ -1,0 +1,42 @@
+{
+  "name": "react-webpack-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@storybook/addon-essentials": "7.5.3",
+    "@storybook/addon-interactions": "7.5.3",
+    "@storybook/addon-links": "7.5.3",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.5.3",
+    "@storybook/react": "7.5.3",
+    "@storybook/react-webpack5": "7.5.3",
+    "@storybook/testing-library": "0.2.2",
+    "@types/react": "18.2.37",
+    "@types/react-dom": "18.2.15",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "7.5.3",
+    "style-loader": "^3.3.1",
+    "ts-loader": "9.5.0",
+    "typescript": "5.2.2",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.0"
+  }
+}
