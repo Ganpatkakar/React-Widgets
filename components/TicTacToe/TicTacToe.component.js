@@ -86,10 +86,9 @@ export default function TicTacToeComponent () {
     const handleClick = (event) => {
         event.preventDefault();
         const target = event.target;
-        console.log(target);
-        // if (!target.classList.contains("gridCol")) {
-        //     return;
-        // }
+        if (!target.dataset.hasOwnProperty("row")) {
+            return;
+        }
         if (target.innerText !== '') {
           return;
         }
