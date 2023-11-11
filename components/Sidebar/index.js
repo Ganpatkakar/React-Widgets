@@ -11,6 +11,7 @@ const Sidebar = () => {
     { link: "/home/typeahead", name: "Typeahead" },
     { link: "/home/poll", name: "Poll widget" },
     { link: "/home/tictactoe", name: "Tic Tac Toe" },
+    { link: "/home/datepicker", name: "DatePicker" },
   ];
   return (
     <div className={styles.sidebarContainer}>
