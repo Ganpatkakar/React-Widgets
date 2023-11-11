@@ -4,6 +4,7 @@
     "jsx": "react",
     "target": "ES6",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   }
 }
