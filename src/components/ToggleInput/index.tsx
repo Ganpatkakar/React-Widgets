@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function index({ onClick: handleClick, value, initialState }) {
+interface IProps {
+  onClick: (...args: any) => {},
+  value: string | undefined
+  initialState: boolean
+}
+
+export default function index(props: IProps) {
+  const { onClick: handleClick, value, initialState } = props;
   return (
     <>
       <input
