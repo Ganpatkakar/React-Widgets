@@ -37,7 +37,7 @@ interface IDataTable {
 export default function DataTable({
   tableData,
   tableHeaders,
-  overRideStyles,
+  overRideStyles = {},
   title,
   searchEnabled,
   searchBy = "",

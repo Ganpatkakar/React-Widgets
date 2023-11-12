@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import Carousel, { ICarousel, ICarouselList } from "./carousel";
 
 function TextSectionComponent () {

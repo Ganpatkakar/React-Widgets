@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DataTableComponent from "./components/DataTable";
+import CarouselComponent from "./components/Carousel";
 
 function App() {
   const [show, setShow] = useState(true);
@@ -10,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello React..!</h1>
-      <DataTableComponent />
+      <CarouselComponent />
     </div>
   );
 }

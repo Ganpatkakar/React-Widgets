@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import styles from "./carousel.scss";
+import styles from "./Carousel.Module.scss";
 
 const getHeightAndWidth = (width: number, height: number) => {
   const res: {width?: number, height?: number} = {}
@@ -26,7 +26,7 @@ export interface ICarouselList {
 export interface ICarousel {
   carouselList: ICarouselList[];
   container: {width: number, height: number};
-  showDotControls: boolean
+  showDotControls?: boolean
 }
 
 export default function Carousel({ carouselList, container, showDotControls }: ICarousel) {
