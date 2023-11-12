@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import DataTableComponent from "./components/DataTable";
-import CarouselComponent from "./components/Carousel";
+import PollComponent from "./components/Poll";
 
 function App() {
   const [show, setShow] = useState(true);
@@ -11,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <h1>Hello React..!</h1>
-      <CarouselComponent />
+      <PollComponent />
     </div>
   );
 }

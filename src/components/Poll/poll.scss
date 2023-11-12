@@ -1,0 +1,26 @@
+.pollContainer {
+  display: block;
+
+  .createPollContainer {
+    display: block;
+
+    .optionsContainer {
+      display: block;
+
+      .options {
+        display: block;
+      }
+    }
+  }
+
+  .renderPollContainer {
+    .renderQuestion {
+      display: block;
+    }
+    .renderOptions {
+      .renderOption {
+        display: block;
+      }
+    }
+  }
+}

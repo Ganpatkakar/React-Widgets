@@ -5,12 +5,14 @@ import "./modelPopover.css";
 interface IModelPopover {
   show: boolean;
   handleClose?: () => void;
+  handleApply?: () => void;
   children: React.ReactNode;
   showFooter?: boolean;
+  showApply?: boolean
 }
 
 export const ModelPopover = (props: IModelPopover) => {
-  const { show, handleClose, children, showFooter = true } = props;
+  const { show, handleClose, handleApply, children, showFooter = true, showApply = false } = props;
 
   return (
     <div className={`popeverContainer ${show ? "show" : "hide"}`}>
@@ -19,6 +21,7 @@ export const ModelPopover = (props: IModelPopover) => {
           {
             showFooter && (
               <div className={"footerSection"}>
+                {showApply && <Button label="Apply" onClick={handleApply} />}
                 <Button label="close" onClick={handleClose}/>
               </div>
             )

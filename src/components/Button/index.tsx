@@ -21,7 +21,7 @@ interface ButtonProps {
   /**
    * Optional click handler
    */
-  onClick?: () => void;
+  onClick?: (event?: React.SyntheticEvent) => void;
 }
 
 /**
