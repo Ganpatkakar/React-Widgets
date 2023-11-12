@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback, CSSProperties } from "react";
 import styles from "./DataTable.module.scss";
 import { Debounce } from "../Debounce";
 import { TableHeaderClone } from './tableHeaderClone';
@@ -15,10 +15,18 @@ const Next = "next";
 const EndLeft = "endLeft";
 const EndRight = "endRight";
 
+interface IoverrideStyles {
+  tableComponentStyle?: CSSProperties;
+  tableTitleStyle?: CSSProperties;
+  tableContainerStyle?: CSSProperties;
+  tableOverflowStyle?: CSSProperties;
+  tableContentStyle?: CSSProperties;
+}
+
 interface IDataTable {
   tableData: any;
   tableHeaders: any;
-  overrideStyles?: any;
+  overRideStyles?: IoverrideStyles;
   title: string;
   searchEnabled: boolean;
   searchBy: string;
@@ -29,7 +37,7 @@ interface IDataTable {
 export default function DataTable({
   tableData,
   tableHeaders,
-  overrideStyles,
+  overRideStyles,
   title,
   searchEnabled,
   searchBy = "",
@@ -111,8 +119,8 @@ export default function DataTable({
   };
 
   return (
-    <div className={styles.tableComponent}>
-      <div className={styles.tableTitle}>{title}</div>
+    <div className={styles.tableComponent} style={{...overRideStyles.tableComponentStyle}}>
+      <div className={styles.tableTitle} style={{...overRideStyles.tableTitleStyle}}>{title}</div>
       <RenderTableControls
         searchEnabled={searchEnabled}
         settingsEnabled={settingsEnabled}
@@ -120,7 +128,7 @@ export default function DataTable({
         handleSearch={handleSearch}
         handleSettingsClick={handleSettingsClick}
       />
-      <div className={styles.tableContainer}>
+      <div className={styles.tableContainer} style={{...overRideStyles.tableContainerStyle}}>
         {/* Settings flexpane for table columns show and hide options */}
         <RenderSettings
           showSettings={showSettings}
@@ -129,8 +137,8 @@ export default function DataTable({
           setShowSettings={setShowSettings}
           resetSettings={resetSettings}
         />
-        <div className={styles.tableOverflow}>
-          <div className={styles.tableContent}>
+        <div className={styles.tableOverflow} style={{...overRideStyles.tableOverflowStyle}}>
+          <div className={styles.tableContent} style={{...overRideStyles.tableContentStyle}}>
             <RenderTableHeader
               tableHeaders={tableHeaderData}
               handleSorting={handleSorting}

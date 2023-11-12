@@ -103,7 +103,7 @@ export function RenderTableHeader({ tableHeaders, handleSorting }: IRenderTableH
   };
   const refs = [];
   return (
-    <div className={`${styles.tableHeader} `}>
+    <div className={`${styles.tableHeader}`}>
       {Object.keys(tableHeaders).map((key, index) => {
         const { label, minWidth, visible, sortable } = tableHeaders[key];
         return (

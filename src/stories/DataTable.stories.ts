@@ -33,10 +33,15 @@ export const Table: Story = {
   args: {
     title: "Data Table Example",
     tableHeaders: tableHeaders2,
-    tableData: movies,
+    overRideStyles: {
+      tableComponentStyle: {
+        width: '900px'
+      }
+    },
     searchEnabled:true,
     searchBy:"title",
     paginationEnabled: true,
-    settingsEnabled: true
+    settingsEnabled: true,
+    tableData: movies,
   },
 };
