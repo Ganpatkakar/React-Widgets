@@ -4,6 +4,25 @@
   .createPollContainer {
     display: block;
 
+    .label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .inputElement {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+
+      &::focus {
+        border: 1px solid #000;
+      }
+    }
+
     .optionsContainer {
       display: block;
 
@@ -13,13 +32,104 @@
     }
   }
 
-  .renderPollContainer {
-    .renderQuestion {
+  .previewContainer {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    .previewQuestion {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .previewOptions {
+      .previewOption {
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        box-sizing: border-box;
+        border: 1px solid #b9b5b5;
+        text-align: center;
+
+        &:hover {
+          background-color: #ddd;
+        }
+
+        &.active {
+          background-color: #ddd;
+        }
+      }
+    }
+  }
+
+  .showHidePreview {
+    display: block;
+  }
+
+  .resultContainer {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    
+    .resultParticipants {
       display: block;
     }
-    .renderOptions {
-      .renderOption {
-        display: block;
+
+    .resultQuestions {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .resultOptionsContainer {
+      padding: 0px;
+
+      .resultOption {
+        display: flex;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        border: 1px solid #b9b5b5;
+        
+        .resultOptionTitle {
+          width: 90%;
+          height: 100%;
+
+          .titleTextContainer {
+            background: #ddd;
+            width: 0.5%;
+            max-width: 100%;
+            min-height: 30px;
+            transition: width .4s cubic-bezier(.4,0,.2,1),background-color 167ms cubic-bezier(.4,0,.2,1),box-shadow 167ms cubic-bezier(.4,0,.2,1),color 167ms cubic-bezier(.4,0,.2,1);
+
+            .titleText {
+              position: absolute;
+              padding: 5px;
+              min-height: 30px;
+            }
+          }
+        }
+
+        .resultOptionVotes {
+          display: flex;
+          justify-content: end;
+          width: 10%;
+          min-height: 30px;
+          box-sizing: border-box;
+          padding: 5px;
+        }
+        
       }
     }
   }

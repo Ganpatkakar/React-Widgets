@@ -22,6 +22,10 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: (event?: React.SyntheticEvent) => void;
+  /**
+   * Is this the button disabled?
+   */
+  disabled?: boolean
 }
 
 /**

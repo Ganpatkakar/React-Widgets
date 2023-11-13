@@ -2,32 +2,57 @@ import React, { useState } from "react";
 import CreatePoll from "./createPoll";
 import styles from './poll.scss';
 import PollResult from "./pollResult";
-import { IPollData } from './pollType';
+import { IOptions, IPollData } from './pollType';
+import ShowPollPreview from "./showPollPreview";
+import uniqid from 'uniqid';
 
-const pollOptions: IPollData = {
+const initialState: IPollData = {
   question: '',
-  options: ['', '']
+  options: [{title: '', votes: 0, id: uniqid()}],
+  id: uniqid(),
+  pollState: 'notStarted',
+  participants: 0
 }
 
 function PollComponent() {
-  const [showPoll, setShowPoll] = useState(false);
-  const [options, setOptions] = useState([]);
-  const [question, setQuestion] = useState("");
+  const [pollData, setPollData] = useState(initialState);
+  const {pollState} = pollData;
 
-
-  const handleCreatepoll = (pollOptions: IPollData) => {
-    const { question, options } = pollOptions;
-    setQuestion(question);
-    setOptions([...options]);
-    setShowPoll(true)
+  const handleCreatepoll = (pollData: IPollData) => {
+    setPollData({...pollData});
   }
 
-  return (
-    <div className={styles.pollContainer}>
-      {showPoll && <PollResult question={question} options={options}/>}
-      {!showPoll && <CreatePoll createPoll={handleCreatepoll} />}
-    </div>
-  )
+  const handlePollSubmit = (options: IOptions[]) => {
+    pollData.options = options;
+    pollData.pollState = 'submited';
+    pollData.participants += 1;
+    setPollData({...pollData});
+  }
+
+  if (pollState === 'notStarted') {
+    return (
+      <div className={styles.pollContainer}>
+        <CreatePoll createPoll={handleCreatepoll} />
+      </div>
+    )
+  }
+
+  if (pollState === 'preview') {
+    return (
+      <div className={styles.pollContainer}>
+        <ShowPollPreview pollData={pollData} handlePollSubmit={handlePollSubmit}/>
+      </div>
+    )
+  }
+
+  if (pollState === 'submited') {
+    return (
+      <div className={styles.pollContainer}>
+        <PollResult {...pollData}/>
+      </div>
+    )
+  }
 }
 
 export default PollComponent;
+
