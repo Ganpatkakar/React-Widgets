@@ -54,6 +54,8 @@
   "dependencies": {
     "@storybook/preset-scss": "1.0.3",
     "react-icons": "4.11.0",
-    "storybook-addon-next": "1.8.0"
+    "storybook-addon-next": "1.8.0",
+    "uniqid": "5.4.0",
+    "uuid": "9.0.1"
   }
 }
