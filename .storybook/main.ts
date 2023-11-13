@@ -11,7 +11,19 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
-    '@storybook/preset-scss'
+    {
+			name: `@storybook/preset-scss`,
+			options: {
+				rule: {
+					test: /\.s[ca]ss$/,
+				},
+				cssLoaderOptions: {
+					modules: {
+						localIdentName: '[name]__[local]--[hash:base64:5]',
+					},
+				}
+			},
+		},
   ],
   docs: {
     autodocs: "tag",

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import CreatePoll from "./createPoll";
-import styles from './poll.scss';
 import PollResult from "./pollResult";
 import { IOptions, IPollData } from './pollType';
 import ShowPollPreview from "./showPollPreview";
 import uniqid from 'uniqid';
+import styles from './poll.scss';
 
 const initialState: IPollData = {
   question: '',
