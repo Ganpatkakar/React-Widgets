@@ -1,0 +1,22 @@
+.accordianContainer {
+  display: block;
+
+  .accordianHeader {
+    display: flex;
+    font-size: 20px;
+    cursor: pointer;
+
+    .accordianHeaderTitle {
+      display: flex;
+      margin-left: 10px;
+    }
+  }
+
+  .displayPanel {
+    display: block;
+  }
+
+  .hidePanel {
+    display: none;
+  }
+}
