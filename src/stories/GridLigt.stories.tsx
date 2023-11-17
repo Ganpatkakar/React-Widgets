@@ -26,6 +26,6 @@ export const CustomGridLights3X3: Story = {
 export const CustomGridLights6X9: Story = {
   args: {
     rowsCount: 6,
-    colunsCount: 6
+    colunsCount: 9
   },
 };
