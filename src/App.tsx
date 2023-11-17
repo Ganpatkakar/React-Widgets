@@ -1,11 +1,11 @@
 import React from "react";
-import EditorComponent from "./components/Editor";
+import { GridLights } from "./components/GridLights";
 
 function App() {
   return (
     <div className="App">
       <h1>Hello React..!</h1>
-      <EditorComponent />
+      <GridLights rowsCount={5} colunsCount={5} />
     </div>
   );
 }
