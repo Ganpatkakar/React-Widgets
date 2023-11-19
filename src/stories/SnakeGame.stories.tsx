@@ -3,7 +3,7 @@ import { SnakeGame } from '../components/Snake';
 
 
 const meta = {
-  title: 'SnakeGame',
+  title: 'Games/SnakeGame',
   component: SnakeGame,
   parameters: {
     layout: 'fullScreen',

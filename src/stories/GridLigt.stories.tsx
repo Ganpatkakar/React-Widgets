@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { GridLights } from '../components/GridLights';
 
 const meta = {
-  title: 'GridLights',
+  title: 'Games/GridLights',
   component: GridLights,
   parameters: {
     layout: 'fullScreen',

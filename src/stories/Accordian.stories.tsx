@@ -62,7 +62,7 @@ import {
 // };
 
 const meta = {
-  title: 'Accordian',
+  title: 'Components/Accordian',
   component: Accordian,
   parameters: {
     layout: 'fullScreen',
