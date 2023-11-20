@@ -7,7 +7,9 @@
     "dev": "webpack-dev-server",
     "build": "webpack",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "chromatic --exit-zero-on-changes"
+    
   },
   "keywords": [],
   "author": "",
@@ -59,5 +61,7 @@
     "storybook-addon-next": "1.8.0",
     "uniqid": "5.4.0",
     "uuid": "9.0.1"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "react-webpack-project@1.0.0"
 }
