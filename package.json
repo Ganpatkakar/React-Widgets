@@ -52,6 +52,7 @@
     "@storybook/core-server/webpack": "^5",
     "@storybook/builder-webpack4/webpack": "^5",
     "@storybook/manager-webpack4/webpack": "^5",
+    "string-width": "^4",
     "jackspeak": "^2"
   },
   "dependencies": {
