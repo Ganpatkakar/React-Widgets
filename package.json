@@ -51,7 +51,10 @@
     "@storybook/core-common/webpack": "^5",
     "@storybook/core-server/webpack": "^5",
     "@storybook/builder-webpack4/webpack": "^5",
-    "@storybook/manager-webpack4/webpack": "^5"
+    "@storybook/manager-webpack4/webpack": "^5",
+    "string-width": "^4",
+    "jackspeak": "^2",
+    "strip-ansi": "^6"
   },
   "dependencies": {
     "@storybook/preset-scss": "1.0.3",
