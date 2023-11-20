@@ -9,7 +9,6 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "chromatic --exit-zero-on-changes"
-    
   },
   "keywords": [],
   "author": "",
@@ -56,8 +55,9 @@
   },
   "dependencies": {
     "@storybook/preset-scss": "1.0.3",
+    "konva": "9.2.3",
     "react-icons": "4.11.0",
-    "react-konva": "18.2.10",
+    "react-konva": "18.1.0-0",
     "storybook-addon-next": "1.8.0",
     "uniqid": "5.4.0",
     "uuid": "9.0.1"
