@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/TabList',
   component: TabList,
   parameters: {
-    layout: 'fullScreen',
+    layout: 'padded'
   },
   tags: ['autodocs'],
   argTypes: {
