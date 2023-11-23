@@ -33,11 +33,11 @@ const defaultProps: DefaultProps = {
 
 function CheckBox(props: ICheckBox) {
 
-  const { checked = false, label = '', handleClick = () => { }, name = '' } = props;
+  const { checked, label, handleClick, name } = props;
 
   return (
     <div className={styles.checkBoxContainer}>
-      <CheckBoxInput {...props} checked={checked} handleCheckBox={handleClick}  />
+      <CheckBoxInput {...props} checked={checked} handleClick={handleClick}  />
       <CheckBoxIcon {...props} checked={checked} />
       <label className={styles.labelContainer} htmlFor={name}>{label}</label>
     </div>

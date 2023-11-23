@@ -3,7 +3,7 @@ import styles from './checkBox.scss';
 
 export const CheckBoxInput = (props: any) => {
   const cRef = useRef<HTMLInputElement>();
-  const { checked, handleCheckBox, name } = props;
+  const { checked, handleClick, name } = props;
 
   useEffect(() => {
     const indeterminate = checked === 'mixed';
@@ -12,11 +12,23 @@ export const CheckBoxInput = (props: any) => {
 
   let inputClassNames = styles.checkBoxInput;
 
+  const handleCheckBoxWithUpdatedValue = (event) => {
+    event.preventDefault();
+    let newCheck = checked
+    if (newCheck === true) {
+      newCheck = false;
+    } else {
+      newCheck = true;
+    }
+    console.log(newCheck);
+    handleClick(newCheck)
+  }
+
   return (
     <input
       className={inputClassNames}
       type="checkbox"
-      onChange={handleCheckBox}
+      onChange={handleCheckBoxWithUpdatedValue}
       id={name}
       defaultChecked={checked === true ? true : false}
       ref={cRef}
