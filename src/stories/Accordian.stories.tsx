@@ -65,7 +65,7 @@ const meta = {
   title: 'Components/Accordian',
   component: Accordian,
   parameters: {
-    layout: 'fullScreen',
+    layout: 'padded',
   },
   tags: ['autodocs'],
   argTypes: {},
