@@ -87,18 +87,18 @@ const group1 = [
   {
     name: 'group1check1',
     checked: false,
-    label: "first checkbox",
+    label: "group 1 checkbox 1",
     groups: level3Groups
   },
   {
     name: 'group1check2',
     checked: false,
-    label: "second checkbox"
+    label: "group 1 checkbox 2"
   },
   {
     name: 'group1check3',
     checked: false,
-    label: "second checkbox"
+    label: "group 1 checkbox 3"
   }
 ];
 
@@ -106,17 +106,17 @@ const group2 = [
   {
     name: 'group2check1',
     checked: false,
-    label: "first checkbox"
+    label: "group 2 checkbox 1"
   },
   {
     name: 'group2check2',
     checked: false,
-    label: "second checkbox"
+    label: "group 2 checkbox 2"
   },
   {
     name: 'group2check3',
     checked: false,
-    label: "second checkbox"
+    label: "group 2 checkbox 3"
   }
 ];
 
@@ -124,42 +124,42 @@ const group3 = [
   {
     name: 'group3check1',
     checked: false,
-    label: "first checkbox"
+    label: "group 3 checkbox 1"
   },
   {
     name: 'group3check2',
     checked: false,
-    label: "second checkbox"
+    label: "group 3 checkbox 2"
   },
   {
     name: 'group3check3',
     checked: false,
-    label: "second checkbox"
+    label: "group 3 checkbox 3"
   }
 ];
 
 const initialState = {
   name: 'CheckBoxesGroups',
   checked: false,
-  label: "Check Boxex Group",
+  label: "Parent control checkbox",
 
   groups: [
     {
       name: 'CheckBoxesGroups1',
       checked: false,
-      label: "Check Boxex Group",
+      label: "Check Boxex Group 1",
       groups: group1
     },
     {
       name: 'CheckBoxesGroups2',
       checked: false,
-      label: "Check Boxex Group",
+      label: "Check Boxex Group 2",
       groups: group2
     },
     {
       name: 'CheckBoxesGroups3',
       checked: false,
-      label: "Check Boxex Group",
+      label: "Check Boxex Group 3",
       groups: group3
     }
   ]
@@ -300,22 +300,35 @@ const example = `
 import React, { useReducer, useState } from "react";
 import Checkbox from "./components/Checkbox";
 
+const level3Groups = [
+  {
+    name: 'level3Check1',
+    checked: false,
+    label: "level 3 checkbox 1"
+  },
+  {
+    name: 'level3Check2',
+    checked: false,
+    label: "level 3 checkbox 2"
+  }
+]
+
 const group1 = [
   {
     name: 'group1check1',
     checked: false,
-    disabled: true,
-    label: "first checkbox"
+    label: "group 1 checkbox 1",
+    groups: level3Groups
   },
   {
     name: 'group1check2',
     checked: false,
-    label: "second checkbox"
+    label: "group 1 checkbox 2"
   },
   {
     name: 'group1check3',
     checked: false,
-    label: "second checkbox"
+    label: "group 1 checkbox 3"
   }
 ];
 
@@ -323,17 +336,17 @@ const group2 = [
   {
     name: 'group2check1',
     checked: false,
-    label: "first checkbox"
+    label: "group 2 checkbox 1"
   },
   {
     name: 'group2check2',
     checked: false,
-    label: "second checkbox"
+    label: "group 2 checkbox 2"
   },
   {
     name: 'group2check3',
     checked: false,
-    label: "second checkbox"
+    label: "group 2 checkbox 3"
   }
 ];
 
@@ -341,42 +354,42 @@ const group3 = [
   {
     name: 'group3check1',
     checked: false,
-    label: "first checkbox"
+    label: "group 3 checkbox 1"
   },
   {
     name: 'group3check2',
     checked: false,
-    label: "second checkbox"
+    label: "group 3 checkbox 2"
   },
   {
     name: 'group3check3',
     checked: false,
-    label: "second checkbox"
+    label: "group 3 checkbox 3"
   }
 ];
 
 const initialState = {
   name: 'CheckBoxesGroups',
   checked: false,
-  label: "Check Boxex Group",
+  label: "Parent control checkbox",
 
   groups: [
     {
       name: 'CheckBoxesGroups1',
       checked: false,
-      label: "Check Boxex Group",
+      label: "Check Boxex Group 1",
       groups: group1
     },
     {
       name: 'CheckBoxesGroups2',
       checked: false,
-      label: "Check Boxex Group",
+      label: "Check Boxex Group 2",
       groups: group2
     },
     {
       name: 'CheckBoxesGroups3',
       checked: false,
-      label: "Check Boxex Group",
+      label: "Check Boxex Group 3",
       groups: group3
     }
   ]
