@@ -5,6 +5,7 @@ interface CssExports {
   'checkBoxIcon': string;
   'checkBoxInput': string;
   'checkedIcon': string;
+  'disabledCheckBox': string;
   'labelContainer': string;
   'mixedIcon': string;
 }
