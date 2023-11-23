@@ -1,10 +1,11 @@
 import React, { useReducer, useState } from "react";
-import CheckBox from "./components/CheckBox";
+import Checkbox from "./components/Checkbox";
 
 const group1 = [
   {
     name: 'group1check1',
     checked: false,
+    disabled: true,
     label: "first checkbox"
   },
   {
@@ -14,7 +15,7 @@ const group1 = [
   },
   {
     name: 'group1check3',
-    checked: true,
+    checked: false,
     label: "second checkbox"
   }
 ];
@@ -169,15 +170,16 @@ const reducer = (state = initialState, { type, payload }) => {
 
 function CheckBoxesWithGroup(props: any) {
   const { state, handleCheckBox } = props;
-  const { label, name } = state;
+  const { label, name, disabled = false } = state;
   let { checked } = state;
 
   return (
     <div key={name}>
-      <CheckBox
+      <Checkbox
         checked={checked}
         label={label}
         name={name}
+        disabled={disabled}
         handleClick={(value) => handleCheckBox(value, name)}
       />
       <ul>
@@ -194,6 +196,46 @@ function CheckBoxesWithGroup(props: any) {
 
 
 function App() {
+
+  // const [option1, setOption1] = React.useState(false);
+  // const [option2, setOption2] = React.useState(true);
+  // const [option3, setOption3] = React.useState(false);
+
+  // return (
+  //   <>
+  //     <CheckBox
+  //       checked={
+  //         option1 && option2 && option3
+  //           ? true
+  //           : !(option1 || option2 || option3)
+  //           ? false
+  //           : "mixed"
+  //       }
+  //       handleClick={(data) => {
+  //         setOption1(!!data);
+  //         setOption2(!!data);
+  //         setOption3(!!data);
+  //       }}
+  //       label="All options"
+  //     />
+
+  //     <CheckBox
+  //       checked={option1}
+  //       handleClick={() => setOption1((checked) => !checked)}
+  //       label="Option 1"
+  //     />
+  //     <CheckBox
+  //       checked={option2}
+  //       handleClick={() => setOption2((checked) => !checked)}
+  //       label="Option 2"
+  //     />
+  //     <CheckBox
+  //       checked={option3}
+  //       handleClick={() => setOption3((checked) => !checked)}
+  //       label="Option 3"
+  //     />
+  //   </>
+  // );
   const [state, dispatchState] = useReducer(reducer, initialState);
 
   const handleCheckBox = (value, name) => {
