@@ -82,8 +82,76 @@ const initialState = {
   ]
 };
 
-const FindStructure = (state, name) => {
-  console.log(state, name);
+function updateState(state, nodeName, value) {
+  let finalPath = [];
+  let found = false;
+
+  const traverse = (node, path = []) => {
+    if (!node || found) {
+      return;
+    }
+    path.push(node);
+    if (node.name === nodeName) {
+      finalPath = [...path];
+      found = true;
+      return;
+    }
+
+    const len = node?.groups?.length;
+    if (len) {
+      node?.groups.forEach((group) => {
+        traverse(group, path);
+        path.pop();
+      })
+    }
+  }
+  traverse(state);
+
+  // navigate downwards to check all the child and subchilds of this parent
+  const node = finalPath.pop();
+  const checkAllChilds = (node) => {
+    if (!node)
+      return;
+
+    node.checked = value;
+    const len = node?.groups?.length;
+    if (len) {
+      node?.groups.forEach((group) => {
+        checkAllChilds(group);
+      })
+    }
+  }
+  
+  checkAllChilds(node);
+
+  // navigate topward to determine parents needs to be checked true or in mixed condition
+  finalPath.reverse();
+  finalPath.forEach((node) => {
+    let checked;
+    const len = node?.groups?.length
+    if (len) {
+      let checkedLen = 0;
+      let mixed = 0;
+      node?.groups.forEach(group => {
+        if (group.checked === true) {
+          checkedLen++;
+        }
+        if (group.checked === 'mixed') {
+          mixed++;
+        }
+      });
+      if (checkedLen === len) {
+        checked = true;
+      } else if (checkedLen > 0 || mixed > 0) {
+        checked = 'mixed';
+      } else if (checkedLen === 0) {
+        checked = false;
+      }
+    }
+    node.checked = checked;
+  });
+
+  return state;
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -91,7 +159,7 @@ const reducer = (state = initialState, { type, payload }) => {
 
     case 'updateCheckBoxes':
       const { value, name } = payload;
-      const structure = FindStructure(state, name)
+      state = updateState(state, name, value);
       return { ...state };
 
     default:
@@ -103,23 +171,6 @@ function CheckBoxesWithGroup(props: any) {
   const { state, handleCheckBox } = props;
   const { label, name } = state;
   let { checked } = state;
-
-  const len = state?.groups?.length;
-  if (len) {
-    let checkedLen = 0
-    state?.groups.forEach(group => {
-      if (group.checked) {
-        checkedLen++;
-      }
-    });
-    if (checkedLen === len) {
-      checked = true;
-    } else if (checked > 0) {
-      checked = 'mixed';
-    } else if (checked === 0) {
-      checked = false;
-    }
-  }
 
   return (
     <div key={name}>
@@ -143,11 +194,9 @@ function CheckBoxesWithGroup(props: any) {
 
 
 function App() {
-
   const [state, dispatchState] = useReducer(reducer, initialState);
 
   const handleCheckBox = (value, name) => {
-    console.log(value, name);
     dispatchState({
       type: 'updateCheckBoxes',
       payload: {
