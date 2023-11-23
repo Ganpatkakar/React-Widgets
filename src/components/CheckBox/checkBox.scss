@@ -1,0 +1,40 @@
+.checkBoxContainer {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+
+  .checkBoxInput {
+    display: block;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+
+  .checkBoxIcon {
+    cursor: pointer;
+    border: 1px solid #000;
+    color: #fff;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    margin-right: 5px;
+
+    &.mixedIcon {
+      background-color: #fff;
+      color: #431111fc
+    }
+
+    &.checkedIcon {
+      color: #fff;
+      background-color: #000;
+    }
+  }
+
+  .labelContainer {
+    cursor: pointer;
+  }
+}
