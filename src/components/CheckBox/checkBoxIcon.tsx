@@ -1,17 +1,17 @@
 import React from "react";
-import styles from './checkBox.scss';
-import { checkBoxChecked, checkBoxMixed } from "./checkBoxStates";
+import styles from './checkbox.scss';
+import { checkboxChecked, checkboxMixed } from "./checkboxStates";
 
-export const CheckBoxIcon = (props: any) => {
+export const CheckboxIcon = (props: any) => {
   const { checked, width, height } = props;
 
   let icon = null;
   let iconClassNames = styles.checkBoxIcon;
   if (checked === 'mixed') {
-    icon = checkBoxMixed(width - 2, height - 2);
+    icon = checkboxMixed(width - 2, height - 2);
     iconClassNames += ` ${styles.mixedIcon}`
   } else if (checked) {
-    icon = checkBoxChecked(width - 2, height - 2);
+    icon = checkboxChecked(width - 2, height - 2);
     iconClassNames += ` ${styles.checkedIcon}`
   }
   

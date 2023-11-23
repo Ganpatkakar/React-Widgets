@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './checkBox.scss';
+import styles from './checkbox.scss';
 
-export const CheckBoxInput = (props: any) => {
+export const CheckboxInput = (props: any) => {
   const cRef = useRef<HTMLInputElement>();
   const { checked, handleClick, name } = props;
 

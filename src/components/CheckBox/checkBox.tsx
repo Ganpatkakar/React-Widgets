@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import styles from './checkBox.scss';
-import { CheckBoxInput } from "./checkBoxInput";
-import { CheckBoxIcon } from "./checkBoxIcon";
+import styles from './checkbox.scss';
+import { CheckboxInput } from "./checkboxInput";
+import { CheckboxIcon } from "./checkboxIcon";
 
-interface ICheckBox {
+interface ICheckbox {
   // indeterminateState
   checked: true | false | "mixed"
+
+  // check if checkbox is disabled
+  disabled?: true | false
 
   // unique name for every checkbox
   name: string;
@@ -20,31 +23,47 @@ interface ICheckBox {
   height?: number
 }
 
-type DefaultProps = Partial<ICheckBox>;
+type DefaultProps = Partial<ICheckbox>;
 
 const defaultProps: DefaultProps = {
   checked: true,
+  disabled: false,
   name: '',
   label: '',
   width: 14,
   height: 14,
-  handleClick: () => {}
+  handleClick: () => { }
 };
 
-function CheckBox(props: ICheckBox) {
+function Checkbox(props: ICheckbox) {
+  let {checked} = props;
+  const { label, handleClick, name, disabled } = props;
 
-  const { checked, label, handleClick, name } = props;
+  const handleCheckBoxWithUpdatedValue = (event) => {
+    event.preventDefault();
+    if (disabled) {
+      return;
+    }
+    let newCheck = checked
+    if (newCheck === true) {
+      newCheck = false;
+    } else {
+      newCheck = true;
+    }
+    checked = newCheck;
+    handleClick(newCheck);
+  }
 
   return (
-    <div className={styles.checkBoxContainer}>
-      <CheckBoxInput {...props} checked={checked} handleClick={handleClick}  />
-      <CheckBoxIcon {...props} checked={checked} />
+    <span className={`${styles.checkBoxContainer} ${disabled && styles.disabledCheckBox}`} onClick={handleCheckBoxWithUpdatedValue}>
+      <CheckboxInput {...props} checked={checked} />
+      <CheckboxIcon {...props} checked={checked} />
       <label className={styles.labelContainer} htmlFor={name}>{label}</label>
-    </div>
+    </span>
   )
 }
 
-CheckBox.defaultProps = defaultProps;
-CheckBox.displayName = 'CheckBox';
+Checkbox.defaultProps = defaultProps;
+Checkbox.displayName = 'CheckBox';
 
-export default CheckBox;
+export default Checkbox;
