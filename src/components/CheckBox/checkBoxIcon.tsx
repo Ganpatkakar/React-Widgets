@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './checkbox.scss';
+import styles from "./checkbox.scss";
 import { checkboxChecked, checkboxMixed } from "./checkboxStates";
 
 export const CheckboxIcon = (props: any) => {
@@ -7,17 +7,17 @@ export const CheckboxIcon = (props: any) => {
 
   let icon = null;
   let iconClassNames = styles.checkBoxIcon;
-  if (checked === 'mixed') {
+  if (checked === "mixed") {
     icon = checkboxMixed(width - 2, height - 2);
-    iconClassNames += ` ${styles.mixedIcon}`
+    iconClassNames += ` ${styles.mixedIcon}`;
   } else if (checked) {
     icon = checkboxChecked(width - 2, height - 2);
-    iconClassNames += ` ${styles.checkedIcon}`
+    iconClassNames += ` ${styles.checkedIcon}`;
   }
-  
+
   return (
-    <div className={iconClassNames} style={{width: width, height: height}}>
+    <div className={iconClassNames} style={{ width: width, height: height }}>
       {icon}
     </div>
   );
-}
+};

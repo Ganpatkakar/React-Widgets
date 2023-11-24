@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import styles from './checkbox.scss';
+import React, { useEffect, useRef } from "react";
+import styles from "./checkbox.scss";
 
 export const CheckboxInput = (props: any) => {
   const cRef = useRef<HTMLInputElement>();
   const { checked, handleClick, name } = props;
 
   useEffect(() => {
-    const indeterminate = checked === 'mixed';
+    const indeterminate = checked === "mixed";
     cRef.current.indeterminate = indeterminate;
   }, [cRef, checked]);
 
@@ -14,15 +14,15 @@ export const CheckboxInput = (props: any) => {
 
   const handleCheckBoxWithUpdatedValue = (event) => {
     event.preventDefault();
-    let newCheck = checked
+    let newCheck = checked;
     if (newCheck === true) {
       newCheck = false;
     } else {
       newCheck = true;
     }
     console.log(newCheck);
-    handleClick(newCheck)
-  }
+    handleClick(newCheck);
+  };
 
   return (
     <input
@@ -33,5 +33,5 @@ export const CheckboxInput = (props: any) => {
       defaultChecked={checked === true ? true : false}
       ref={cRef}
     />
-  )
-}
+  );
+};
