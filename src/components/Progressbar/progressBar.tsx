@@ -59,7 +59,7 @@ export function ProgressBar(props: IProgressBar) {
         }`}
       >
         <div
-          className={styles.progressBarBar}
+          className={`${styles.progressBarBar} ${progressBarWidth && styles.animationStart}`}
           style={{
             width: `${progressBarWidth}%`,
             backgroundColor: color,
