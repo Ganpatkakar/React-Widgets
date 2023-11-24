@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface IsearchInField {
   tableRowsData: any[];
@@ -7,7 +7,7 @@ interface IsearchInField {
 }
 
 export function searchInfield(props: IsearchInField) {
-  const {tableRowsData, searchBy, searchValue} = props
+  const { tableRowsData, searchBy, searchValue } = props;
   return tableRowsData.filter((row) => {
     return row[searchBy].toLowerCase().includes(searchValue.toLowerCase());
   });

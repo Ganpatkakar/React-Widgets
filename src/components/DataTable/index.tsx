@@ -141,29 +141,29 @@ const tableHeaders2 = {
   title: { label: "Title", minWidth: 150, visible: true },
   year: { label: "Year", minWidth: 50, sortable: true, visible: true },
   runtime: { label: "RunTime", minWidth: 50, sortable: true, visible: true },
-  director: { label: "Director", minWidth: 100, sortable: true, visible: true }
+  director: { label: "Director", minWidth: 100, sortable: true, visible: true },
 };
 
 export default function DataTableComponent() {
   const [tableData, setTableData] = useState(movies);
   useEffect(() => {
     fetch("/api/movies", {
-      "method": "GET",
-      "headers": {
+      method: "GET",
+      headers: {
         "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-        "x-rapidapi-key": "d9c87f999amshb4af30838481e71p1ea5f2jsnce1fbcd684a2"
-      }
+        "x-rapidapi-key": "d9c87f999amshb4af30838481e71p1ea5f2jsnce1fbcd684a2",
+      },
     })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      // setTableData(data);
-      setTableData(movies);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // setTableData(data);
+        setTableData(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   return (

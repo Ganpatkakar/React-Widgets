@@ -1,19 +1,16 @@
-import React, {useRef, useEffect, useState} from "react";
-import {
-  AiFillCaretDown,
-  AiFillCaretUp,
-} from "react-icons/ai";
-import styles from './DataTable.module.scss';
+import React, { useRef, useEffect, useState } from "react";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import styles from "./DataTable.module.scss";
 
 interface IRenderTableHeaderCell {
-  index?: number,
-  refs?: any,
-  label: string
+  index?: number;
+  refs?: any;
+  label: string;
   minWidth: number;
   sortable: boolean;
-  handleSort: (...args: any[]) => void
-  sorted: boolean
-  sortOrder: string
+  handleSort: (...args: any[]) => void;
+  sorted: boolean;
+  sortOrder: string;
 }
 
 export const RenderTableHeaderCell = ({
@@ -32,20 +29,28 @@ export const RenderTableHeaderCell = ({
   useEffect(() => {
     const resize = (e) => {
       if (resizeContainerRef && resizeContainerRef.current) {
-        const dx = e.pageX - resizeContainerRef.current.getBoundingClientRect().left;
-        const newWidth = parseInt(getComputedStyle(resizeContainerRef.current, "").width) + dx +"px";
+        const dx =
+          e.pageX - resizeContainerRef.current.getBoundingClientRect().left;
+        const newWidth =
+          parseInt(getComputedStyle(resizeContainerRef.current, "").width) +
+          dx +
+          "px";
         resizeContainerRef.current.style.width = newWidth;
       }
-    }
+    };
     if (resizeRef && resizeRef.current) {
-      resizeRef.current.addEventListener("mousedown",function (e) {
-        document.addEventListener("mousemove", resize, false);
-        document.addEventListener('mouseup', mouseUpHandler);
-      }, false);
+      resizeRef.current.addEventListener(
+        "mousedown",
+        function (e) {
+          document.addEventListener("mousemove", resize, false);
+          document.addEventListener("mouseup", mouseUpHandler);
+        },
+        false
+      );
 
       const mouseUpHandler = function () {
-        document.removeEventListener('mousemove', resize);
-        document.removeEventListener('mouseup', mouseUpHandler);
+        document.removeEventListener("mousemove", resize);
+        document.removeEventListener("mouseup", mouseUpHandler);
       };
 
       return function cleanup() {
@@ -83,13 +88,15 @@ export const RenderTableHeaderCell = ({
   );
 };
 
-
 interface IRenderTableHeader {
   tableHeaders: object;
-  handleSorting: (...args: any[]) => void
+  handleSorting: (...args: any[]) => void;
 }
 
-export function RenderTableHeader({ tableHeaders, handleSorting }: IRenderTableHeader) {
+export function RenderTableHeader({
+  tableHeaders,
+  handleSorting,
+}: IRenderTableHeader) {
   const [sortKey, setSortKey] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const handleSort = (key) => {

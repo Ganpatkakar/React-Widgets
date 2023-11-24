@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ITableRowClone {
   tableData: any[];
@@ -6,7 +6,7 @@ interface ITableRowClone {
   to: number;
 }
 
-export function TableRowsClone({tableData = [], from, to}: ITableRowClone) {
+export function TableRowsClone({ tableData = [], from, to }: ITableRowClone) {
   const data = [];
   for (let i = from; i < to; i++) {
     data.push({ ...tableData[i] });

@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
-import TicTacToeComponent from '../components/TicTacToe/ticTacToe';
+import TicTacToeComponent from "../components/TicTacToe/ticTacToe";
 
 const meta = {
-  title: 'Games/TicTacToeComponent',
+  title: "Games/TicTacToeComponent",
   component: TicTacToeComponent,
   parameters: {
-    layout: 'fullScreen',
+    layout: "fullScreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {},
 } satisfies Meta<typeof TicTacToeComponent>;
 

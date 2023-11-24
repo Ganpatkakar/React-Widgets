@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Tooltip from "./Tooltip";
 
 const ToolTipRenderComponent = () => {
@@ -25,7 +25,7 @@ const ToolTipRenderComponent = () => {
         <div>Tooltip render on bottom</div>
       </Tooltip>
     </>
-  )
-}
+  );
+};
 
 export default ToolTipRenderComponent;

@@ -1,11 +1,18 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback, CSSProperties } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+  CSSProperties,
+} from "react";
 import styles from "./DataTable.module.scss";
 import { Debounce } from "../Debounce";
-import { TableHeaderClone } from './tableHeaderClone';
-import { TableRowsClone } from './tableRowClone';
-import { searchInfield } from './searchField';
-import { RenderPagination } from './renderPagination';
-import { RenderTableHeader } from './renderTableHeaderCell';
+import { TableHeaderClone } from "./tableHeaderClone";
+import { TableRowsClone } from "./tableRowClone";
+import { searchInfield } from "./searchField";
+import { RenderPagination } from "./renderPagination";
+import { RenderTableHeader } from "./renderTableHeaderCell";
 import { RenderSettings } from "./renderSettings";
 import { RenderTableControls } from "./renderTableControls";
 import { RenderTableRows } from "./renderTableRow";
@@ -83,7 +90,11 @@ export default function DataTable({
     const searchValue = e.target.value;
     let newRows;
     if (searchValue.length > 0) {
-      newRows = searchInfield({ tableRowsData: tableData, searchBy, searchValue });
+      newRows = searchInfield({
+        tableRowsData: tableData,
+        searchBy,
+        searchValue,
+      });
     } else {
       newRows = TableRowsClone({ tableData, from: 0, to: pageSize });
     }
@@ -119,8 +130,16 @@ export default function DataTable({
   };
 
   return (
-    <div className={styles.tableComponent} style={{...overRideStyles.tableComponentStyle}}>
-      <div className={styles.tableTitle} style={{...overRideStyles.tableTitleStyle}}>{title}</div>
+    <div
+      className={styles.tableComponent}
+      style={{ ...overRideStyles.tableComponentStyle }}
+    >
+      <div
+        className={styles.tableTitle}
+        style={{ ...overRideStyles.tableTitleStyle }}
+      >
+        {title}
+      </div>
       <RenderTableControls
         searchEnabled={searchEnabled}
         settingsEnabled={settingsEnabled}
@@ -128,7 +147,10 @@ export default function DataTable({
         handleSearch={handleSearch}
         handleSettingsClick={handleSettingsClick}
       />
-      <div className={styles.tableContainer} style={{...overRideStyles.tableContainerStyle}}>
+      <div
+        className={styles.tableContainer}
+        style={{ ...overRideStyles.tableContainerStyle }}
+      >
         {/* Settings flexpane for table columns show and hide options */}
         <RenderSettings
           showSettings={showSettings}
@@ -137,8 +159,14 @@ export default function DataTable({
           setShowSettings={setShowSettings}
           resetSettings={resetSettings}
         />
-        <div className={styles.tableOverflow} style={{...overRideStyles.tableOverflowStyle}}>
-          <div className={styles.tableContent} style={{...overRideStyles.tableContentStyle}}>
+        <div
+          className={styles.tableOverflow}
+          style={{ ...overRideStyles.tableOverflowStyle }}
+        >
+          <div
+            className={styles.tableContent}
+            style={{ ...overRideStyles.tableContentStyle }}
+          >
             <RenderTableHeader
               tableHeaders={tableHeaderData}
               handleSorting={handleSorting}

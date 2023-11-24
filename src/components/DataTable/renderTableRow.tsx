@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './DataTable.module.scss';
+import React from "react";
+import styles from "./DataTable.module.scss";
 
 interface IRenderTableRows {
   tableHeaders: any;

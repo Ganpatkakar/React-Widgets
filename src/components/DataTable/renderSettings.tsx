@@ -1,14 +1,14 @@
 import React from "react";
 import { Button } from "../Button";
-import styles from './DataTable.module.scss';
-import ToggleInput from '../ToggleInput';
+import styles from "./DataTable.module.scss";
+import ToggleInput from "../ToggleInput";
 
 interface IRenderSettings {
   showSettings: boolean;
   tableHeader: object;
-  setTableHeaderData: (...args: any[]) => void
-  setShowSettings: (...args: any[]) => void
-  resetSettings: (...args: any[]) => void
+  setTableHeaderData: (...args: any[]) => void;
+  setShowSettings: (...args: any[]) => void;
+  resetSettings: (...args: any[]) => void;
 }
 
 export function RenderSettings({
@@ -45,7 +45,9 @@ export function RenderSettings({
       <div className={"styles.settingsContent"}>
         {Object.keys(tableHeader).map((key) => (
           <div key={key} className={styles.settingsRow}>
-            <div className={"styles.settingsLabel"}>{tableHeader[key].label}</div>
+            <div className={"styles.settingsLabel"}>
+              {tableHeader[key].label}
+            </div>
             <ToggleInput
               value={key}
               onClick={handleClick}

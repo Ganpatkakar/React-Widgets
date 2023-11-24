@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './progressBar.scss';
+import styles from "./progressBar.scss";
 
 interface IProgressBar {
   // lable of the progress bar
@@ -25,43 +25,53 @@ interface IProgressBar {
   shape?: "square" | "round";
 
   // default medium
-  size?: "small" | "medium" | "large"
+  size?: "small" | "medium" | "large";
 }
 
-const configsForHeight = {small: '2px', medium: '4px', large: '6px'}
+const configsForHeight = { small: "2px", medium: "4px", large: "6px" };
 
 export function ProgressBar(props: IProgressBar) {
-
   const {
-    label = '',
-    labelColor = 'black',
+    label = "",
+    labelColor = "black",
     min = 0,
     max = 1,
     value = 0,
     color = "blue",
     shape = "round",
-    size="medium"
+    size = "medium",
   } = props;
 
-  const progressBarWidth = (value - min) / (max - min) * 100;
+  const progressBarWidth = ((value - min) / (max - min)) * 100;
   const height = configsForHeight[size];
 
   if (progressBarWidth > 100) {
-    return (<div>Please provide correct min, max and value as per documentation</div>)
+    return (
+      <div>Please provide correct min, max and value as per documentation</div>
+    );
   }
 
   return (
     <div className={styles.progressBarContainer} style={{ color: color }}>
-      <div 
-        className={`${styles.progressBar} ${shape === 'round' ? styles.round : styles.square}`}
+      <div
+        className={`${styles.progressBar} ${
+          shape === "round" ? styles.round : styles.square
+        }`}
       >
         <div
           className={styles.progressBarBar}
-          style={{ width: `${progressBarWidth}%`, backgroundColor: color, height: height }}
-        >
-        </div>
+          style={{
+            width: `${progressBarWidth}%`,
+            backgroundColor: color,
+            height: height,
+          }}
+        ></div>
       </div>
-      {label && <div className={styles.progressBarLabel} style={{ color: labelColor }}>{label}</div>}
+      {label && (
+        <div className={styles.progressBarLabel} style={{ color: labelColor }}>
+          {label}
+        </div>
+      )}
     </div>
-  )
+  );
 }

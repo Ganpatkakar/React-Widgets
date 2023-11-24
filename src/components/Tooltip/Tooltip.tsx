@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './Tooltip.scss';
+import React from "react";
+import styles from "./Tooltip.scss";
 
-function getPositionClassName (position) {
+function getPositionClassName(position) {
   switch (position) {
     case "top":
       return "top";
@@ -13,7 +13,7 @@ function getPositionClassName (position) {
       return "bottom";
     default:
       return "bottom";
-  } 
+  }
 }
 
 const Tooltip = ({ children, text, position }) => {
@@ -22,9 +22,11 @@ const Tooltip = ({ children, text, position }) => {
   return (
     <span className={styles.tooltipContainer}>
       {children}
-      <span className={`${styles.toolTipText} ${styles[toolTipPosition]}`}>{text}</span>
+      <span className={`${styles.toolTipText} ${styles[toolTipPosition]}`}>
+        {text}
+      </span>
     </span>
   );
-}
+};
 
 export default Tooltip;

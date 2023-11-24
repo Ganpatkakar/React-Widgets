@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import {
   AiOutlineRight,
   AiOutlineLeft,
   AiOutlineVerticalLeft,
   AiOutlineVerticalRight,
 } from "react-icons/ai";
-import styles from './DataTable.module.scss';
+import styles from "./DataTable.module.scss";
 
 const Prev = "prev";
 const Next = "next";

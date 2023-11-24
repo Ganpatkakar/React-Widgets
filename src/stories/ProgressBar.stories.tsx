@@ -1,14 +1,14 @@
 import * as React from "react";
-import type { Meta, StoryObj } from '@storybook/react';
-import { ProgressBar } from '../components/Progressbar';
+import type { Meta, StoryObj } from "@storybook/react";
+import { ProgressBar } from "../components/Progressbar";
 
 const meta = {
-  title: 'Components/ProgressBar',
+  title: "Components/ProgressBar",
   component: ProgressBar,
   parameters: {
-    layout: 'padded'
+    layout: "padded",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {},
 } satisfies Meta<typeof ProgressBar>;
 
@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Progressbar: Story = {
   args: {
     value: 0.5,
-    label: "Default ProgressBar"
+    label: "Default ProgressBar",
   },
 };
 
@@ -28,8 +28,8 @@ export const ProgressbarWarning: Story = {
     max: 5,
     value: 2,
     label: "Warning ProgressBar",
-    labelColor: 'red',
-    color: 'red'
+    labelColor: "red",
+    color: "red",
   },
 };
 
@@ -37,8 +37,8 @@ export const ProgressbarSuccess: Story = {
   args: {
     value: 0.8,
     label: "Success ProgressBar",
-    labelColor: 'green',
-    color: 'green'
+    labelColor: "green",
+    color: "green",
   },
 };
 
@@ -46,7 +46,6 @@ const intervalDelay = 100;
 const intervalIncrement = 1;
 
 const template = () => {
-
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
@@ -59,9 +58,13 @@ const template = () => {
   });
 
   return (
-    <ProgressBar max={42} value={value} label={`There have been ${value} files downloaded`}/>
+    <ProgressBar
+      max={42}
+      value={value}
+      label={`There have been ${value} files downloaded`}
+    />
   );
-}
+};
 
 export const ContinouseProgress = template.bind({});
 

@@ -1,15 +1,13 @@
-import React from 'react';
-import {
-  AiFillSetting,
-} from "react-icons/ai";
-import styles from './DataTable.module.scss';
+import React from "react";
+import { AiFillSetting } from "react-icons/ai";
+import styles from "./DataTable.module.scss";
 
 interface IRenderTableControls {
   searchEnabled: boolean;
   settingsEnabled: boolean;
   searchBy: string;
-  handleSettingsClick: (...args: any[]) => void
-  handleSearch: (...args: any) => void
+  handleSettingsClick: (...args: any[]) => void;
+  handleSearch: (...args: any) => void;
 }
 
 export function RenderTableControls({

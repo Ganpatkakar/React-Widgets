@@ -1,2 +1,3 @@
-import TicTacToeComponent from './ticTacToe';
+import TicTacToeComponent from "./ticTacToe";
+
 export default TicTacToeComponent;

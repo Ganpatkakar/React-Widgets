@@ -45,6 +45,7 @@
       font-size: 20px;
       margin-bottom: 20px;
     }
+
     .previewOptions {
       .previewOption {
         display: block;
@@ -79,7 +80,7 @@
     padding: 10px;
     border-radius: 5px;
     box-sizing: border-box;
-    
+
     .resultParticipants {
       display: block;
     }
@@ -101,7 +102,7 @@
         border-radius: 5px;
         box-sizing: border-box;
         border: 1px solid #b9b5b5;
-        
+
         .resultOptionTitle {
           width: 90%;
           height: 100%;
@@ -111,7 +112,7 @@
             width: 0.5%;
             max-width: 100%;
             min-height: 30px;
-            transition: width .4s cubic-bezier(.4,0,.2,1),background-color 167ms cubic-bezier(.4,0,.2,1),box-shadow 167ms cubic-bezier(.4,0,.2,1),color 167ms cubic-bezier(.4,0,.2,1);
+            transition: width .4s cubic-bezier(.4, 0, .2, 1), background-color 167ms cubic-bezier(.4, 0, .2, 1), box-shadow 167ms cubic-bezier(.4, 0, .2, 1), color 167ms cubic-bezier(.4, 0, .2, 1);
 
             .titleText {
               position: absolute;
@@ -129,7 +130,7 @@
           box-sizing: border-box;
           padding: 5px;
         }
-        
+
       }
     }
   }

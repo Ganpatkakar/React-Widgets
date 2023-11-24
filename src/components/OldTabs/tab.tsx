@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import styles from './tab.scss';
+import styles from "./tab.scss";
 
 interface ITabContent {
   tabKey: string;
@@ -13,10 +13,9 @@ export interface ITab {
 
 function Tab(props: ITab) {
   const { tabs = [] } = props;
-  const { tabKey: initialActiveTab, content } = tabs[0] || {}
+  const { tabKey: initialActiveTab, content } = tabs[0] || {};
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [tabContent, setTabContent] = useState(content);
-
 
   const handleActiveTab = (event: any) => {
     event.preventDefault();
@@ -25,7 +24,7 @@ function Tab(props: ITab) {
     const { tabKey, content } = tabs.find((tab) => tab.tabKey === key);
     setActiveTab(tabKey);
     setTabContent(content);
-  }
+  };
 
   return (
     <>
@@ -33,25 +32,22 @@ function Tab(props: ITab) {
         <div className={styles.tabsNavContainer}>
           <ul className={styles.tabLists} onClick={handleActiveTab}>
             {tabs.map(({ tabKey, title }: ITabContent, index) => {
-              const classes = [styles.tabList, tabKey === activeTab ? styles.activeTab : styles.nonActive].join(" ");
+              const classes = [
+                styles.tabList,
+                tabKey === activeTab ? styles.activeTab : styles.nonActive,
+              ].join(" ");
               return (
-                <li
-                  key={tabKey}
-                  data-key={tabKey}
-                  className={classes}
-                >
+                <li key={tabKey} data-key={tabKey} className={classes}>
                   {title}
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
-        <div className={styles.tabsContnentContainer}>
-          {tabContent}
-        </div>
-      </div >
+        <div className={styles.tabsContnentContainer}>{tabContent}</div>
+      </div>
     </>
-  )
+  );
 }
 
 export default Tab;

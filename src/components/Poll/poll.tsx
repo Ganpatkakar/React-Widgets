@@ -1,58 +1,60 @@
 import React, { useState } from "react";
 import CreatePoll from "./createPoll";
 import PollResult from "./pollResult";
-import { IOptions, IPollData } from './pollType';
+import { IOptions, IPollData } from "./pollType";
 import ShowPollPreview from "./showPollPreview";
-import uniqid from 'uniqid';
-import styles from './poll.scss';
+import uniqid from "uniqid";
+import styles from "./poll.scss";
 
 const initialState: IPollData = {
-  question: '',
-  options: [{title: '', votes: 0, id: uniqid()}],
+  question: "",
+  options: [{ title: "", votes: 0, id: uniqid() }],
   id: uniqid(),
-  pollState: 'notStarted',
-  participants: 0
-}
+  pollState: "notStarted",
+  participants: 0,
+};
 
 function PollComponent() {
   const [pollData, setPollData] = useState(initialState);
-  const {pollState} = pollData;
+  const { pollState } = pollData;
 
   const handleCreatepoll = (pollData: IPollData) => {
-    setPollData({...pollData});
-  }
+    setPollData({ ...pollData });
+  };
 
   const handlePollSubmit = (options: IOptions[]) => {
     pollData.options = options;
-    pollData.pollState = 'submited';
+    pollData.pollState = "submited";
     pollData.participants += 1;
-    setPollData({...pollData});
-  }
+    setPollData({ ...pollData });
+  };
 
-  if (pollState === 'notStarted') {
+  if (pollState === "notStarted") {
     return (
       <div className={styles.pollContainer}>
         <CreatePoll createPoll={handleCreatepoll} />
       </div>
-    )
+    );
   }
 
-  if (pollState === 'preview') {
+  if (pollState === "preview") {
     return (
       <div className={styles.pollContainer}>
-        <ShowPollPreview pollData={pollData} handlePollSubmit={handlePollSubmit}/>
+        <ShowPollPreview
+          pollData={pollData}
+          handlePollSubmit={handlePollSubmit}
+        />
       </div>
-    )
+    );
   }
 
-  if (pollState === 'submited') {
+  if (pollState === "submited") {
     return (
       <div className={styles.pollContainer}>
-        <PollResult {...pollData}/>
+        <PollResult {...pollData} />
       </div>
-    )
+    );
   }
 }
 
 export default PollComponent;
-

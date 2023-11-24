@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ITableHeader {
   tableHeaders: any;

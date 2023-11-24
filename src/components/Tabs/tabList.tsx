@@ -1,5 +1,5 @@
 import React, { Children, ReactComponentElement, useState } from "react";
-import styles from './tabs.scss';
+import styles from "./tabs.scss";
 
 export interface ITabList {
   // To control and get active tab value, provide onTabClick prop
@@ -9,7 +9,7 @@ export interface ITabList {
 }
 
 export function TabList<ReactComponentElement>(props: any) {
-  const {onTabClick = () => {}, defaultSelectedTab = ''} = props
+  const { onTabClick = () => {}, defaultSelectedTab = "" } = props;
   const [activeTab, setActiveTab] = useState(defaultSelectedTab);
 
   const handleTabClick = (event: any, value: string) => {
@@ -17,18 +17,16 @@ export function TabList<ReactComponentElement>(props: any) {
     setActiveTab(value);
     onTabClick(value);
     return value;
-  }
+  };
 
   return (
     <div className={styles.tabListContainer}>
-      {
-        Children.map(props.children, (child) => {
-          return React.cloneElement(child, {
-            handleTabClick,
-            activeTab
-          })
-        })
-      }
+      {Children.map(props.children, (child) => {
+        return React.cloneElement(child, {
+          handleTabClick,
+          activeTab,
+        });
+      })}
     </div>
-  )
+  );
 }

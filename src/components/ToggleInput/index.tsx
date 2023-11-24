@@ -3,10 +3,14 @@ import React from "react";
 interface IToggleInput {
   onClick: (...args: any[]) => void;
   value: string;
-  initialState: boolean
+  initialState: boolean;
 }
 
-export default function ToggleInput({ onClick: handleClick, value, initialState }: IToggleInput) {
+export default function ToggleInput({
+  onClick: handleClick,
+  value,
+  initialState,
+}: IToggleInput) {
   return (
     <>
       <input

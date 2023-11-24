@@ -1,27 +1,27 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Tab, TabList, ITabList } from '../components/Tabs';
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Tab, TabList, ITabList } from "../components/Tabs";
 
 const meta = {
-  title: 'Components/TabList',
+  title: "Components/TabList",
   component: TabList,
   parameters: {
-    layout: 'padded'
+    layout: "padded",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     onTabClick: {
-      description: 'Callback function on change of active tab',
-      type: 'function',
-      default: '(value: string) => void',
-      defaultValue: '(value: string) => void',
+      description: "Callback function on change of active tab",
+      type: "function",
+      default: "(value: string) => void",
+      defaultValue: "(value: string) => void",
     },
     defaultSelectedTab: {
-      description: 'Default selected tab value',
-      type: 'string',
-      default: '',
-      defaultValue: ''
-    }
+      description: "Default selected tab value",
+      type: "string",
+      default: "",
+      defaultValue: "",
+    },
   },
 } satisfies Meta<typeof TabList>;
 
@@ -29,10 +29,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const TabsTemplate = ({}) => (
-  <TabList defaultSelectedTab='Tab1'>
-    <Tab value='Tab1'>First Tab</Tab>
-    <Tab value='Tab2'>Second Tab</Tab>
-    <Tab value='Tab3'>Third Tab</Tab>
+  <TabList defaultSelectedTab="Tab1">
+    <Tab value="Tab1">First Tab</Tab>
+    <Tab value="Tab2">Second Tab</Tab>
+    <Tab value="Tab3">Third Tab</Tab>
   </TabList>
 );
 
@@ -97,8 +97,6 @@ TabsList.parameters = {
     },
   },
 };
-
-
 
 // export const TabListComponent: Story = {
 //   args: {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GridRow } from "./gridRow";
-import styles from './gridLights.scss';
+import styles from "./gridLights.scss";
 
 interface IGridLights {
   rowsCount?: number;
@@ -8,7 +8,7 @@ interface IGridLights {
 }
 
 function getGridLayout(rowsCount: number, colunsCount: number) {
-  const matrixCol = Array.from({ length: colunsCount }, () => '');
+  const matrixCol = Array.from({ length: colunsCount }, () => "");
   return Array.from({ length: rowsCount }, () => [...matrixCol]);
 }
 
@@ -23,21 +23,21 @@ export function GridLights(props: IGridLights) {
 
   const handleColumnClick = (event: any) => {
     const target = event.target;
-    if (!target.dataset.hasOwnProperty('row')) {
+    if (!target.dataset.hasOwnProperty("row")) {
       return;
     }
 
     const rowIndex = target.dataset.row;
     const columnIndex = target.dataset.column;
 
-    if (grid[rowIndex][columnIndex] !== '') {
+    if (grid[rowIndex][columnIndex] !== "") {
       return;
     }
 
     stack.push(`${rowIndex},${columnIndex}`);
 
     const gridRow = grid[rowIndex];
-    gridRow[columnIndex] = 'x';
+    gridRow[columnIndex] = "x";
     grid[rowIndex] = [...gridRow];
     setGrid([...grid]);
 
@@ -49,32 +49,30 @@ export function GridLights(props: IGridLights) {
       reverseGridLights();
       timer = null;
     }, 3000);
-  }
+  };
 
   const reverseGridLights = async () => {
     const reversedStack = stack.reverse();
-    for(let val of reversedStack) {
+    for (let val of reversedStack) {
       const lastVal = val;
       const awaitedVal: string = await new Promise((res) => {
         setTimeout(() => {
-          res(lastVal)
+          res(lastVal);
         }, 200);
       });
-      const [rowIndex, columnIndex] = awaitedVal.split(',');
+      const [rowIndex, columnIndex] = awaitedVal.split(",");
       const gridRow = grid[rowIndex];
-      gridRow[columnIndex] = '';
+      gridRow[columnIndex] = "";
       grid[rowIndex] = [...gridRow];
       setGrid([...grid]);
     }
-  }
+  };
 
   return (
     <div className={styles.gridContainer} onClick={handleColumnClick}>
-      {
-        grid.map((row: any[], index: number) => {
-          return <GridRow key={index} row={row} rowIndex={index}/>
-        })
-      }
+      {grid.map((row: any[], index: number) => {
+        return <GridRow key={index} row={row} rowIndex={index} />;
+      })}
     </div>
-  )
+  );
 }

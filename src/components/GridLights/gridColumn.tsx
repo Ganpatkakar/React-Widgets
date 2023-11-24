@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './gridLights.scss';
+import styles from "./gridLights.scss";
 
 interface IGridColumn {
   col: string;
@@ -9,11 +9,12 @@ interface IGridColumn {
 
 export function GridColumn({ col, rowIndex, columnIndex }: IGridColumn) {
   return (
-    <div 
-      className={`${styles.columnContainer} ${col === '' ? styles.columnDisabled : styles.columnActive}`}
+    <div
+      className={`${styles.columnContainer} ${
+        col === "" ? styles.columnDisabled : styles.columnActive
+      }`}
       data-row={rowIndex}
       data-column={columnIndex}
-    >
-    </div>
-  )
+    ></div>
+  );
 }

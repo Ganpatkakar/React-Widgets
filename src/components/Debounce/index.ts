@@ -7,5 +7,5 @@ export function Debounce(fn, timer) {
     timer = setTimeout(() => {
       fn(...args);
     }, timer);
-  }
+  };
 }

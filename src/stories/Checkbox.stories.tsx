@@ -1,14 +1,14 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import Checkbox from '../components/Checkbox';
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import Checkbox from "../components/Checkbox";
 
 const meta = {
-  title: 'Components/Checkbox',
+  title: "Components/Checkbox",
   component: Checkbox,
   parameters: {
-    layout: 'padded'
+    layout: "padded",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {},
 } satisfies Meta<typeof Checkbox>;
 
@@ -28,7 +28,6 @@ export const Checked = () => {
 };
 
 export const MultiCheckBoxWithParentControl = () => {
-
   const [option1, setOption1] = React.useState(false);
   const [option2, setOption2] = React.useState(true);
   const [option3, setOption3] = React.useState(false);
@@ -68,101 +67,101 @@ export const MultiCheckBoxWithParentControl = () => {
       />
     </>
   );
-}
+};
 
 const level3Groups = [
   {
-    name: 'level3Check1',
+    name: "level3Check1",
     checked: false,
-    label: "level 3 checkbox 1"
+    label: "level 3 checkbox 1",
   },
   {
-    name: 'level3Check2',
+    name: "level3Check2",
     checked: false,
-    label: "level 3 checkbox 2"
-  }
-]
+    label: "level 3 checkbox 2",
+  },
+];
 
 const group1 = [
   {
-    name: 'group1check1',
+    name: "group1check1",
     checked: false,
     label: "group 1 checkbox 1",
-    groups: level3Groups
+    groups: level3Groups,
   },
   {
-    name: 'group1check2',
+    name: "group1check2",
     checked: false,
-    label: "group 1 checkbox 2"
+    label: "group 1 checkbox 2",
   },
   {
-    name: 'group1check3',
+    name: "group1check3",
     checked: false,
-    label: "group 1 checkbox 3"
-  }
+    label: "group 1 checkbox 3",
+  },
 ];
 
 const group2 = [
   {
-    name: 'group2check1',
+    name: "group2check1",
     checked: false,
-    label: "group 2 checkbox 1"
+    label: "group 2 checkbox 1",
   },
   {
-    name: 'group2check2',
+    name: "group2check2",
     checked: false,
-    label: "group 2 checkbox 2"
+    label: "group 2 checkbox 2",
   },
   {
-    name: 'group2check3',
+    name: "group2check3",
     checked: false,
-    label: "group 2 checkbox 3"
-  }
+    label: "group 2 checkbox 3",
+  },
 ];
 
 const group3 = [
   {
-    name: 'group3check1',
+    name: "group3check1",
     checked: false,
-    label: "group 3 checkbox 1"
+    label: "group 3 checkbox 1",
   },
   {
-    name: 'group3check2',
+    name: "group3check2",
     checked: false,
-    label: "group 3 checkbox 2"
+    label: "group 3 checkbox 2",
   },
   {
-    name: 'group3check3',
+    name: "group3check3",
     checked: false,
-    label: "group 3 checkbox 3"
-  }
+    label: "group 3 checkbox 3",
+  },
 ];
 
 const initialState = {
-  name: 'CheckBoxesGroups',
+  name: "CheckBoxesGroups",
   checked: false,
   label: "Parent control checkbox",
 
   groups: [
     {
-      name: 'CheckBoxesGroups1',
+      name: "CheckBoxesGroups1",
       checked: false,
       label: "Check Boxex Group 1",
-      groups: group1
+      groups: group1,
     },
     {
-      name: 'CheckBoxesGroups2',
+      name: "CheckBoxesGroups2",
       checked: false,
       label: "Check Boxex Group 2",
-      groups: group2
+      groups: group2,
     },
     {
-      name: 'CheckBoxesGroups3',
+      name: "CheckBoxesGroups3",
       checked: false,
       label: "Check Boxex Group 3",
-      groups: group3
-    }
-  ]
+      groups: group3,
+    },
+  ],
 };
 
 function updateState(state, nodeName, value) {
@@ -185,48 +184,47 @@ function updateState(state, nodeName, value) {
       node?.groups.forEach((group) => {
         traverse(group, path);
         path.pop();
-      })
+      });
     }
-  }
+  };
   traverse(state);
 
   // navigate downwards to check all the child and subchilds of this parent
   const node = finalPath.pop();
   const checkAllChilds = (node) => {
-    if (!node)
-      return;
+    if (!node) return;
 
     node.checked = value;
     const len = node?.groups?.length;
     if (len) {
       node?.groups.forEach((group) => {
         checkAllChilds(group);
-      })
+      });
     }
-  }
-  
+  };
+
   checkAllChilds(node);
 
   // navigate topward to determine parents needs to be checked true or in mixed condition
   finalPath.reverse();
   finalPath.forEach((node) => {
     let checked;
-    const len = node?.groups?.length
+    const len = node?.groups?.length;
     if (len) {
       let checkedLen = 0;
       let mixed = 0;
-      node?.groups.forEach(group => {
+      node?.groups.forEach((group) => {
         if (group.checked === true) {
           checkedLen++;
         }
-        if (group.checked === 'mixed') {
+        if (group.checked === "mixed") {
           mixed++;
         }
       });
       if (checkedLen === len) {
         checked = true;
       } else if (checkedLen > 0 || mixed > 0) {
-        checked = 'mixed';
+        checked = "mixed";
       } else if (checkedLen === 0) {
         checked = false;
       }
@@ -239,16 +237,15 @@ function updateState(state, nodeName, value) {
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-
-    case 'updateCheckBoxes':
+    case "updateCheckBoxes":
       const { value, name } = payload;
       state = updateState(state, name, value);
       return { ...state };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
 function CheckBoxesWithGroup(props: any) {
   const { state, handleCheckBox } = props;
@@ -265,15 +262,13 @@ function CheckBoxesWithGroup(props: any) {
         handleClick={(value) => handleCheckBox(value, name)}
       />
       <ul>
-        {
-          state?.groups?.map((group) => {
-            const { name } = group;
-            return CheckBoxesWithGroup({ state: group, handleCheckBox });
-          })
-        }
+        {state?.groups?.map((group) => {
+          const { name } = group;
+          return CheckBoxesWithGroup({ state: group, handleCheckBox });
+        })}
       </ul>
     </div>
-  )
+  );
 }
 
 const MultiLevelCheckBoxesCode = () => {
@@ -281,18 +276,16 @@ const MultiLevelCheckBoxesCode = () => {
 
   const handleCheckBox = (value, name) => {
     dispatchState({
-      type: 'updateCheckBoxes',
+      type: "updateCheckBoxes",
       payload: {
         value,
-        name
-      }
-    })
-  }
+        name,
+      },
+    });
+  };
 
-  return (
-    <CheckBoxesWithGroup state={state} handleCheckBox={handleCheckBox} />
-  );
-}
+  return <CheckBoxesWithGroup state={state} handleCheckBox={handleCheckBox} />;
+};
 
 export const MultiLevelCheckBoxes = MultiLevelCheckBoxesCode.bind({});
 

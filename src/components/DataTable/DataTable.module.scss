@@ -32,6 +32,7 @@
         border-radius: 0.25rem;
       }
     }
+
     .tableSettings {
       padding: 0 0 0 1rem;
       font-size: 16px;
@@ -90,7 +91,7 @@
         font-weight: 500;
         padding: 0.5rem;
       }
-      
+
       .settingsRow {
         display: flex;
         width: 100%;
@@ -123,17 +124,17 @@
         max-width: 100%;
         color: rgba(0, 0, 0, 0.87);
         background-color: rgb(255, 255, 255);
-  
+
         .rowStyle {
           border-bottom: 1px solid #ddd;
           min-height: 48px;
           align-items: center;
         }
-    
+
         .tableHeader {
           display: flex;
           border-bottom: 1px solid #ddd;
-      
+
           .tableHeaderItem {
             flex: 1;
             margin: 0.5rem;
@@ -155,13 +156,13 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
               }
-  
+
               .sortableIcons {
                 color: #ddd;
                 display: flex;
                 padding: 0 5px;
               }
-  
+
               &:hover .sortableIcons, .sortableIcons.sortableIconActive {
                 color: #000;
               }
@@ -180,11 +181,12 @@
             }
           }
         }
+
         .tableRows {
           .tableRow {
             display: flex;
-            
-            
+
+
             .tableRowItem {
               flex: 1;
               margin: 0.5rem;

@@ -1,9 +1,9 @@
 import React, { Children, JSXElementConstructor, ReactElement } from "react";
-import styles from './accordian.style.scss';
+import styles from "./accordian.style.scss";
 
 interface IAccordianPanel {
   isActive?: boolean;
-  children: ReactElement<any, string | JSXElementConstructor<any>>
+  children: ReactElement<any, string | JSXElementConstructor<any>>;
 }
 
 export function AccordianPanel({ children, isActive }: IAccordianPanel) {
@@ -13,5 +13,5 @@ export function AccordianPanel({ children, isActive }: IAccordianPanel) {
         {children}
       </div>
     </>
-  )
+  );
 }

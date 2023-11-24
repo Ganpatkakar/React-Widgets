@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import { Stage, Layer, Rect, Circle } from 'react-konva';
+import { Stage, Layer, Rect, Circle } from "react-konva";
 import { Button } from "../Button";
 import { ModelPopover } from "../ModelPopOver";
 
@@ -9,23 +9,23 @@ interface ISnakeGame {
 }
 
 interface ISnakePosition {
-  position: { x: number, y: number }[]
+  position: { x: number; y: number }[];
 }
 
 interface IFood {
   x: number;
-  y: number
+  y: number;
 }
 
 interface IReducerState {
-  width: number,
-  height: number,
-  score: number,
-  gameOver: boolean,
-  mouthRadius: number[],
+  width: number;
+  height: number;
+  score: number;
+  gameOver: boolean;
+  mouthRadius: number[];
   snake: ISnakePosition;
   food: IFood;
-  direction: 'ArrowUp' | 'ArrowRight' | 'ArrowDown' | 'ArrowLeft';
+  direction: "ArrowUp" | "ArrowRight" | "ArrowDown" | "ArrowLeft";
 }
 
 const foodCenterBy = 10;
@@ -33,37 +33,45 @@ const radiusCurve = 20;
 
 function getInitialFoodPosition(width: number, height: number) {
   let x = Math.floor(Math.random() * width);
-  x -= x % 20 + foodCenterBy;
+  x -= (x % 20) + foodCenterBy;
   // if x is before 20 px
   x = x < 20 ? 30 : x;
   // if x closer to end direction
   x = x > width - 20 ? width - 20 : x;
   let y = Math.floor(Math.random() * height);
-  y -= y % 20 + foodCenterBy;
+  y -= (y % 20) + foodCenterBy;
   // if y is before 20 px
   y = y < 20 ? 30 : y;
   // if x closer to end direction
   y = y > width - 20 ? width - 20 : y;
-  return { x, y }
+  return { x, y };
 }
 
 const getInitalState = (width: number, height: number) => {
   const initialSnakePostion: ISnakePosition = {
-    position: [{ x: 20, y: 40 }, { x: 40, y: 40 }, { x: 60, y: 40 }, { x: 80, y: 40 }]
+    position: [
+      { x: 20, y: 40 },
+      { x: 40, y: 40 },
+      { x: 60, y: 40 },
+      { x: 80, y: 40 },
+    ],
   };
   const food: IFood = getInitialFoodPosition(width, height);
-  const direction: 'ArrowUp' | 'ArrowRight' | 'ArrowDown' | 'ArrowLeft' = 'ArrowRight';
+  const direction: "ArrowUp" | "ArrowRight" | "ArrowDown" | "ArrowLeft" =
+    "ArrowRight";
   return { snake: initialSnakePostion, food, direction: direction };
-}
+};
 
 function reducer(state: IReducerState, action: any) {
   const snakePositionsSet = new Set();
+
   function setSnakePositionsSet() {
     let { position } = state.snake;
     position = [...position];
     position.pop();
     position.forEach(({ x, y }) => snakePositionsSet.add(`${x}:${y}`));
   }
+
   function isFoodEaten() {
     let { snake, food } = state;
     const { position } = snake;
@@ -93,16 +101,16 @@ function reducer(state: IReducerState, action: any) {
   }
 
   switch (action.type) {
-    case 'ArrowUp': {
+    case "ArrowUp": {
       let { snake, direction, food, score } = state;
-      if (direction === 'ArrowDown') {
+      if (direction === "ArrowDown") {
         return { ...state };
       }
       const { position } = snake;
       let { x, y } = position[position.length - 1];
       y -= 20;
       position.push({ x, y });
-      direction = 'ArrowUp';
+      direction = "ArrowUp";
       snake.position = [...position];
       if (checkGameOver()) {
         return { ...state, gameOver: true };
@@ -119,19 +127,19 @@ function reducer(state: IReducerState, action: any) {
         mouthRadius: [radiusCurve, radiusCurve, 0, 0],
         snake: { ...snake },
         food,
-        direction: direction
+        direction: direction,
       };
     }
-    case 'ArrowRight': {
+    case "ArrowRight": {
       let { snake, direction, food, score } = state;
-      if (direction === 'ArrowLeft') {
+      if (direction === "ArrowLeft") {
         return { ...state };
       }
       const { position } = snake;
       let { x, y } = position[position.length - 1];
       x += 20;
       position.push({ x, y });
-      direction = 'ArrowRight';
+      direction = "ArrowRight";
       snake.position = [...position];
       if (checkGameOver()) {
         return { ...state, gameOver: true };
@@ -148,19 +156,19 @@ function reducer(state: IReducerState, action: any) {
         mouthRadius: [0, radiusCurve, radiusCurve, 0],
         snake: { ...snake },
         food,
-        direction: direction
+        direction: direction,
       };
     }
-    case 'ArrowDown': {
+    case "ArrowDown": {
       let { snake, direction, food, score } = state;
-      if (direction === 'ArrowUp') {
+      if (direction === "ArrowUp") {
         return { ...state };
       }
       const { position } = snake;
       let { x, y } = position[position.length - 1];
       y += 20;
       position.push({ x, y });
-      direction = 'ArrowDown';
+      direction = "ArrowDown";
       snake.position = [...position];
       if (checkGameOver()) {
         return { ...state, gameOver: true };
@@ -177,19 +185,19 @@ function reducer(state: IReducerState, action: any) {
         mouthRadius: [0, 0, radiusCurve, radiusCurve],
         snake: { ...snake },
         food,
-        direction: direction
+        direction: direction,
       };
     }
-    case 'ArrowLeft': {
+    case "ArrowLeft": {
       let { snake, direction, food, score } = state;
-      if (direction === 'ArrowRight') {
+      if (direction === "ArrowRight") {
         return { ...state };
       }
       const { position } = snake;
       let { x, y } = position[position.length - 1];
       x -= 20;
       position.push({ x, y });
-      direction = 'ArrowLeft';
+      direction = "ArrowLeft";
       snake.position = [...position];
       if (checkGameOver()) {
         return { ...state, gameOver: true };
@@ -206,24 +214,24 @@ function reducer(state: IReducerState, action: any) {
         mouthRadius: [radiusCurve, 0, 0, radiusCurve],
         snake: { ...snake },
         food,
-        direction: direction
+        direction: direction,
       };
     }
-    case 'ResetGame': {
+    case "ResetGame": {
       return {
         ...state,
         mouthRadius: [0, radiusCurve, radiusCurve, 0],
         score: 0,
         gameOver: false,
-        ...getInitalState(state.width, state.height)
+        ...getInitalState(state.width, state.height),
       };
     }
     default:
-      throw Error('Unknown action: ' + action.type);
+      throw Error("Unknown action: " + action.type);
   }
 }
 
-let direction: string = '';
+let direction: string = "";
 let gameOver: boolean = false;
 
 export function SnakeGame(props: ISnakeGame) {
@@ -235,7 +243,7 @@ export function SnakeGame(props: ISnakeGame) {
     score: 0,
     gameOver: false,
     mouthRadius: [0, radiusCurve, radiusCurve, 0],
-    ...getInitalState(width, height)
+    ...getInitalState(width, height),
   });
   direction = state.direction;
   gameOver = state.gameOver;
@@ -245,27 +253,27 @@ export function SnakeGame(props: ISnakeGame) {
       return;
     }
     switch (event.key) {
-      case 'ArrowUp': {
-        dispatch({ type: 'ArrowUp' });
+      case "ArrowUp": {
+        dispatch({ type: "ArrowUp" });
         break;
       }
-      case 'ArrowRight': {
-        dispatch({ type: 'ArrowRight' });
+      case "ArrowRight": {
+        dispatch({ type: "ArrowRight" });
         break;
       }
-      case 'ArrowDown': {
-        dispatch({ type: 'ArrowDown' });
+      case "ArrowDown": {
+        dispatch({ type: "ArrowDown" });
         break;
       }
-      case 'ArrowLeft': {
-        dispatch({ type: 'ArrowLeft' });
+      case "ArrowLeft": {
+        dispatch({ type: "ArrowLeft" });
         break;
       }
     }
-  }
+  };
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyEvent);
+    document.addEventListener("keydown", handleKeyEvent);
     // const timer = setInterval(() => {
     //   if (gameOver) {
     //     return;
@@ -274,14 +282,14 @@ export function SnakeGame(props: ISnakeGame) {
     // }, 1000);
 
     () => {
-      document.removeEventListener('keydown', handleKeyEvent);
+      document.removeEventListener("keydown", handleKeyEvent);
       // clearInterval(timer);
-    }
+    };
   }, []);
 
   const handleRestart = () => {
-    dispatch({ type: 'ResetGame' })
-  }
+    dispatch({ type: "ResetGame" });
+  };
 
   let { position } = state.snake;
   position = [...position];
@@ -295,14 +303,14 @@ export function SnakeGame(props: ISnakeGame) {
         show={state.gameOver}
         handleApply={handleRestart}
         showApply
-        handleClose={() => { }}
+        handleClose={() => {}}
       >
         <div>Game Over, Restart the Game</div>
       </ModelPopover>
       <div style={{ border: "1px solid #000", width: width }}>
         <Stage width={width} height={height}>
           <Layer imageSmoothingEnabled>
-            {position.map(({ x, y },) => (
+            {position.map(({ x, y }) => (
               <Rect
                 x={x}
                 y={y}
@@ -339,7 +347,6 @@ export function SnakeGame(props: ISnakeGame) {
           </Layer>
         </Stage>
       </div>
-
     </>
-  )
+  );
 }

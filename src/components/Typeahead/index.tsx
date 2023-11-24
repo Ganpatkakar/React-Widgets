@@ -1,8 +1,10 @@
-import React from 'react';
-import Typeahead from './Typeahead.component';
+import React from "react";
+import Typeahead from "./Typeahead.component";
 
 export default function TypeaheadRenderComponent() {
-  return (<>
-    <Typeahead />
-  </>);
+  return (
+    <>
+      <Typeahead />
+    </>
+  );
 }
