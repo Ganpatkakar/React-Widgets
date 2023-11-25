@@ -21,7 +21,7 @@ export const Checked = () => {
   return (
     <Checkbox
       checked={checked}
-      handleClick={(data) => setChecked(data)}
+      handleClick={(event, data) => setChecked(data)}
       label="Checked"
     />
   );
@@ -259,7 +259,7 @@ function CheckBoxesWithGroup(props: any) {
         label={label}
         name={name}
         disabled={disabled}
-        handleClick={(value) => handleCheckBox(value, name)}
+        handleClick={(event, value) => handleCheckBox(value, name)}
       />
       <ul>
         {state?.groups?.map((group) => {

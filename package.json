@@ -53,7 +53,8 @@
     "@storybook/builder-webpack4/webpack": "^5",
     "@storybook/manager-webpack4/webpack": "^5",
     "string-width": "^4",
-    "jackspeak": "^2"
+    "jackspeak": "^2",
+    "styled-components": "^5"
   },
   "dependencies": {
     "@storybook/preset-scss": "1.0.3",
@@ -61,6 +62,7 @@
     "react-icons": "4.11.0",
     "react-konva": "18.1.0-0",
     "storybook-addon-next": "1.8.0",
+    "styled-components": "6.1.1",
     "uniqid": "5.4.0",
     "uuid": "9.0.1"
   },

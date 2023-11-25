@@ -17,7 +17,7 @@ interface ICheckbox {
   label?: string;
 
   // Callback function to receive back this components internal state of checked when event triggers
-  handleClick?: (value: boolean) => void;
+  handleClick?: (event, value: boolean) => void;
 
   width?: number;
   height?: number;
@@ -51,7 +51,7 @@ function Checkbox(props: ICheckbox) {
       newCheck = true;
     }
     checked = newCheck;
-    handleClick(newCheck);
+    handleClick(event, newCheck);
   };
 
   return (

@@ -2,3 +2,8 @@ h1 {
     color: red;
     text-align: center;
 }
+
+.innerZoomElementWrapper {
+    padding: 20px;
+    background-color: #ddd;
+}

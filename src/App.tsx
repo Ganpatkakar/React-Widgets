@@ -1,109 +1,113 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
-import { ProgressBar } from "./components/Progressbar";
+import React from "react";
+import { CiEdit, CiFileOn, CiFolderOn, CiVideoOn } from 'react-icons/ci';
+import { IoMdPeople } from 'react-icons/io';
+import { IoDocumentTextOutline } from 'react-icons/io5';
+import { CgProfile } from "react-icons/cg";
 
-// slider states => idle => 0%, loading => 95%, completed => 100%
-// when any api call happens change states
-// setLoading => this will modify the loading counts and modify value of progress bar based on states,
-// endLoading => modify => states based on current loading counts and modify the value
+import {
+  Table,
+  TableHeader,
+  TableHeaderRow,
+  TableRow,
+  TableHeaderCell,
+  TableBody,
+  TableCell
+} from "./components/Table";
+import styled from "styled-components";
 
-const states = {
-  idle: 'idle',
-  loading: 'loading',
-  completed: 'completed'
-}
-let loading = 0;
+const columns = [
+  { columnKey: "file", label: "File", maxWidth: 150 },
+  { columnKey: "author", label: "Author", maxWidth: 150 },
+  { columnKey: "lastUpdated", label: "Last updated", maxWidth: 150 },
+  { columnKey: "lastUpdate", label: "Last update", maxWidth: 150 },
+];
+
+const items = [
+  {
+    file: { label: "Meeting notes", icon: <CiFileOn /> },
+    author: { label: "Max Mustermann", status: "available" },
+    lastUpdated: { label: "7h ago", timestamp: 1 },
+    lastUpdate: {
+      label: "You edited this",
+      icon: <CiEdit />
+    },
+  },
+  {
+    file: { label: "Thursday presentation", icon: <CiFolderOn /> },
+    author: { label: "Erika Mustermann", status: "busy" },
+    lastUpdated: { label: "Yesterday at 1:45 PM", timestamp: 2 },
+    lastUpdate: {
+      label: "You recently opened this",
+      icon: <CiFolderOn />
+    },
+  },
+  {
+    file: { label: "Training recording", icon: <CiVideoOn /> },
+    author: { label: "John Doe", status: "away" },
+    lastUpdated: { label: "Yesterday at 1:45 PM", timestamp: 2 },
+    lastUpdate: {
+      label: "You recently opened this",
+      icon: <CiVideoOn />
+    },
+  },
+  {
+    file: { label: "Purchase order", icon: <IoDocumentTextOutline /> },
+    author: { label: "Jane Doe", status: "offline" },
+    lastUpdated: { label: "Tue at 9:30 AM", timestamp: 3 },
+    lastUpdate: {
+      label: "You shared this in a Teams chat",
+      icon: <IoMdPeople />
+    },
+  },
+];
+
+const SpanIcon = styled.span`
+  margin-right: 8px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+`
+
 function App() {
-  const currentState = useRef(null); 
-  const [value, setValue] = useState(0);
-
-  const startLoading = () => {
-    if (loading === 0) {
-      currentState.current = states.idle
-    } else if (loading > 0) {
-      currentState.current = states.loading;
-    }
-
-    switch (currentState.current) {
-      case states.completed:
-        currentState.current = states.idle;
-        loading = 0;
-        setValue(0);
-      case states.idle:
-        currentState.current = states.loading;
-        setValue(0.75);
-        break;
-      case states.loading:
-        currentState.current = states.loading;
-        setValue(0.75);
-        break;
-    }
-    loading++;
-  }
-
-  const endLoading = () => {
-    loading = Math.max(loading - 1, 0);
-    if (loading === 0) {
-      currentState.current = states.completed
-    } else if (loading > 0) {
-      currentState.current = states.loading;
-    }
-
-    switch (currentState.current) {
-      case states.completed:
-        setValue(1);
-        break;
-      case states.loading:
-        setValue(0.75);
-        break;
-    }
-  }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      startLoading();
-      const apiTimer = setTimeout(() => {
-        endLoading();
-        console.log("3 second timer");
-        clearTimeout(timer);
-        clearTimeout(apiTimer);
-
-        startLoading();
-        const apiTimer2 = setTimeout(() => {
-          endLoading();
-          console.log("5 second timer");
-          clearTimeout(timer);
-          clearTimeout(apiTimer2);
-        }, 5000);
-
-      }, 3000);
-
-      setTimeout(() =>{
-        startLoading();
-        const apiTimer1 = setTimeout(() => {
-          endLoading();
-          console.log("3 second timer");
-          clearTimeout(timer);
-          clearTimeout(apiTimer1);
-        }, 2000);
-
-        startLoading();
-        const apiTimer2 = setTimeout(() => {
-          endLoading();
-          console.log("4 second timer");
-          clearTimeout(timer);
-          clearTimeout(apiTimer2);
-        }, 4000);
-      }, 500)
-
-    }, 100);
-  }, []);
-
-
   return (
-    <div className="App">
-      <h1>Hello React..!</h1>
-      <ProgressBar value={value} label="Api calls progress bar" />
-    </div>
+    <>
+      <h1>Hello React</h1>
+      <Table selectionEnabled>
+        <TableHeader>
+          <TableHeaderRow>
+            {columns.map((column) => (
+              <TableHeaderCell
+                key={column.columnKey}
+                onClick={(event, data) => {
+                  console.log("header cell click", column.columnKey)
+                }}
+              >
+                {column.label}
+              </TableHeaderCell>
+            ))}
+          </TableHeaderRow>
+        </TableHeader>
+        <TableBody>
+          {items.map((item) => (
+            <TableRow key={item.file.label} id={item.file.label}>
+              <TableCell>
+                {item.file.icon && <SpanIcon>{item.file.icon}</SpanIcon>}
+                {item.file.label}
+              </TableCell>
+              <TableCell>
+                <SpanIcon><CgProfile /></SpanIcon>
+                {item.author.label}
+              </TableCell>
+              <TableCell>{item.lastUpdated.label}</TableCell>
+              <TableCell>
+                {item.lastUpdate.icon && <SpanIcon>{item.lastUpdate.icon}</SpanIcon>}
+                {item.lastUpdate.label}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   );
 }
 
