@@ -27,12 +27,12 @@ import styled from "styled-components";
 // } satisfies Meta<typeof Table>;
 
 const meta: Meta<typeof Table> = {
-  title: "Components/Table2",
+  title: "Components/Table",
   component: Table,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <div style={{ margin: '1em', padding: '2em', background: '#eee' }}>
+      <div style={{ margin: '1em', padding: '2em', background: '#f8f7f7' }}>
         <Story />
       </div>
     ),
