@@ -13,7 +13,7 @@ export function TableBody(props: any) {
 
   return (
     <TableBodyContainer>
-        {props.children}
+      {props.children}
     </TableBodyContainer>
   )
 }

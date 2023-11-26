@@ -46,7 +46,7 @@ const defaultProps: DefaultProps = {
 }
 
 export function TableRow(props: ITableRow) {
-  const { id = useId(), children, style = {}, onClick: handleCallBack = (event: any, data: any) => {}, selected } = props;
+  const { id = useId(), children, style, onClick: handleCallBack = (event: any, data: any) => {}, selected } = props;
 
   const handleTableRowClick = (event: any) => {
     event.preventDefault();

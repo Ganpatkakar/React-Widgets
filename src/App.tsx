@@ -3,7 +3,7 @@ import { CiEdit, CiFileOn, CiFolderOn, CiVideoOn } from 'react-icons/ci';
 import { IoMdPeople } from 'react-icons/io';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { CgProfile } from "react-icons/cg";
-import { FixedSizeList } from 'react-window';
+import { FixedSizeList as List } from "react-window";
 
 import {
   Table,
@@ -62,19 +62,19 @@ const baseItems = [
   },
 ];
 
-const items = [...baseItems];
+// const items = [...baseItems];
 
-// const items = new Array(1500).fill(0).map(((_,i)=> {
-//   let {file, ...res} = baseItems[i % baseItems.length];
-//   let {label} = file;
-//   label = `[${i}] ${label}`
-//   file = {...file, label};
-//   return ({
-//     file,
-//     ...res,
-//     index: i
-//   })
-// }))
+const items = new Array(1500).fill(0).map(((_,i)=> {
+  let {file, ...res} = baseItems[i % baseItems.length];
+  let {label} = file;
+  label = `[${i}] ${label}`
+  file = {...file, label};
+  return ({
+    file,
+    ...res,
+    index: i
+  })
+}))
 
 const SpanIcon = styled.span`
   margin-right: 8px;
@@ -164,31 +164,42 @@ function App() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {state.items.map((item) => (
-            <TableRow
-              key={item.file.label}
-              onClick={handleRowClick}
-            >
-              <TableSelectionCell
-                id={item.id}
-                selected={state.selectedRows.has(item.id)}
-                onClick={handleRowCheckboxClick}
-              />
-              <TableCell>
-                {item.file.icon && <SpanIcon>{item.file.icon}</SpanIcon>}
-                {item.file.label}
-              </TableCell>
-              <TableCell>
-                <SpanIcon><CgProfile /></SpanIcon>
-                {item.author.label}
-              </TableCell>
-              <TableCell>{item.lastUpdated.label}</TableCell>
-              <TableCell>
-                {item.lastUpdate.icon && <SpanIcon>{item.lastUpdate.icon}</SpanIcon>}
-                {item.lastUpdate.label}
-              </TableCell>
-            </TableRow>
-          ))}
+          <List
+            height={310}
+            width={"100%"}
+            itemCount={state?.items?.length}
+            itemSize={44}
+          >
+            {({ index, style }) => {
+              const item = state.items[index];
+              return (
+                <TableRow
+                  key={item.file.label}
+                  onClick={handleRowClick}
+                  style={style}
+                >
+                  <TableSelectionCell
+                    id={item.id}
+                    selected={state.selectedRows.has(item.id)}
+                    onClick={handleRowCheckboxClick}
+                  />
+                  <TableCell>
+                    {item.file.icon && <SpanIcon>{item.file.icon}</SpanIcon>}
+                    {item.file.label}
+                  </TableCell>
+                  <TableCell>
+                    <SpanIcon><CgProfile /></SpanIcon>
+                    {item.author.label}
+                  </TableCell>
+                  <TableCell>{item.lastUpdated.label}</TableCell>
+                  <TableCell>
+                    {item.lastUpdate.icon && <SpanIcon>{item.lastUpdate.icon}</SpanIcon>}
+                    {item.lastUpdate.label}
+                  </TableCell>
+                </TableRow>
+              )}
+            }
+          </List>
         </TableBody>
       </Table>
     </>
