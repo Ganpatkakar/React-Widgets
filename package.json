@@ -61,6 +61,7 @@
     "konva": "9.2.3",
     "react-icons": "4.11.0",
     "react-konva": "18.1.0-0",
+    "react-window": "1.8.10",
     "storybook-addon-next": "1.8.0",
     "styled-components": "6.1.1",
     "uniqid": "5.4.0",

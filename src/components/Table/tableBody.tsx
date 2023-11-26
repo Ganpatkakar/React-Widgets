@@ -1,10 +1,19 @@
 import React from "react";
-import styles from './table.scss';
+import styled from "styled-components";
+
+const TableBodyContainer = styled.div`
+  display: block;
+  max-height: 500px;
+  overflow: scroll;
+  max-wdith: 100%;
+  box-size: border-box;
+`
 
 export function TableBody(props: any) {
+
   return (
-    <div className={styles.tableBodyContainer}>
-      {props.children}
-    </div>
+    <TableBodyContainer>
+        {props.children}
+    </TableBodyContainer>
   )
 }

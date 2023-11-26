@@ -4,13 +4,18 @@ import { TableCell } from "./tableCell";
 import styled from 'styled-components'
 import { ActionTypes, TableContext, TableDispatchContext } from "./context/table.context";
 
-const TableRowContainer = styled.div<{ $selectedRow?: boolean; }>`
+const TableRowContainer = styled.div<{ 
+  $selectedRow?: boolean;
+  $style: any;
+}>`
+  ${(props) => ({...props.$style})}
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;
   border-collapse: collapse;
   box-sizing: border-box;
   cursor: pointer;
+  height: 44px;
 
   &:hover {
     background-color: #f5f5f5;
@@ -31,6 +36,7 @@ interface ITableRow {
   children: any;
   selectedRows?: Set<any>;
   handleSelection?: (event, data) => void;
+  style?: any
 }
 
 type DefaultProps = Partial<ITableRow>;
@@ -38,18 +44,9 @@ type DefaultProps = Partial<ITableRow>;
 const defaultProps: DefaultProps = {}
 
 export function TableRow(props: ITableRow) {
-  const { id = useId(), children } = props;
+  const { id = useId(), children, style = {} } = props;
   const state: any = useContext(TableContext);
   const dispatch = useContext(TableDispatchContext);
-
-  useEffect(() => {
-    dispatch(
-      {
-        type: ActionTypes.UpdateTableRowIdSet,
-        payload: id
-      }
-    )
-  }, []);
 
   const handleTableRowClick = (event: any) => {
     event.preventDefault();
@@ -62,7 +59,7 @@ export function TableRow(props: ITableRow) {
   }
   
   return (
-    <TableRowContainer onClick={handleTableRowClick} $selectedRow={state.selectedRows.has(id)}>
+    <TableRowContainer onClick={handleTableRowClick} $selectedRow={state.selectedRows.has(id)} $style={style}>
       {state.selectionEnabled && (
         <TableCell checkBoxContainer={true}>
           <Checkbox checked={state.selectedRows.has(id)}/>

@@ -33,13 +33,14 @@ export const TableProvider = (props: ITable) => {
 
 function tableReducer (state: ITableState, {type, payload}) {
   if (type === ActionTypes.UpdateTableRowSelection) {
+    console.log("table row selection cliked");
     const {selectedRows} = state;
     if (selectedRows.has(payload)) {
       selectedRows.delete(payload);
     } else {
       selectedRows.add(payload);
     }
-    return {...state, selectedRows};
+    return {...state, selectedRows}
   }
 
   if (type === ActionTypes.UpdateTableHeaderSelection) {
@@ -52,7 +53,7 @@ function tableReducer (state: ITableState, {type, payload}) {
     } else {
       selectedRows.clear();
     }
-    return {...state, isHeaderSelected, selectedRows};
+    return {...state, isHeaderSelected, selectedRows}
   }
 
   if (type === ActionTypes.TableHeaderSortingClick) {
@@ -63,6 +64,6 @@ function tableReducer (state: ITableState, {type, payload}) {
   if (type === ActionTypes.UpdateTableRowIdSet) {
     const {tableRowIds} = state;
     tableRowIds.add(payload);
-    return {...state, tableRowIds};
+    return {...state, tableRowIds}
   }
 }
