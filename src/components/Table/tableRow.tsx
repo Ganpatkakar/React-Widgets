@@ -32,39 +32,29 @@ const TableRowContainer = styled.div<{
 
 interface ITableRow {
   id: number | string;
-  selectionEnabled?: boolean;
   children: any;
-  selectedRows?: Set<any>;
-  handleSelection?: (event, data) => void;
+  selected?: boolean;
+  onClick?: (event, data) => void;
   style?: any
 }
 
 type DefaultProps = Partial<ITableRow>;
 
-const defaultProps: DefaultProps = {}
+const defaultProps: DefaultProps = {
+  selected: false,
+  style: {}
+}
 
 export function TableRow(props: ITableRow) {
-  const { id = useId(), children, style = {} } = props;
-  const state: any = useContext(TableContext);
-  const dispatch = useContext(TableDispatchContext);
+  const { id = useId(), children, style = {}, onClick: handleCallBack = (event: any, data: any) => {}, selected } = props;
 
   const handleTableRowClick = (event: any) => {
     event.preventDefault();
-    if (state.selectionEnabled) {
-      dispatch({
-        type: ActionTypes.UpdateTableRowSelection,
-        payload: id
-      })
-    }
+    handleCallBack(event, id);
   }
   
   return (
-    <TableRowContainer onClick={handleTableRowClick} $selectedRow={state.selectedRows.has(id)} $style={style}>
-      {state.selectionEnabled && (
-        <TableCell checkBoxContainer={true}>
-          <Checkbox checked={state.selectedRows.has(id)}/>
-        </TableCell>
-      )}
+    <TableRowContainer onClick={handleTableRowClick} $selectedRow={selected} $style={style}>
       {children}
     </TableRowContainer>
   )

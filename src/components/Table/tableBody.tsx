@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const TableBodyContainer = styled.div`
   display: block;
-  max-height: 500px;
+  max-height: 490px;
   overflow: scroll;
   max-wdith: 100%;
   box-size: border-box;

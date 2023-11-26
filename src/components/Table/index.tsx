@@ -5,3 +5,4 @@ export { TableCell } from './tableCell';
 export { TableRow } from './tableRow';
 export { TableHeaderCell } from './tableHeaderCell';
 export { TableHeaderRow } from './tableHeaderRow';
+export {TableSelectionCell} from './tableSelectionCell';

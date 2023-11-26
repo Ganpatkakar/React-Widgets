@@ -5,8 +5,7 @@ import { ActionTypes, TableDispatchContext } from "./context/table.context";
 
 interface ITableHeaderCell {
   children: any;
-  onClick: (event: any, data?: any) =>  void;
-  checkBoxContainer?: boolean;
+  onClick?: (event: any, data?: any) =>  void;
 }
 
 const TableHeaderCellContainer  = styled.div<{ $checkBoxContainer?: boolean; }>`
@@ -30,16 +29,12 @@ const TableHeaderCellContainer  = styled.div<{ $checkBoxContainer?: boolean; }>`
   }}
 `
 
-
 export function TableHeaderCell(props: ITableHeaderCell) {
-  const {onClick: handleClickCallBack} = props;
+  const {onClick: handleClickCallBack = () => {}} = props;
   const dispatch = useContext(TableDispatchContext);
 
   const handleTableHeaderCellClick = (event: any) => {
     event.preventDefault();
-    if (props.checkBoxContainer) {
-      return;
-    }
     dispatch(
       {
         type: ActionTypes.TableHeaderSortingClick,
@@ -49,7 +44,7 @@ export function TableHeaderCell(props: ITableHeaderCell) {
     handleClickCallBack(event);
   }
   return (
-    <TableHeaderCellContainer onClick={handleTableHeaderCellClick} $checkBoxContainer={props.checkBoxContainer}>
+    <TableHeaderCellContainer onClick={handleTableHeaderCellClick}>
       {props.children}
     </TableHeaderCellContainer>
   )
