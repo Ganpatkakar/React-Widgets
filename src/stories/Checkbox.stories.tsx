@@ -20,6 +20,7 @@ export const Checked = () => {
 
   return (
     <Checkbox
+      name="abc"
       checked={checked}
       handleClick={(event, data) => setChecked(data)}
       label="Checked"
@@ -35,6 +36,7 @@ export const MultiCheckBoxWithParentControl = () => {
   return (
     <>
       <Checkbox
+        name="abc"
         checked={
           option1 && option2 && option3
             ? true
@@ -51,16 +53,19 @@ export const MultiCheckBoxWithParentControl = () => {
       />
 
       <Checkbox
+        name="abc"
         checked={option1}
         handleClick={() => setOption1((checked) => !checked)}
         label="Option 1"
       />
       <Checkbox
+        name="abc"
         checked={option2}
         handleClick={() => setOption2((checked) => !checked)}
         label="Option 2"
       />
       <Checkbox
+          name="abc"
         checked={option3}
         handleClick={() => setOption3((checked) => !checked)}
         label="Option 3"
@@ -205,7 +210,7 @@ function updateState(state, nodeName, value) {
 
   checkAllChilds(node);
 
-  // navigate topward to determine parents needs to be checked true or in mixed condition
+  // navigate top ward to determine parents needs to be checked true or in mixed condition
   finalPath.reverse();
   finalPath.forEach((node) => {
     let checked;
