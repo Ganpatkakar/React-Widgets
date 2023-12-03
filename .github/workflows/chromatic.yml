@@ -20,9 +20,6 @@ jobs:
           yarn
           yarn build-storybook
           yarn chromatic
-        with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         # 👇 Adds Chromatic as a step in the workflow
 #      - name: Publish to Chromatic
 #        uses: chromaui/action@v1
