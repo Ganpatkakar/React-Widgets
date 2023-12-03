@@ -35,7 +35,7 @@ const defaultProps: DefaultProps = {
   handleClick: () => {},
 };
 
-function Checkbox(props: ICheckbox) {
+export function Checkbox(props: ICheckbox) {
   let { checked } = props;
   const { label, handleClick, name, disabled } = props;
 
@@ -71,6 +71,3 @@ function Checkbox(props: ICheckbox) {
 }
 
 Checkbox.defaultProps = defaultProps;
-Checkbox.displayName = "CheckBox";
-
-export default Checkbox;
