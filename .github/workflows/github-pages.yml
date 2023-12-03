@@ -14,7 +14,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@2.0.3
         env:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: storybook-static
+          BRANCH: gh-pages
           FOLDER: storybook-static
 
 #name: Build and Publish storybook to GitHub Pages
