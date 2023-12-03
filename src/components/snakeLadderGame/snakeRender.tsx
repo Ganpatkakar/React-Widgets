@@ -63,7 +63,13 @@ const calcWayPoints = (vertices, difference) => {
   return (wayPoints);
 };
 
-const colors = ["#ffcc02", "#ff9900", "#009966", "#ff999a", "#0099cc"];
+const colors = [
+  "#ffcc02",
+  "#ff9900",
+  "#009966",
+  "#ff999a",
+  "#0099cc"
+];
 
 export function SnakeRender() {
   const state = React.useContext(SnakeLadderContext);

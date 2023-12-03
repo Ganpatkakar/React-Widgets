@@ -69,16 +69,6 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
   return (
     <SnakeLadderContext.Provider value={state}>
       <SnakeLadderDispatcher.Provider value={dispatch}>
-        <div>Active player: {state.players[state.currentPlayer].name}</div>
-        <PassaRender />
-
-        <div>Players Score:
-          {state.players.map((player) => {
-            return <div key={player.name}>{player.name}: {player.score}</div>
-          })
-        }
-        </div>
-
         <Stage width={width} height={height}>
           <Layer>
             <SnakeLadderContext.Provider value={state}>
@@ -93,6 +83,16 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
             </SnakeLadderContext.Provider>
           </Layer>
         </Stage>
+
+        <div>Active player: {state.players[state.currentPlayer].name}</div>
+        <PassaRender />
+
+        <div>Players Score:
+          {state.players.map((player) => {
+            return <div key={player.name}>{player.name}: {player.score}</div>
+          })
+          }
+        </div>
       </SnakeLadderDispatcher.Provider>
     </SnakeLadderContext.Provider>
   )
