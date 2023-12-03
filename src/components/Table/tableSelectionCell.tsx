@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableCell } from "./tableCell";
-import Checkbox from '../Checkbox';
+import { Checkbox } from "../Checkbox";
 
 interface ITableSelectionCell {
   id: number | string;

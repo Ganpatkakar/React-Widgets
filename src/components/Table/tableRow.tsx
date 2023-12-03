@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useId } from "react";
-import Checkbox from "../Checkbox";
-import { TableCell } from "./tableCell";
+import React, { useId } from "react";
 import styled from 'styled-components'
-import { ActionTypes, TableContext, TableDispatchContext } from "./context/table.context";
 
-const TableRowContainer = styled.div<{ 
+const TableRowContainer = styled.div<{
   $selectedRow?: boolean;
   $style: any;
 }>`
@@ -52,7 +49,7 @@ export function TableRow(props: ITableRow) {
     event.preventDefault();
     handleCallBack(event, id);
   }
-  
+
   return (
     <TableRowContainer onClick={handleTableRowClick} $selectedRow={selected} $style={style}>
       {children}
