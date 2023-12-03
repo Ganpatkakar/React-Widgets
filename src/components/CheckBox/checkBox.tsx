@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./checkbox.scss";
 import { CheckboxInput } from "./checkboxInput";
 import { CheckboxIcon } from "./checkboxIcon";
@@ -16,8 +16,8 @@ interface ICheckbox {
   // Checkbox label, default value empty string
   label?: string;
 
-  // Callback function to receive back this components internal state of checked when event triggers
-  handleClick?: (event, value: boolean) => void;
+  // Callback function to receive back these components internal state of checked when event triggers
+  handleClick?: (event: any, value: boolean) => void;
 
   width?: number;
   height?: number;
@@ -39,17 +39,13 @@ export function Checkbox(props: ICheckbox) {
   let { checked } = props;
   const { label, handleClick, name, disabled } = props;
 
-  const handleCheckBoxWithUpdatedValue = (event) => {
+  const handleCheckBoxWithUpdatedValue = (event: any) => {
     event.preventDefault();
     if (disabled) {
       return;
     }
     let newCheck = checked;
-    if (newCheck === true) {
-      newCheck = false;
-    } else {
-      newCheck = true;
-    }
+    newCheck = newCheck !== true;
     checked = newCheck;
     handleClick(event, newCheck);
   };
