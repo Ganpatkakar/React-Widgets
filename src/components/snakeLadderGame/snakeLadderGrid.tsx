@@ -12,13 +12,13 @@ export function SnakeLadderGrid() {
     <>
       {Object.keys(state.scoreWithGrid).map((key, index) => {
         const [xAxis, yAxis, rectWidth, rectHeight] = state.scoreWithGrid[key];
-        const centerX = xAxis + rectWidth / 2 - 5;
-        const centerY = yAxis + rectWidth / 2 - 5;
+        const centerX = xAxis + rectWidth / 2;
+        const centerY = yAxis + rectWidth / 4 - 5;
         let gridColor;
         if (index % 2 === 0) {
-          gridColor = "#ffed86"
+          gridColor = "#fff6e9"
         } else {
-          gridColor = "#ffa202"
+          gridColor = "#ffefd7"
         }
         return (
           <RenderGrid
@@ -56,8 +56,9 @@ export default function RenderGrid({
       />
       <Text
         x={centerX}
-        y={centerY} 
+        y={centerY}
         text={name}
+        fontSize={16}
       />
     </>
   )

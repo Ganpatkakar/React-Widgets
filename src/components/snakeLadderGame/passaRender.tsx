@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '../Button';
-import { Actions, SnakeLadderContext, SnakeLadderDispatcher } from './snakeLadderGameContext';
+import { Actions, SnakeLadderContext, SnakeLadderDispatcher, maxGridLayers } from './snakeLadderGameContext';
 
 export const maxPassaSides = 6;
 
@@ -8,21 +8,59 @@ export default function PassaRender() {
   const [isPassaActive, setIsPassaActive] = useState(true);
   const dispatch = React.useContext(SnakeLadderDispatcher);
   const state = React.useContext(SnakeLadderContext);
+  const {players, currentPlayer} = state;
+
+  const resetNextPlayerSettings = React.useCallback(() => {
+    dispatch({
+      type: Actions.NextPlayerTurn,
+      payload: null
+    })
+    dispatch(
+      {
+        type: Actions.PassaAction,
+        payload: null
+      }
+    )
+    setIsPassaActive(true);
+  }, []);
 
   const animateTillNextVal = React.useCallback((randomPassaValue, curr) => {
-    if (curr > randomPassaValue) {
+    if (curr >= randomPassaValue) {
+
       requestAnimationFrame(() => {
-        dispatch({
-          type: Actions.NextPlayerTurn,
-          payload: null
-        })
-        dispatch(
-          {
-            type: Actions.PassaAction,
-            payload: null
-          }
-        )
-        setIsPassaActive(true);
+        const currentPlayerScore = players[currentPlayer].score;
+        //console.log(currentPlayer, randomPassaValue, currentPlayerScore);
+        if (state.snakesMouthScoreMap.has(currentPlayerScore)) {
+          //console.log(state.snakesMouthScoreMap);
+          setTimeout(() => {
+            dispatch(
+              {
+                type: Actions.UpdateScore,
+                payload: state.snakesMouthScoreMap.get(currentPlayerScore)
+              }
+            )
+            resetNextPlayerSettings();
+          }, 300);
+
+          return;
+        }
+        
+        //console.log(currentPlayer, randomPassaValue, currentPlayerScore);
+        if (state.laddersMap.has(currentPlayerScore)) {
+          //console.log(state.snakesMouthScoreMap);
+          setTimeout(() => {
+            dispatch(
+              {
+                type: Actions.UpdateScore,
+                payload: state.laddersMap.get(currentPlayerScore)
+              }
+            )
+            resetNextPlayerSettings()
+          }, 300);
+          return;
+        }
+
+        resetNextPlayerSettings();
       });
 
       return;
@@ -33,13 +71,13 @@ export default function PassaRender() {
         dispatch(
           {
             type: Actions.UpdateScore,
-            payload: state.players[state.currentPlayer].score + 1
+            payload: players[currentPlayer].score + 1
           }
         )
         clearTimeout(timer);
         animateTillNextVal(randomPassaValue, ++curr);
       })
-    }, 200);
+    }, 300);
   }, [state.currentPlayer]);
 
 
@@ -58,7 +96,7 @@ export default function PassaRender() {
       }
     )
 
-    if (state.players[state.currentPlayer].score + randomPassaValue <= 35) {
+    if (state.players[state.currentPlayer].score + randomPassaValue < (maxGridLayers * maxGridLayers)) {
       animateTillNextVal(randomPassaValue, 0);
     } else {
       const timer = setTimeout(() => {

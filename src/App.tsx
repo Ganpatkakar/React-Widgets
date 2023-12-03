@@ -4,7 +4,7 @@ import { SnakeLadderGame } from "./components/snakeLadderGame";
 function App() {
   return (
     <>
-      <SnakeLadderGame />
+      <SnakeLadderGame width={700} height={700}/>
 
       {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,</p>
       <p>molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum</p>

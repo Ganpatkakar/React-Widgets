@@ -5,9 +5,7 @@ import { SnakeRender } from './snakeRender';
 import { PlayerPositionRender } from './playerPositionRender';
 import { Layer, Stage } from 'react-konva';
 import PassaRender from './passaRender';
-import { SnakeLadderContext, SnakeLadderDispatcher, SnakeLadderReducer, initialValues } from './snakeLadderGameContext';
-
-const maxGridLayers = 10;
+import { ILadder, ISnake, SnakeLadderContext, SnakeLadderDispatcher, SnakeLadderReducer, initialValues, maxGridLayers } from './snakeLadderGameContext';
 
 interface ISnakeLadderGame {
   width?: number;
@@ -47,6 +45,25 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
     return scorePointsWithGridPosition;
   }, [width, height]);
 
+  initialValues.snakesMouthScoreMap = React.useMemo(() => {
+    const map: Map<number, number> = new Map();
+    initialValues.snakes.forEach(({mouthScore, tailScore}: ISnake) => {
+      map.set(mouthScore, tailScore);
+    });
+
+    return map;
+  }, [width, height]);
+
+
+  initialValues.laddersMap = React.useMemo(() => {
+    const map: Map<number, number> = new Map();
+    initialValues.ladders.forEach(({startScore, endScore}: ILadder) => {
+      map.set(startScore, endScore);
+    });
+
+    return map;
+  }, [width, height]);
+
   const [state, dispatch] = useReducer(SnakeLadderReducer, initialValues);
 
   return (
@@ -57,7 +74,7 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
 
         <div>Players Score:
           {state.players.map((player) => {
-            return <span key={player.name}>{player.name}: {player.score}</span>
+            return <div key={player.name}>{player.name}: {player.score}</div>
           })
         }
         </div>
@@ -66,20 +83,13 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
           <Layer>
             <SnakeLadderContext.Provider value={state}>
               <SnakeLadderGrid />
-              {/* <PlayerPositionRender /> */}
+              <SnakeRender />
+              <SnakeLadderRender />
             </SnakeLadderContext.Provider>
           </Layer>
           <Layer>
             <SnakeLadderContext.Provider value={state}>
               <PlayerPositionRender />
-            </SnakeLadderContext.Provider>
-          </Layer>
-          {/* <Layer>
-            <SnakeLadderRender />
-          </Layer> */}
-          <Layer>
-            <SnakeLadderContext.Provider value={state}>
-              <SnakeRender />
             </SnakeLadderContext.Provider>
           </Layer>
         </Stage>
