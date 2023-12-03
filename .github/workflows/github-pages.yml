@@ -5,14 +5,17 @@ on:
     branches:
       - "main"
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.build-publish.outputs.page_url }}
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.0
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Build Storybook
+        run: |
+          yarn
+          yarn build-storybook
+      - name: Build and deploy to storybook-static branch
+        uses: JamesIves/github-pages-deploy-action@2.0.3
         with:
-          path: dist/storybook
-          build_command: npm run build-storybook
+          BRANCH: gh-pages
+          FOLDER: storybook-static
