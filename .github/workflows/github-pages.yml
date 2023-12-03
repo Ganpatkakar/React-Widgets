@@ -1,23 +1,21 @@
-  // .github/workflows/storybook.yml
+on:
+  push
 
-  on:
-    push
+name: Publish stories if changed
 
-  name: Publish stories if changed
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
 
-  jobs:
-    build-and-deploy:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@master
-
-        - name: Build and deploy to storybook-static branch
-          uses: JamesIves/github-pages-deploy-action@2.0.3
-          env:
-            ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            BRANCH: storybook-static
-            FOLDER: storybook-static
+      - name: Build and deploy to storybook-static branch
+        uses: JamesIves/github-pages-deploy-action@2.0.3
+        env:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: storybook-static
+          FOLDER: storybook-static
 
 #name: Build and Publish storybook to GitHub Pages
 #
