@@ -1,24 +1,29 @@
+name: 'Chromatic Dev'
 
-# Workflow name
-name: 'Chromatic Deployment'
+on:
+  push:
+    branches:
+      - dev
 
-# Event for the workflow
-on: push
+defaults:
+  run:
+    working-directory: buoy-workspace
 
-# List of jobs
 jobs:
-  test:
-    # Operating System
+  chromatic-deployment:
     runs-on: ubuntu-latest
-    # Job steps
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: yarn
-        #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@v1
-        # Options required for Chromatic's GitHub Action
+      - name: Install dependencies and build
+        run: |
+          yarn
+          yarn build-storybook
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
         with:
-          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/intro-to-storybook/react/en/deploy/ to obtain it
+          workingDir: buoy-workspace
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
