@@ -1,29 +1,32 @@
-name: 'Chromatic Dev'
+# .github/workflows/chromatic.yml
 
-on:
-  push:
-    branches:
-      - dev
+# Workflow name
+name: "Chromatic"
 
-defaults:
-  run:
-    working-directory: buoy-workspace
+# Event for the workflow
+on: push
 
+# List of jobs
 jobs:
   chromatic-deployment:
+    # Operating System
     runs-on: ubuntu-latest
+    # Job steps
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install dependencies and build
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        # 👇 Install dependencies with the same package manager used in the project (replace it as needed), e.g. yarn, npm, pnpm
         run: |
           yarn
           yarn build-storybook
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
+          yarn chromatic
+        # 👇 Adds Chromatic as a step in the workflow
         with:
-          workingDir: buoy-workspace
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          exitZeroOnChanges: true
+#      - name: Publish to Chromatic
+#        uses: chromaui/action@v1
+#        # Chromatic GitHub Action options
+#        with:
+#          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+#          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
