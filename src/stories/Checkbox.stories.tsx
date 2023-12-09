@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Checkbox } from "../components/CheckBox";
 
