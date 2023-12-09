@@ -1,28 +1,24 @@
-# .github/workflows/github-pages.yml
-
-# Workflow name
-name: "Github page"
-
-# Event for the workflow
-on: push
-
-# List of jobs
+name: Build and Deploy
+on:
+  push:
+    paths: [ "src/stories/**" ] # Trigger the action only when files change in the folders defined here
 jobs:
   build-and-deploy:
-    # Operating System
     runs-on: ubuntu-latest
-    # Job steps
     steps:
       - name: Checkout
-        uses: actions/checkout@master
-      - name: Build Storybook
-        # 👇 Install dependencies with the same package manager used in the project (replace it as needed), e.g. yarn, npm, pnpm
-        run: |
-          yarn clear
-        # 👇 Adds Chromatic as a step in the workflow
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        # Chromatic GitHub Action options
+        uses: actions/checkout@v3
         with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          persist-credentials: false
+      - name: Install and Build
+        run: |
+          yarn install --frozen-lockfile
+          yarn build-storybook
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          folder: docs-build
+          clean: true
+          target-folder: docs
