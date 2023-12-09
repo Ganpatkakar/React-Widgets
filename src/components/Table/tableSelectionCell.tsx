@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableCell } from "./tableCell";
-import { Checkbox } from "../Checkbox";
+import { Checkbox } from "../Checkbox/checkbox";
 
 interface ITableSelectionCell {
   id: number | string;
@@ -16,7 +16,7 @@ export function TableSelectionCell(props: ITableSelectionCell) {
   }
   return (
     <TableCell checkBoxContainer={true}>
-      <Checkbox checked={selected} handleClick={handleCheckBoxClick}/>
+      <Checkbox checked={selected} handleClick={handleCheckBoxClick} name={"tableRow"}/>
     </TableCell>
   )
 }
