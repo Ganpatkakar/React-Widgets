@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./checkbox.scss";
 
-export const CheckboxInput = (props: any) => {
+export function CheckboxInput(props: any) {
   const cRef = useRef<HTMLInputElement>();
   const { checked, name } = props;
 
@@ -11,18 +11,6 @@ export const CheckboxInput = (props: any) => {
   }, [cRef, checked]);
 
   let inputClassNames = styles.checkBoxInput;
-
-  // const handleCheckBoxWithUpdatedValue = (event) => {
-  //   event.preventDefault();
-  //   let newCheck = checked;
-  //   if (newCheck === true) {
-  //     newCheck = false;
-  //   } else {
-  //     newCheck = true;
-  //   }
-  //   console.log(newCheck);
-  //   handleClick(event, newCheck);
-  // };
 
   return (
     <input

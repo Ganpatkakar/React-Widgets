@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./checkbox.scss";
 import { CheckboxInput } from "./checkboxInput";
 import { CheckboxIcon } from "./checkboxIcon";
 
-interface ICheckbox {
+export interface ICheckbox {
   // indeterminateState
   checked: true | false | "mixed";
 
@@ -39,7 +39,7 @@ export function Checkbox(props: ICheckbox) {
   let { checked } = props;
   const { label, handleClick, name, disabled } = props;
 
-  const handleCheckBoxWithUpdatedValue = (event: any) => {
+  const handleCheckBoxWithUpdatedValue = useCallback((event: any) => {
     event.preventDefault();
     if (disabled) {
       return;
@@ -48,7 +48,7 @@ export function Checkbox(props: ICheckbox) {
     newCheck = newCheck !== true;
     checked = newCheck;
     handleClick(event, newCheck);
-  };
+  }, []);
 
   return (
     <span
