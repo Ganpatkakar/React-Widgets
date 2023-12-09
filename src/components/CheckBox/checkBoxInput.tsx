@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from "react";
 import styles from "./checkbox.scss";
 
 export function CheckboxInput(props: any): React.JSX.Element {
-  const cRef: React.MutableRefObject<HTMLInputElement> = useRef<HTMLInputElement>();
+  const cRef: React.MutableRefObject<HTMLInputElement> =
+    useRef<HTMLInputElement>();
   const { checked, name } = props;
 
   useEffect(() => {
@@ -17,5 +18,5 @@ export function CheckboxInput(props: any): React.JSX.Element {
       defaultChecked={checked === true}
       ref={cRef}
     />
-  );
-};
+  )
+}

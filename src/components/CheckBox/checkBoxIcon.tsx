@@ -16,7 +16,10 @@ export const CheckboxIcon = (props: any) => {
   }
 
   return (
-    <div className={iconClassNames.join(" ")} style={{ width: width, height: height }}>
+    <div
+      className={iconClassNames.join(" ")}
+      style={{ width: width, height: height }}
+    >
       {icon}
     </div>
   );
