@@ -5,7 +5,7 @@ import { CheckboxIcon } from "./checkboxIcon";
 
 export interface ICheckbox {
   // indeterminateState
-  checked: true | false | "mixed";
+  checked: boolean | "mixed";
 
   // check if checkbox is disabled
   disabled?: true | false;

@@ -1,23 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./checkbox.scss";
 
-export function CheckboxInput(props: any) {
-  const cRef = useRef<HTMLInputElement>();
+export function CheckboxInput(props: any): React.JSX.Element {
+  const cRef: React.MutableRefObject<HTMLInputElement> = useRef<HTMLInputElement>();
   const { checked, name } = props;
 
   useEffect(() => {
-    const indeterminate = checked === "mixed";
-    cRef.current.indeterminate = indeterminate;
+    cRef.current.indeterminate = checked === "mixed";
   }, [cRef, checked]);
-
-  let inputClassNames = styles.checkBoxInput;
 
   return (
     <input
-      className={inputClassNames}
+      className={styles.checkBoxInput}
       type="checkbox"
       id={name}
-      defaultChecked={checked === true ? true : false}
+      defaultChecked={checked === true}
       ref={cRef}
     />
   );
