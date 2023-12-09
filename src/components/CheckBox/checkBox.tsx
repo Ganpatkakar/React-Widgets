@@ -67,3 +67,5 @@ export function Checkbox(props: ICheckbox) {
 }
 
 Checkbox.defaultProps = defaultProps;
+
+export default Checkbox;
