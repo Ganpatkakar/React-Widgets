@@ -1,122 +1,28 @@
-on:
-  push
+# .github/workflows/github-pages.yml
 
-name: Publish stories if changed
+# Workflow name
+name: "Github page"
 
+# Event for the workflow
+on: push
+
+# List of jobs
 jobs:
   build-and-deploy:
+    # Operating System
     runs-on: ubuntu-latest
+    # Job steps
     steps:
       - name: Checkout
         uses: actions/checkout@master
-
-      - name: Build and deploy to storybook-static branch
-        uses: JamesIves/github-pages-deploy-action@2.0.3
-        env:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: storybook-static
-
-#name: Build and Publish storybook to GitHub Pages
-#
-#on:
-#  push:
-#    branches:
-#      - "main"
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - uses: actions/setup-node@v4
-#        with:
-#          node-version: 'v18.18.2'
-#          registry-url: 'https://registry.npmjs.org'
-#
-#      - name: Install Yarn
-#        run: npm install -g yarn
-#
-#      - name: Build lib
-#          run: |
-#            yarn install --frozen-lockfile
-#            yarn build-storybook
-#
-#      - name: Rebuild production node_modules
-#        run: |
-#          yarn install --production --frozen-lockfile
-#          ls node_modules
-#
-#      - name: artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: dist
-#          path: |
-#            lib
-#            node_modules
-#
-#  integration:
-#    runs-on: ubuntu-latest
-#    needs: build
-#    strategy:
-#      matrix:
-#        branch: ['gh-pages', 'no-pages']
-#        commit: ['singleCommit', 'add commits']
-#      max-parallel: 1
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          persist-credentials: false
-#
-#      - uses: actions/setup-node@v4
-#        with:
-#          node-version: 'v18.18.2'
-#          registry-url: 'https://registry.npmjs.org'
-#
-#      - name: Download artifact
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: dist
-#
-#      - name: Deploy
-#        id: unmodified
-#        uses: ./
-#        with:
-#          folder: integration
-#          branch: ${{ matrix.branch }}
-#          single-commit: ${{ matrix.commit == 'singleCommit' }}
-#          dry-run: true
-#
-#      # Usually, this should be skipped, but if the upstream gh-pages
-#      # branch doesn't match ours, it should still be a success.
-#      - name: Check step output
-#        run: |
-#          [[ \
-#          ${{steps.unmodified.outputs.deployment-status}} = skipped || \
-#          ${{steps.unmodified.outputs.deployment-status}} = success \
-#          ]]
-#
-#      - name: Tweak content to publish to existing branch
-#        if: ${{ matrix.branch == 'gh-pages' }}
-#        run: |
-#          echo "<!-- just sayin -->" >> integration/index.html
-#
-#      - name: Deploy with modifications to existing branch
-#        id: modified
-#        uses: ./
-#        if: ${{ matrix.branch == 'gh-pages' }}
-#        with:
-#          folder: integration
-#          branch: ${{ matrix.branch }}
-#          single-commit: ${{ matrix.commit == 'singleCommit' }}
-#          dry-run: true
-#
-#      # The modified deployment should be a success, and not skipped.
-#      - name: Check step output
-#        if: ${{ matrix.branch == 'gh-pages' }}
-#        run: |
-#          [[ \
-#          ${{steps.modified.outputs.deployment-status}} = success \
-#          ]]
+      - name: Build Storybook
+        # 👇 Install dependencies with the same package manager used in the project (replace it as needed), e.g. yarn, npm, pnpm
+        run: |
+          yarn clear
+        # 👇 Adds Chromatic as a step in the workflow
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        # Chromatic GitHub Action options
+        with:
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
