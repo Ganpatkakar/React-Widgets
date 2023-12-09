@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Checkbox } from "../components/Checkbox";
+import { Checkbox } from "../components/CheckBox";
 
 const meta = {
   title: "Components/Checkbox",
