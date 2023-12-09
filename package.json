@@ -7,7 +7,8 @@
     "dev": "webpack-dev-server",
     "build": "webpack",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook-original": "storybook build",
+    "build-storybook": "storybook build -o docs-build -s ./src/stories/assets",
     "chromatic": "chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes"
   },
   "keywords": [],
