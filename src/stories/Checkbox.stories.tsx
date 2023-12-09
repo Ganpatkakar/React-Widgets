@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Checkbox } from "../components/Checkbox";
 
@@ -65,7 +65,7 @@ export const MultiCheckBoxWithParentControl = () => {
         label="Option 2"
       />
       <Checkbox
-          name="abc"
+        name="abc"
         checked={option3}
         handleClick={() => setOption3((checked) => !checked)}
         label="Option 3"
@@ -268,7 +268,6 @@ function CheckBoxesWithGroup(props: any) {
       />
       <ul>
         {state?.groups?.map((group) => {
-          const { name } = group;
           return CheckBoxesWithGroup({ state: group, handleCheckBox });
         })}
       </ul>
@@ -295,8 +294,8 @@ const MultiLevelCheckBoxesCode = () => {
 export const MultiLevelCheckBoxes = MultiLevelCheckBoxesCode.bind({});
 
 const example = `
-import React, { useReducer, useState } from "react";
-import Checkbox from "./components/Checkbox";
+// import React, { useReducer, useState } from "react";
+//import Checkbox from "./components/Checkbox";
 
 const level3Groups = [
   {
