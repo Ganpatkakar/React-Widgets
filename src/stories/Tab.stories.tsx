@@ -1,51 +1,90 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Tab, TabList, ITabList } from "../components/Tabs";
+import { TabList, Tabs, TabsHeader, TabsBody, TabContent } from "../components/Tabs";
 
 const meta = {
-  title: "Components/TabList",
-  component: TabList,
+  title: "Components/Tabs",
+  component: Tabs,
   parameters: {
     layout: "padded",
   },
   tags: ["autodocs"],
   argTypes: {
-    onTabClick: {
-      description: "Callback function on change of active tab",
-      type: "function",
-      default: "(value: string) => void",
-      defaultValue: "(value: string) => void",
-    },
-    defaultSelectedTab: {
-      description: "Default selected tab value",
-      type: "string",
-      default: "",
-      defaultValue: "",
-    },
+    defaultActiveTab: String
   },
-} satisfies Meta<typeof TabList>;
+} satisfies Meta<typeof Tabs>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const TabsTemplate = ({}) => (
-  <TabList defaultSelectedTab="Tab1">
-    <Tab value="Tab1">First Tab</Tab>
-    <Tab value="Tab2">Second Tab</Tab>
-    <Tab value="Tab3">Third Tab</Tab>
-  </TabList>
+  <Tabs defaultActiveTab="Tab1">
+    <TabsHeader>
+      <TabList value='Tab1'>First Tab</TabList>
+      <TabList value='Tab2'>Second Tab</TabList>
+      <TabList value='Tab3'>Third Tab</TabList>
+    </TabsHeader>
+    <TabsBody>
+      <TabContent value='Tab1'>
+        Tab 1
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+        took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </TabContent>
+      <TabContent value='Tab2'>
+        Tab 2
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+        took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </TabContent>
+      <TabContent value='Tab3'>
+        Tab 3
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+        took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </TabContent>
+    </TabsBody>
+  </Tabs>
 );
 
-export const TabsList = TabsTemplate.bind({});
+export const TabsComponent = TabsTemplate.bind({});
 
 const example = `
-Only Tabs
+Tabs Complete implementation
 
-<TabList>
-  <Tab value='Tab1'>First Tab</Tab>
-  <Tab value='Tab2'>Second Tab</Tab>
-  <Tab value='Tab3'>Third Tab</Tab>
-</TabList>
+<Tabs defaultActiveTab="Tab1">
+    <TabsHeader>
+      <TabList value='Tab1'>First Tab</TabList>
+      <TabList value='Tab2'>Second Tab</TabList>
+      <TabList value='Tab3'>Third Tab</TabList>
+    </TabsHeader>
+    <TabsBody>
+      <TabContent value='Tab1'>
+        Tab 1
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+        took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </TabContent>
+      <TabContent value='Tab2'>
+        Tab 2
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+        took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </TabContent>
+      <TabContent value='Tab3'>
+        Tab 3
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+        took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+        and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </TabContent>
+    </TabsBody>
+  </Tabs>
 
 In case you want to control tabs
 
@@ -57,11 +96,13 @@ const handleSelectedTab = (value: string) => {
 
 return (
   <>
-    <TabList defaultSelectedTab={defaultSelectedTab} onTabClick={handleSelectedTab}>
-      <Tab value='Tab1'>First Tab</Tab>
-      <Tab value='Tab2'>Second Tab</Tab>
-      <Tab value='Tab3'>Third Tab</Tab>
-    </TabList>
+    <Tabs defaultActiveTab="tab1" handleTabClickCb={handleSelectedTab}>
+      <TabsHeader>
+        <TabList value='Tab1'>First Tab</TabList>
+        <TabList value='Tab2'>Second Tab</TabList>
+        <TabList value='Tab3'>Third Tab</TabList>
+      </TabsHeader>
+    </Tabs>
     {
       selectedTab === 'Tab1' && (
         <>
@@ -90,22 +131,10 @@ return (
 )
 `;
 
-TabsList.parameters = {
+TabsComponent.parameters = {
   docs: {
     source: {
       code: example,
     },
   },
 };
-
-// export const TabListComponent: Story = {
-//   args: {
-//     onTabClick: () => {},
-//     defaultSelectedTab: 'Tab1',
-//     children: [
-//       <Tab value='Tab1'>First Tab</Tab>,
-//       <Tab value='Tab2'>Second Tab</Tab>,
-//       <Tab value='Tab3'>Third Tab</Tab>
-//     ]
-//   },
-// };

@@ -1,2 +1,11 @@
-export * from "./tabList";
-export * from "./tab";
+import { TabContent } from "./tabContent";
+import { TabList } from "./tabList";
+import { Tabs, TabsHeader, TabsBody } from "./tabs";
+
+export {
+    Tabs,
+    TabsHeader,
+    TabList,
+    TabsBody,
+    TabContent
+};

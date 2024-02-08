@@ -96,7 +96,7 @@ export default function PassaRender() {
       }
     )
 
-    if (state.players[state.currentPlayer].score + randomPassaValue < (maxGridLayers * maxGridLayers)) {
+    if (state.players[state.currentPlayer].score + randomPassaValue <= (maxGridLayers * maxGridLayers)) {
       animateTillNextVal(randomPassaValue, 0);
     } else {
       const timer = setTimeout(() => {
