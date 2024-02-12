@@ -1,0 +1,26 @@
+.gameContainer {
+  display: block;
+
+  .row {
+    display: flex;
+
+    .col {
+      display: flex;
+      border: 1px solid #6d6c6c;
+      background-color: #ddd;
+      justify-content: center;
+      align-items: center;
+
+      width: 100px;
+      height: 100px;
+      font-size: 36px;
+      border-radius: 4px;
+      margin: 4px;
+
+      &.successFlip {
+        background-color: transparent;
+        border-color: transparent;
+      }
+    }
+  }
+}

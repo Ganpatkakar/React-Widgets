@@ -1,0 +1,40 @@
+.watchContainer {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border: 4px solid #ddd;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transform: rotate(-90deg);
+}
+
+.watchCenter, .hourHand, .minuteHand, .secondHand {
+  display: block;
+  background: #ddd;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  box-sizing: border-box;
+  transform-origin: left;
+  border-radius: 4px;
+}
+
+.watchCenter {
+  width: 5px;
+  border-radius: #ddd;
+}
+
+.hourHand {
+  width: 60px;
+  height: 8px;
+}
+
+.minuteHand {
+  width: 75px;
+  height: 5px;
+}
+
+.secondHand {
+  width: 90px;
+  height: 3px;
+}

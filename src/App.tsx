@@ -1,10 +1,12 @@
 import React from "react";
 import { SnakeLadderGame } from "./components/snakeLadderGame";
+import WhackAMole from "./whackAMole";
+
 
 function App() {
   return (
     <>
-      <SnakeLadderGame width={700} height={700}/>
+      <WhackAMole />
 
       {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,</p>
       <p>molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum</p>
