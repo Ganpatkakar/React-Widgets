@@ -70,20 +70,18 @@ export default function TicTacToe() {
     }
   }
 
-  const handlePlayerClick = (position) => {
+  const handlePlayerClick = (position: string) => {
     const [row, col] = position.split(":");
     if (winner !== null || board[row][col] !== '') return;
     board[row][col] = player;
     setBoard([...board]);
     if (checkWin(board)) {
-      setWinner(player)
+      setWinner(player);
       return;
     }
 
     handleTurn();
   }
-
-  let counter = 1;
 
   return (
     <>
@@ -96,11 +94,10 @@ export default function TicTacToe() {
             <div key={rowIndex} className={styles.rows}>
               {
                 val.map((colVal, colIndex) => {
-                  const currentVal = counter++;
                   return (
-                    <div 
-                      key={colIndex} 
-                      className={styles.cols} 
+                    <div
+                      key={colIndex}
+                      className={styles.cols}
                       onClick={() => handlePlayerClick(`${rowIndex}:${colIndex}`)}
                     >
                       {board[rowIndex][colIndex]}
