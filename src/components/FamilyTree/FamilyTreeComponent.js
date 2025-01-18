@@ -576,7 +576,7 @@ function RenderTree({ data }) {
 
   return (
     <ul style={{ listStyleType: "none" }}>
-      <li>
+      <li style={{minWidth: "200px"}}>
         {data.children.length > 0 && (
           <button onClick={handleTreeOpen}>{open ? "-" : "+"}</button>
         )}
