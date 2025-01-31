@@ -1,0 +1,76 @@
+.gameContianer {
+  width: 475px;
+
+  .gridContainer {
+    border-radius: 10px;
+    height: 420px;
+    background-color: #1c61f2;
+    .girdRow {
+      display: flex;
+      
+      .gridSections {
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+        background-color: #fff;
+        border-radius: 50%;
+      }
+    }
+  }
+  .choiceContainer {
+    display: flex;
+  
+    .choice {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 10px;
+      display: block;
+      background-color: transparent;
+      opacity: 0;
+  
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .showWinText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+}
+
+
+// Google calendar
+// gather requirement, support signup, crud operation, support events, invite other users, and calendar invitation
+// Follow up questions, internationalization, accessibility, service workers to improve performance, multiple calendars, full day events
+// Expectatons => API design and data model, Rest/GraphQl/RPC
+// over and under fetching
+// event fetching
+// how state is handled and multiple date and timezones
+// recurring events, weekly events
+// rendering strategy, client side, server side rendering, hybrid strategy
+// Caching and performance, indexdb, localstorage, service workers
+// local specific bundles, dynamic loading bundles of localizations
+
+// Messaging apps
+// users last conversations
+// specific conversations and past messages
+// sending a new message and support larger numbers of users
+// group conversations
+// multimedia messages supprot
+// API design
+// Data storeage and persistence of data
+// horizontal scaling, data sharding
+// pagination cursor based pagination which use timestamp as pointer
+// caching redis, memcache
+// UX responsiveness, and async data loading
+// State management, data update, inconsistent state
+// pros and cons of all the decisions
+
