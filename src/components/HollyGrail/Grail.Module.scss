@@ -1,0 +1,25 @@
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  header {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    background: #ddd;
+    align-items: center;
+  }
+
+  nav {
+    
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    background: #ddd;
+    align-items: center;
+  }
+}
