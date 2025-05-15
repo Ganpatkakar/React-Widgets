@@ -1,0 +1,109 @@
+Can you recall a situation where you faced a conflict at work?
+
+Config API migration project execution strategy conflict.
+Service team where we were consuming API's was planning a migration of existing API's. The execution plan was to simultaneously develop and consume those API's on the consumer services. I was responsible for consuming these API's on client side. Our tech stack used React and MobX for state management.
+MobX is a store based state management library where our architecture included one feature which includes CRUD operation are all stored in one MobX store, since all the crud operations were performed on single store.
+Now the service team decided to complete all the get operations faster because it was easy and that would have showed the faster progress as well as majority of simple work would have been completed.
+But this was a problem on client side, as we were using single store for all crud operations, now for new migrated endpoints we needed to maintain the similar architecture of current code, so it was not possible for us to create 2 different stores and where we will consume from one store and update in another store. Because it would bring lot of complexity to codebase as well as it was very error prone approach. Client architecture was not prepared for this.
+So I jumped on quick calls with these API service team to explain the situation and after 3 long meetings with different stack holders including the group engineering manager, senior product manager and principle, developers I was able to explain and convince them to provide all CRUD operations at the same time and then move to next feature for a faster and simultaneous development.
+- Technology conflict
+- Timeline conflict
+- Project delay.
+
+
+
+Tell me a scenario where you messed.
+
+Calendar view change project
+Situation - Designing calendar view on client side.
+Task - In uber eats project calendar view support date range capture to see lot of date specific data on different pages.
+But it was lagging a functionality of direct selection beahvior, like last day, last week, this week, last month etc.
+Action - I was responsbile to design this project. Where this calendar date range selection updates the URL query params and based on these query params new data will be loaded.
+So I planned to add a new query param and update the existing start date and end date accordingly in the URL.
+This way existing functinality along with the new ask of supporting calendar fetch for direct actions was planned.
+Result - I prepared my design along with the possible solutions list where I will be using the existing start date and last date with new query param of selectionCalendarOption (last day, last week, last month)
+but I forgot the scenario where users can copy paste the urls, where user will copy the url of 4rht May and with option of last day as direct action.
+so the url would be start date as 3rd may and end date as 3rd may and direct action as last day.
+Where as todays date is 7th may and according to users direct action it should show results of start date 6th May and end date 6th may and direct action as last day.
+Reflection - To support existing functionality I ignored possible users url copy paste scenario which is generally a common scenario (not usual but very common).
+
+
+Another situation - where I messed.
+Situation - Information bar not presenting proper information on migration success.
+Task - I was leading a project of app access management and we were migrating existing customer to newer experience of app access management.
+Some details about the project, current project was handling app assignment to users based on a policy management, which was very complicated and less then 1% users were using it, and this was leading a to a loss of companies vision of making Microsoft teams as a platform to other apps ecosystem.
+So I completed the project designing, and architecturing the product lead 2 more engineers to work along with me to the development part and we were almost done with the project release. So we planned to do a private preview of the project and release this project to 2 selected customers.
+Issue - So in this migration process one the migration is successful we were supposed to show a migration success message, however our code logic of success message was not working propely and it lead to an assumption that migration is not successful, however on page relaod the migration success message was working fine.
+Action - I fixed the issue, deployed to the production and after this problem was resolved.
+Relection - During the product bug bash and testing the scenario should have been covered.
+On the project lead I was supposed to provide all the testing scenarios and I missed this one on testing so I took this as an action point for me to cover all the scenarios and not depend on the bug bash teams to figure out all the scenarios.
+
+
+
+Can you recall an experience where your perseverance played a key role in overcoming a challenge?
+
+Situation - Delivering project even when faced 86 initial bugs on a newly onboarded project.
+I was asked to participate in a project where the project completion timelines was supposed to be at near end and the staf engineer needed my help with minor bugs.
+This staf engineer was a CTO and founder of a small componay which was aquired by Walmart in India, alomg with all of its engineers.
+His philosophy was that other depency services should send data in a very generic way so that all the products could be supported for view.
+However in reality different category of products had different views and many of those were laging proper data as well.
+
+Task - My task was to support him for the last mile of the project and support with quality issues.
+When he planned to do the bug bash of the project the product team bombarded that with lot of bugs around 80-85 bugs which included around 30-35 high sverity bugs.
+after this bluder management planned to move him to other parts of the business and I was left alone to handle the scenario so I requested management for more resources (at the same time there were problems going on with the management 
+shuffling as well, which lead to not proper support from management) and after conviencing senior managers i received a support of one junior engineer and a not full time resource of senior engineer.
+I assesed all the bugs, preapred a new timeline, persisted to resolve all the bugs including over time to fasten the process.
+The bugs included lot of memory leak issues, so this included log of debugging of existing product, fixing, supporting after math.
+
+Result - I onboarded the new engineers to the product, handled the task management, communication to product team, collaboration with existing team on different continent and delivered this project and this project was a success as it got around 1.14% increase in total engagement of the search page.
+
+
+
+Can you recall an experience where your adaptability was crucial in navigating through a situation?
+- Ensuring project continuity amidst external disruptions.
+- Maintaining performance during resource crunches.
+
+I worked on a senior eninggers project when he needed to go to his grandmothers last rituals, so I adopted to the new project, understood the requirements, and taken the last pending tasks list to implement and deliver the project.
+
+Situation - 
+New project onboarding of the Quick view project during Walmart tennure.
+In 1 to 2 weeks of the onboarding the staff engineer who was leading the project was removed from the project due to higher management planning.
+I was left alone to finish the project with just 1 to 2 weeks of onboarding I was tasked to lead the project.
+Asked for more resources but due to some disructin in the higer management and resource crunch I was only provide one junior engineer to support and one non full time senior for the project (his task was to track the project progress and guide for any major issues on non full time role).
+So I adopted to that situation of being a supporting person to be the project release owner along with fixing all the bug bash bugs (80-85 bugs, around 35-40 high priority bugs).
+Action - I understood the tech stack, current implementation, data configurations, release pipelines process and resource management along with collaboration to new team members etc.
+Relection - I have delived the project on the new timelines and with less resource support. I was awarded with a Bravo award of that quarter.
+
+
+Growth mindset - Describe a situation that highlights your commitment to personal and professional growth.
+- Mentoring or coaching team members. - Mentored engineers at Microsoft, during my project of App access management.
+- Implementing learning into strategic improvements. - During my tennure at Toshiba it was not using the latest technology and relying on the jQuery applications, which was leading to non centeralized project controls, so along with few senior engineers we planned to do a code reward to React technology and improve project quality with centralizing the state management of the project.
+- Encouraging and implementing a team learning environment. - Proposed a new learning series in the team for on going projects and newly launched projects, this would help eningger to know whats going on in other projects and during their oncall weeks they know how to tackle the issues also in case of sever issues whom to contact.
+
+Leadership
+Describe a situation where you exhibited leadership.
+- Strategically guiding projects or teams to success. -  Leading the config api migration project, where I Strategically planned on the executin of the project and convienced other teams to agree on project execution which suited our teams execution.
+- Providing mentorship and fostering growth within the team. - I lead a small team of 2 members where I analyzed their strenghts and disctributed work accordingly, handed over the responsibility to them so they would fell that they are important part of the project and its their responsbility to take the project to deadline.
+- Driving change - Using my design and execution planning I drived the project of app access management where the major component on which the migration logic was depending, I designed and coded it to enable other developers to build features on top of that.
+
+
+Team collaboration and communication
+- Strategizing and communicating larger goals or changes. - Project planning, design document preparation, task segregation and communication to team members.
+So during the next phase implementation of the ACM project I planned to rewamp and make the logic easy, I collaborated with product team on possible outcome scenarios, that way we prepared the process of implementation bulletpoints. Based on those points I have create a design document and mentioned my strategy of implementation along with flow charts and code samples.
+I included entire team for the design review and once the team gave a go ahead and approval on the design, I prepared a task breakdown and implementation timelines. This way I was able to communicate to leadership on possible outcome of the project and also the timelines of the project.
+- Ensuring clear communication during complex projects or challenges. - Preparing proper design documents and task breakdown did communicate clear details of a complex project.
+- Ensuring stakeholder alignment through effective communication strategies. - By involving leadership on implementation strategy and clear timeline breakdown of individual tasks it was easy to communicate to the leadership on the project implementation, also along with this during the project implementation I was clearly communicating the possible risks of timeline missed due to some unforescene scenarios or resource crunch.
+
+I helped a team member during his difficult time by completing his project in his absence.
+- So one of my teams senior engineer, he was working on a important time sensitive project and he was almost 80% done with the project, and 10 days before the project delivery his grandmother passed, 
+so he needed to attend last rituals go to support his family, thats when I offered my support to this project implementation, I gathered all the required information of this project, tried to disturb as less as possible to the senior engineer, understood project requirements and implemented the projects last milestones and release the project with company guidelines.
+
+
+
+Provide details about the initiatives I took in a team.
+1. Code cleanups of behind the feature flag features code.
+2. Reconfiguring the complex project base logic of migration after 2 years of release this way the process was smothened and the logic was less error prone and easy to understand.
+
+
+Conflict where you think you were right but then you found you are wrong.
+Situation with contract braking of API response, situation of conflict with Abhishek.

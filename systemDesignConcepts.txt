@@ -1,0 +1,185 @@
+System design questions
+
+Performance
+  Web vitals
+  https://www.youtube.com/watch?v=YO7R0rYWDl8
+
+
+
+Cross browser compatibility
+  https://www.freecodecamp.org/news/what-is-cross-browser-compatibility/#heading-common-cross-browser-issues-and-solutions
+  https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Testing/Introduction
+
+
+Functional requirements
+- Based on the product
+
+Non functional requirements
+- Accessibility
+- Web Performance optimization
+- Security
+- Internationalization
+- CDN or caching
+- Offline support
+- Monitoring setup
+
+Functional requirement implementation
+- Component structure
+- State
+- State update
+- Styling
+- API design
+
+
+- Accessibility
+1. Semantic HTML tags
+2. aria-lables
+3. tabIndex
+4. Keyboard navigation support
+5. Voice support with proper alt tags, and other info aria-description aria-label etc...
+6. Color contrast support
+7. Accessibility DOM testing
+
+
+API interface
+  WebSockets
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.onopen = function(event) {
+      // Handle connection open
+    };
+
+    socket.onmessage = function(event) {
+      // Handle received message
+    };
+
+    socket.onclose = function(event) {
+      // Handle connection close
+    };
+
+    function sendMessage(message) {
+      socket.send(message);
+    }
+
+  Server sent event
+    - Creating an EventSource instance
+      const evtSource = new EventSource("//api.example.com/sse-demo.php", {
+        withCredentials: true,
+      });
+    - Listening for message events
+      evtSource.onmessage = (event) => {
+        const newElement = document.createElement("li");
+        const eventList = document.getElementById("list");
+
+        newElement.textContent = `message: ${event.data}`;
+        eventList.appendChild(newElement);
+      };
+    - Listening for custom events
+      evtSource.addEventListener("ping", (event) => {
+        const newElement = document.createElement("li");
+        const eventList = document.getElementById("list");
+        const time = JSON.parse(event.data).time;
+        newElement.textContent = `ping at ${time}`;
+        eventList.appendChild(newElement);
+      });
+    - Listening for errors
+      evtSource.onerror = (err) => {
+        console.error("EventSource failed:", err);
+      };
+    - Closing the connection
+      evtSource.close();
+
+  GraphQl
+    query language
+    Rely on the post requests and parameters passed in the body
+    Needs API contracts to be finalized first and then request only the required fields
+    We need to add graphql parsing libraries
+
+    import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+      
+    const client = new ApolloClient({
+      uri: 'YOUR_GRAPHQL_API_ENDPOINT', // Replace with your GraphQL API URL
+      cache: new InMemoryCache(),
+    });
+
+    client.query({
+        query: gql`
+          query GetPosts {
+            posts {
+              id
+              title
+              body
+            }
+          }
+        `,
+      })
+      .then(result => console.log(result))
+      .catch(error => console.error(error));
+
+    client.mutate({
+        mutation: gql`
+          mutation CreatePost($title: String!, $body: String!) {
+            createPost(title: $title, body: $body) {
+              id
+              title
+              body
+            }
+          }
+        `,
+        variables: {
+          title: 'New Post Title',
+          body: 'New post content',
+        },
+      })
+      .then(result => console.log(result))
+      .catch(error => console.error(error));
+
+  gRPC
+
+  Rest
+
+Web Performance optimization (Perceived performance and Real performance)
+  Loaders/Shimmers
+  Rendering
+  lazy loading
+  Code spliting
+  Tree shaking
+  Icons sprinting
+  Minimum API calls
+  Non render blocking JS calls using async, defer
+  Caching
+  Prefetching data
+  Above the fold data loading
+  Image optimization
+  Minifying CSS and JavaScript
+  Network requests compressions, Gzip, Brotlee
+  CDN integration
+  Code optimization
+  WebWorker and service worker = https://medium.com/@alfheimr/service-workers-and-web-workers-how-the-two-separate-features-are-commonly-confused-with-one-56286621e09d
+
+  Measure Performance - Web vitals, there is a library to test these web vitals
+    LCP - Largest contentful pain
+    TTI - Time to interactivity
+    CLS - Commuliative layout shift
+  Monitoring performance using the web vitals library
+
+Security
+  - Authorization
+  - Store user auth into cookies with HTTPOnly option, so that user scripts will not be able to modify integration
+  - CORS
+  - Sanitize form input
+  - DDOS attacks
+  - Rate limiter
+  - Cross-Site Scripting (XSS)
+  - SQL injection
+  - Cross-Site Request Forgery (CSRF)
+
+Offline support
+- Service workers
+- Caching
+- Service worker - https://github.com/mdn/dom-examples/blob/main/service-worker/simple-service-worker/sw.js
+
+Push notification client side
+- https://web.dev/articles/push-notifications-client-codelab
+- https://github.com/StepanNaryshkov/front-end-components/blob/main/push-notification/client/index.html
+
