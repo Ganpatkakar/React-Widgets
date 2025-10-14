@@ -65,8 +65,8 @@ const calcWayPoints = (vertices, difference) => {
 };
 
 const colors = [
-  "#7f6913ff",
-  "#c17504ff",
+  "#bb9f2fff",
+  "#6e6251ff",
   "#012b1dff",
   "#186619ff",
   "#011304ff"
@@ -75,9 +75,10 @@ const colors = [
 const segmentsDefinition = [
   { amplitude: 0.8, lengthRatio: 0.20, points: 20 },  // Tight coil near head
   { amplitude: 0.8, lengthRatio: 0.15, points: 20 },  // Medium S-bend
-  { amplitude: 0.8, lengthRatio: 0.35, points: 30 },   // Long, gentle tail
-  { amplitude: 0.8, lengthRatio: 0.15, points: 30 },
-  { amplitude: 0.5, lengthRatio: 0.15, points: 20 }   // Long, gentle tail
+  { amplitude: 0.8, lengthRatio: 0.30, points: 30 },   // Long, gentle tail
+  { amplitude: 0.8, lengthRatio: 0.15, points: 20 },
+  { amplitude: 0.5, lengthRatio: 0.15, points: 10 },
+  { amplitude: 0.5, lengthRatio: 0.05, points: 10 }   // Long, gentle tail
 ];
 
 export function SnakeRender() {

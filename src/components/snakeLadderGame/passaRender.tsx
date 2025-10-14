@@ -40,7 +40,7 @@ export default function PassaRender() {
               }
             )
             resetNextPlayerSettings();
-          }, 300);
+          }, 500);
 
           return;
         }
@@ -56,7 +56,7 @@ export default function PassaRender() {
               }
             )
             resetNextPlayerSettings()
-          }, 300);
+          }, 500);
           return;
         }
 
@@ -77,7 +77,7 @@ export default function PassaRender() {
         clearTimeout(timer);
         animateTillNextVal(randomPassaValue, ++curr);
       })
-    }, 300);
+    }, 400);
   }, [state.currentPlayer]);
 
 

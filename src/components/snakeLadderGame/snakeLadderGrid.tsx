@@ -58,7 +58,7 @@ export default function RenderGrid({
         x={centerX}
         y={centerY}
         text={name}
-        fontSize={16}
+        fontSize={20}
       />
     </>
   )
