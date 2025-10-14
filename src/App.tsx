@@ -6,7 +6,7 @@ import WhackAMole from "./whackAMole";
 function App() {
   return (
     <>
-      <WhackAMole />
+      <SnakeLadderGame width={1000} height={1000} />
 
       {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,</p>
       <p>molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum</p>

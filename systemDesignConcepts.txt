@@ -22,6 +22,10 @@ Non functional requirements
 - CDN or caching
 - Offline support
 - Monitoring setup
+- Offline support
+- Push Notification (if applicable)
+- Service workers/Web workers
+- Web vitals
 
 Functional requirement implementation
 - Component structure

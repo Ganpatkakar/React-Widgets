@@ -1,6 +1,7 @@
 import React from 'react';
 import { SnakeLadderContext, ISnake } from './snakeLadderGameContext';
-import { Circle, Line, Shape } from 'react-konva';
+import { Shape } from 'react-konva';
+import { drawSnake, generateSegmentedSnakePath } from './snakeRenderer';
 
 function bezierPointsCalc(a, f) {
   for (var b = [], c, e = 0; e < a.length; e++)
@@ -42,16 +43,16 @@ function bezierPointsCalc(a, f) {
 const getQuadraticBezierXYatT = (startPt, ct1, ct2, endPt, t) => {
   let x = Math.pow(1 - t, 3) * startPt.x + 3 * Math.pow(1 - t, 2) * t * ct1.x + 3 * (1 - t) * Math.pow(t, 2) * ct2.x + Math.pow(t, 3) * endPt.x
   let y = Math.pow(1 - t, 3) * startPt.y + 3 * Math.pow(1 - t, 2) * t * ct1.y + 3 * (1 - t) * Math.pow(t, 2) * ct2.y + Math.pow(t, 3) * endPt.y
-  return ({x: x, y: y});
+  return ({ x: x, y: y });
 };
 
 const calcWayPoints = (vertices, difference) => {
   const wayPoints = [];
   for (let i = 1; i < vertices.length; i += 3) {
-    let startPt = {x: vertices[i - 1].x, y: vertices[i - 1].y}
-    let ct1 = {x: vertices[i].x, y: vertices[i].y}
-    let ct2 = {x: vertices[i + 1].x, y: vertices[i + 1].y}
-    let endPt = {x: vertices[i + 2].x, y: vertices[i + 2].y}
+    let startPt = { x: vertices[i - 1].x, y: vertices[i - 1].y }
+    let ct1 = { x: vertices[i].x, y: vertices[i].y }
+    let ct2 = { x: vertices[i + 1].x, y: vertices[i + 1].y }
+    let endPt = { x: vertices[i + 2].x, y: vertices[i + 2].y }
     for (let t = 0; t < difference; t++) {
       let pointers = getQuadraticBezierXYatT(startPt, ct1, ct2, endPt, t / difference);
       wayPoints.push({
@@ -64,91 +65,67 @@ const calcWayPoints = (vertices, difference) => {
 };
 
 const colors = [
-  "#ffcc02",
-  "#ff9900",
-  "#009966",
-  "#ff999a",
-  "#0099cc"
+  "#7f6913ff",
+  "#c17504ff",
+  "#012b1dff",
+  "#186619ff",
+  "#011304ff"
+];
+
+const segmentsDefinition = [
+  { amplitude: 0.8, lengthRatio: 0.20, points: 20 },  // Tight coil near head
+  { amplitude: 0.8, lengthRatio: 0.15, points: 20 },  // Medium S-bend
+  { amplitude: 0.8, lengthRatio: 0.35, points: 30 },   // Long, gentle tail
+  { amplitude: 0.8, lengthRatio: 0.15, points: 30 },
+  { amplitude: 0.5, lengthRatio: 0.15, points: 20 }   // Long, gentle tail
 ];
 
 export function SnakeRender() {
   const state = React.useContext(SnakeLadderContext);
 
   return (
-      <>
-        {
-          state.snakes.map((snake: ISnake, index) => {
-            const { mouthScore, tailScore } = snake;
+    <>
+      {
+        state.snakes.map((snake: ISnake, index) => {
+          const { mouthScore, tailScore } = snake;
 
-            const mouthPosition = state.scoreWithGrid[mouthScore];
-            const tailPosition = state.scoreWithGrid[tailScore];
+          const mouthPosition = state.scoreWithGrid[mouthScore];
+          const tailPosition = state.scoreWithGrid[tailScore];
 
-            let [mXAxis, mYAxis, mRectWidth, mRectHeight] = mouthPosition;
-            mXAxis = mXAxis + mRectWidth / 2;
-            mYAxis = mYAxis + mRectHeight / 2;
+          let [mXAxis, mYAxis, mRectWidth, mRectHeight] = mouthPosition;
+          mXAxis = mXAxis + mRectWidth / 2;
+          mYAxis = mYAxis + mRectHeight / 2;
 
-            let [tXAxis, tYAxis, tRectWidth, tRectHeight] = tailPosition;
-            tXAxis = tXAxis + tRectWidth / 2;
-            tYAxis = tYAxis + tRectHeight / 2;
-            const color = colors[index % colors.length];
+          let [tXAxis, tYAxis, tRectWidth, tRectHeight] = tailPosition;
+          tXAxis = tXAxis + tRectWidth / 2;
+          tYAxis = tYAxis + tRectHeight / 2;
+          const color = colors[index % colors.length];
 
-            return (
-                <>
-                  <Line
-                      x={mXAxis - 5}
-                      y={mYAxis - 5}
-                      points={[0, 0, 15, 0, 15, 15]}
-                      tension={0.5}
-                      closed
-                      stroke="#000"
-                      strokeWidth={1}
-                      fill={color}
-                  />
-                  <Shape
-                      sceneFunc={(ctx, shape) => {
-                        ctx.closePath();
-                        let points: {x: number, y: number}[] = [
-                          { x: mXAxis, y: mYAxis },
-                          { x: mXAxis - (Math.max(tXAxis, mXAxis) - Math.min(tXAxis, mXAxis)) / 2, y: mYAxis + (tYAxis - mYAxis)/3 },
-                          { x: mXAxis + (Math.max(tXAxis, mXAxis) - Math.min(tXAxis, mXAxis)) / 2, y: mYAxis + (tYAxis - mYAxis)/1.5 },
-                          { x: tXAxis, y: tYAxis }
-                        ];
-                        let a = bezierPointsCalc(points, 2);
-                        // console.log(a);
+          // --- 2. Calculate Total Length (Hypotenuse) ---
+          const lengthX = tXAxis - mXAxis;
+          const lengthY = tYAxis - mYAxis;
+          const straightLineDistance = Math.sqrt(lengthX * lengthX + lengthY * lengthY);
 
-                        let wayPoints = calcWayPoints(a, 5);
+          // --- 3. Determine Dynamic BASE_WIDTH ---
+          const lengthCoefficient = 0.03;
+          let dynamicBaseWidth = straightLineDistance * lengthCoefficient;
 
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        // for (var i = 1; i < a.length; i += 3) {
-                        //   if (i <= a.length - 3) {
-                        //     ctx.bezierCurveTo(a[i].x, a[i].y, a[i + 1].x, a[i + 1].y, a[i + 2].x, a[i + 2].y);
-                        //   }
-                        // }
+          //     // Generate the path coordinates
+          const customSnakePath = generateSegmentedSnakePath(
+            mXAxis, mYAxis,
+            tXAxis, tYAxis,
+            segmentsDefinition
+          );
 
-                        // console.log(mouthScore, tailScore, mXAxis, tXAxis, wayPoints);
-                        for (let i = 0; i < wayPoints.length; i++) {
-                          ctx.lineWidth = 8;
-                          ctx.beginPath();
-                          ctx.globalAlpha = 1;
-                          ctx.strokeStyle = color;
-                          if (i === 0) {
-                            ctx.moveTo(wayPoints[i].x, wayPoints[i].y);
-                          } else {
-                            ctx.moveTo(wayPoints[i - 1].x, wayPoints[i - 1].y);
-                            ctx.lineTo(wayPoints[i].x, wayPoints[i].y);
-                          }
-                          ctx.stroke();
-                        }
-                        ctx.closePath();
-                      }}
-                      fill="#00D2FF"
-                      stroke="black"
-                  />
-                </>
-            )
-          })
-        }
-      </>
+          return (
+            <>
+              <Shape
+                sceneFunc={(ctx) => drawSnake(ctx, customSnakePath, color, dynamicBaseWidth)}
+              />
+            </>
+          )
+        })
+      }
+    </>
   )
 }
