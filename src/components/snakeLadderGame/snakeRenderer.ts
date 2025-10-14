@@ -196,11 +196,11 @@ export function drawSnake(ctx, controlPoints, color = '#4CAF50', BASE_WIDTH) {
     if (controlPoints.length < 2) return;
 
     // Goal 2: Minimum tail width is 1/4 of the base width.
-    const MIN_TAIL_WIDTH = BASE_WIDTH / 20; // 6.25 units
+    const MIN_TAIL_WIDTH = BASE_WIDTH / 40;
     // Goal 1: Taper starts at 3/4 mark (already implemented)
     const TAPER_PROPORTION = 0.25; 
     
-    const HEAD_SIZE_MULTIPLIER = 1.4;
+    const HEAD_SIZE_MULTIPLIER = 1.6;
     const NUM_SEGMENTS_PER_CURVE = 1;
 
     // --- Color Processing ---

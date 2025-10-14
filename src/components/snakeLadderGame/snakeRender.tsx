@@ -73,12 +73,12 @@ const colors = [
 ];
 
 const segmentsDefinition = [
-  { amplitude: 0.8, lengthRatio: 0.20, points: 20 },  // Tight coil near head
-  { amplitude: 0.8, lengthRatio: 0.15, points: 20 },  // Medium S-bend
-  { amplitude: 0.8, lengthRatio: 0.30, points: 30 },   // Long, gentle tail
-  { amplitude: 0.8, lengthRatio: 0.15, points: 20 },
-  { amplitude: 0.5, lengthRatio: 0.15, points: 10 },
-  { amplitude: 0.5, lengthRatio: 0.05, points: 10 }   // Long, gentle tail
+  { amplitude: 0.6, lengthRatio: 0.10, points: 100 },
+  { amplitude: 0.8, lengthRatio: 0.30, points: 100 },  // Tight coil near head
+  { amplitude: 1.0, lengthRatio: 0.25, points: 80 },  // Medium S-bend
+  { amplitude: 1.2, lengthRatio: 0.15, points: 50 },
+  { amplitude: 1.0, lengthRatio: 0.15, points: 30 },   // Long, gentle tail
+  { amplitude: 0.8, lengthRatio: 0.05, points: 20 },   // Long, gentle tail
 ];
 
 export function SnakeRender() {
@@ -108,8 +108,14 @@ export function SnakeRender() {
           const straightLineDistance = Math.sqrt(lengthX * lengthX + lengthY * lengthY);
 
           // --- 3. Determine Dynamic BASE_WIDTH ---
-          const lengthCoefficient = 0.03;
-          let dynamicBaseWidth = straightLineDistance * lengthCoefficient;
+          let lengthCoefficient = 0.02;
+          if (straightLineDistance < 200) {
+            lengthCoefficient = 0.05;
+          } else if (straightLineDistance < 300) {
+            lengthCoefficient = 0.03;
+          }
+          
+          const dynamicBaseWidth = straightLineDistance * lengthCoefficient;
 
           //     // Generate the path coordinates
           const customSnakePath = generateSegmentedSnakePath(
