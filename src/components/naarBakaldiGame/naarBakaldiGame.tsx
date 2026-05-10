@@ -32,7 +32,9 @@ export function NaarBakaldiGame() {
     const updateDimensions = () => {
       if (containerRef.current) {
         const width = containerRef.current.clientWidth;
-        setDimensions({ width, height: width }); // Assuming square aspect ratio
+        const height = containerRef.current.clientHeight;
+        const minLen = Math.min(width, height)
+        setDimensions({ width: minLen, height: minLen }); // Assuming square aspect ratio
       }
     };
 
