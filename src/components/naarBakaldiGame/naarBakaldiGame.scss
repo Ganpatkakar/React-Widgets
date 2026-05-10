@@ -1,0 +1,29 @@
+.gameContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .playersContainer {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+
+    .playerContainer {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 16px;
+      gap: 16px;
+
+      .playerCoinsContainer {
+        display: flex;
+        gap: 16px;
+
+        .playerCoin {
+          display: block;
+        }
+      }
+    }
+  }
+}
