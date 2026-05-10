@@ -173,14 +173,15 @@ export default function PassaRender() {
   }
 
   return (
-    <span
+    <div
       onClick={handlePassa}
+      style={{'cursor': 'pointer'}}
     >
       <ResponsiveDiceContainer
         width={150}
         height={150}
       />
-    </span>
+    </div>
   )
 }
 
