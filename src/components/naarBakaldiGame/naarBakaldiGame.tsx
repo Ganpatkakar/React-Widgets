@@ -1,8 +1,8 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useRef, useEffect, useState } from 'react';
 import { Shape, Stage, Layer, Circle, Line } from 'react-konva';
 import { PlayerPositionRender } from './playerPositionRender';
 import styles from './naarBakaldiGame.scss';
-import { calculateCircleCordinates, IDefaultValues, naarBakaldiGameReducer, Actions} from './naarBakaldiGameContext';
+import { calculateCircleCordinates, IDefaultValues, naarBakaldiGameReducer, Actions } from './naarBakaldiGameContext';
 
 const players = [
   {
@@ -18,13 +18,36 @@ const players = [
 ];
 
 const gameMatrix = [
-  [0,0,0,],
-  [0,0,0,],
-  [0,0,0,],
-  [0,0,0,],
+  [0, 0, 0,],
+  [0, 0, 0,],
+  [0, 0, 0,],
+  [0, 0, 0,],
 ];
 
 export function NaarBakaldiGame() {
+  const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.clientWidth;
+        setDimensions({ width, height: width }); // Assuming square aspect ratio
+      }
+    };
+
+    updateDimensions();
+
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   const initialValues: IDefaultValues = {
     playerCoins: [[0, 0, 0], [0, 0, 0]],
     currentPlayer: 0,
@@ -35,9 +58,11 @@ export function NaarBakaldiGame() {
   }
   const [state, dispatch] = useReducer(naarBakaldiGameReducer, initialValues);
 
-  const width = 500;
-  const height = 500;
+  const { width, height } = dimensions;
 
+  const circleCordinates = calculateCircleCordinates(width, height);
+
+  // Event handler
   const handleGameBoardClick = (a: number, b: number) => {
     console.log("handleGameBoardClick", a, b);
     const { selectedCoin, sourceCoordinates, currentPlayer } = state;
@@ -50,12 +75,12 @@ export function NaarBakaldiGame() {
 
     // 1. DESELECT: If clicking the already selected source, unselect it.
     if (sourceCoordinates && sourceCoordinates.a === a && sourceCoordinates.b === b) {
-      dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE});
+      dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
       return;
     }
 
     // 2. SELECT SOURCE: If nothing is selected, pick up a coin.
-    if (selectedCoin === null  && sourceCoordinates === null) {
+    if (selectedCoin === null && sourceCoordinates === null) {
       // Only select if there is actually a coin at that position
       if (targetCell !== 0) {
         dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
@@ -74,7 +99,7 @@ export function NaarBakaldiGame() {
     if (!sourceCoordinates && selectedCoin !== null) {
       if (targetCell === 0) {
         dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
-        dispatch({type: Actions.NEXT_PLAYER_TURN});
+        dispatch({ type: Actions.NEXT_PLAYER_TURN });
       }
       return;
     }
@@ -109,7 +134,7 @@ export function NaarBakaldiGame() {
         // The midpoint is always on row 1, and the column depends on the destination/source column
         const midA = 1;
         const midB = (a === 0) ? prevB : b; // The column of the non-apex point
-        
+
         const midCell = gameMatrix[midA][midB];
 
         // Check if middle cell has an opponent's coin
@@ -135,7 +160,7 @@ export function NaarBakaldiGame() {
     if (rowDiff > 1 || colDiff > 1) {
       const midA = (a + prevA) / 2;
       const midB = (b + prevB) / 2;
-      
+
       // Check if middle cell exists and has an opponent's coin
       const midCell = gameMatrix[midA][midB];
       if (midCell === 0 || midCell - 1 === currentPlayer) {
@@ -205,9 +230,7 @@ export function NaarBakaldiGame() {
     // });
   }
 
-  const circleCordinates = calculateCircleCordinates(width, height);
-
-
+  // Event handler
   const handleCoinSelection = (isCurrentCoinProcessed: boolean, playerIndex: number, coinIndex: number) => {
     if (isCurrentCoinProcessed || playerIndex !== state.currentPlayer) {
       return;
@@ -222,7 +245,7 @@ export function NaarBakaldiGame() {
 
   return (
     <div className={styles.gameContainer}>
-      <div>
+      <div ref={containerRef} style={{ width: '100%', aspectRatio: 1 }}>
         <Stage width={width} height={height}>
           <Layer>
             <Shape
@@ -271,7 +294,7 @@ export function NaarBakaldiGame() {
                   )
                 }
                 return (
-                  <div onClick={() => handleGameBoardClick(a, b)} key={index}>
+                  <div onClick={() => handleGameBoardClick(a, b)} onTouchEnd={() => handleGameBoardClick(a, b)} key={index}>
                     <Circle
                       key={index}
                       x={x}
@@ -307,7 +330,7 @@ export function NaarBakaldiGame() {
                   const isCurrentCoinSelected = state.selectedCoin === coinIndex;
                   const isCurrentCoinProcessed = state.playerCoins[playerIndex][coinIndex] === 1;
                   return (
-                    <div className={styles.playerCoin} key={`${player.playerName}_${coinIndex}`} onClick={() => handleCoinSelection(isCurrentCoinProcessed, playerIndex, coinIndex)}>
+                    <div className={styles.playerCoin} key={`${player.playerName}_${coinIndex}`} onClick={() => handleCoinSelection(isCurrentCoinProcessed, playerIndex, coinIndex)} onTouchEnd={() => handleCoinSelection(isCurrentCoinProcessed, playerIndex, coinIndex)}>
                       <Stage width={40} height={40}>
                         <Layer>
                           <PlayerPositionRender
