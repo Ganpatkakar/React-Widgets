@@ -142,7 +142,8 @@ export default function PassaRender() {
         payload: randomPassaValue
       }
     )
-
+    await sleep(1000);
+    
     if (state.players[state.currentPlayer].score + randomPassaValue <= (maxGridLayers * maxGridLayers)) {
       animateTillNextVal(randomPassaValue, 0);
     } else {

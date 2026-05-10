@@ -56,7 +56,7 @@ export function SnakeLadderRender() {
 
                 //console.log(startScore, diff, sXAxis, firstWayPoints, secondWayPoints);
 
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 1;
                 ctx.strokeStyle = "#8d5524";
                 ctx.beginPath();
                 ctx.moveTo(sXAxis, sYAxis);
@@ -67,7 +67,7 @@ export function SnakeLadderRender() {
                 ctx.stroke();
 
                 for (let i = 1; i < diff; i++ ) {
-                  ctx.lineWidth = 3;
+                  ctx.lineWidth = 2;
                   ctx.beginPath();
                   ctx.globalAlpha = 1;
                   ctx.strokeStyle = '#c68642';
@@ -77,9 +77,8 @@ export function SnakeLadderRender() {
                 }
                 ctx.closePath();
               }}
-              fill="#00D2FF"
               stroke="black"
-              strokeWidth={4}
+              strokeWidth={2}
             />
           )
         })

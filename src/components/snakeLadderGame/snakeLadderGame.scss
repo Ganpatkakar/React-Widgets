@@ -7,6 +7,13 @@
   gap: 16px;
   font-family: 'sans-serif';
 
+  .snakeLadderGameStage {
+    display: block;
+    flex: 1 1 0;
+    min-width: 0;
+    width: 100%;
+  }
+
   // Use the mixin for a specific breakpoint
   @include respond-to('md') {
     flex-direction: column;

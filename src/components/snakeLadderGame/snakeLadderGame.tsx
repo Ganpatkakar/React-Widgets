@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { SnakeLadderGrid } from './snakeLadderGrid';
 import { SnakeLadderRender } from './snakeLadderRender';
 import { SnakeRender } from './snakeRender';
@@ -22,10 +22,31 @@ const defaultProps: DefaultProps = {
 }
 
 export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [stageSize, setStageSize] = useState({
+    width: width ?? defaultProps.width!,
+    height: width ?? defaultProps.height!
+  });
+
+  useEffect(() => {
+    const updateSize = () => {
+      const containerWidth = containerRef.current?.getBoundingClientRect().width;
+      const containerHeight = containerRef.current?.getBoundingClientRect().height;
+      if (!containerWidth || !containerHeight) {
+        return;
+      }
+      const size = Math.min(Math.floor(containerWidth), Math.floor(containerHeight));
+      setStageSize({ width: size, height: size });
+    };
+
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, [width]);
 
   initialValues.scoreWithGrid = React.useMemo(() => {
-    const rectWidth = width / maxGridLayers;
-    const rectHeight = width / maxGridLayers;
+    const rectWidth = stageSize.width / maxGridLayers;
+    const rectHeight = stageSize.width / maxGridLayers;
 
     const scorePointsWithGridPosition = {};
     for (let i = 0; i < maxGridLayers; i++) {
@@ -45,7 +66,7 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
     }
 
     return scorePointsWithGridPosition;
-  }, [width, height]);
+  }, [stageSize.width]);
 
   initialValues.snakesMouthScoreMap = React.useMemo(() => {
     const map: Map<number, number> = new Map();
@@ -72,8 +93,9 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
     <div className={styles.snakeLadderGameContainer}>
       <SnakeLadderContext.Provider value={state}>
         <SnakeLadderDispatcher.Provider value={dispatch}>
-          <Stage width={width} height={height}>
-            <Layer>
+          <div className={styles.snakeLadderGameStage} ref={containerRef}>
+            <Stage width={stageSize.width} height={stageSize.height}>
+              <Layer>
               <SnakeLadderContext.Provider value={state}>
                 <SnakeLadderGrid />
                 <SnakeRender />
@@ -86,6 +108,7 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
               </SnakeLadderContext.Provider>
             </Layer>
           </Stage>
+          </div>
 
           <div className={styles.snakeLadderGameControls}>
             <div className={styles.activePlayer}>

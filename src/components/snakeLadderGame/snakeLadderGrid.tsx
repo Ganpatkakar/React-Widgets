@@ -3,7 +3,7 @@ import { Rect, Text } from 'react-konva';
 import { SnakeLadderContext } from './snakeLadderGameContext';
 
 const color = "#ddd";
-const strokeColor = "#000";
+const strokeColor = "#ccc";
 
 export function SnakeLadderGrid() {
   const state = React.useContext(SnakeLadderContext);
@@ -12,8 +12,8 @@ export function SnakeLadderGrid() {
     <>
       {Object.keys(state.scoreWithGrid).map((key, index) => {
         const [xAxis, yAxis, rectWidth, rectHeight] = state.scoreWithGrid[key];
-        const centerX = xAxis + (rectWidth / 6);
-        const centerY = yAxis + (rectHeight) - (rectHeight / 4);
+        const centerX = xAxis + (rectWidth / 4);
+        const centerY = yAxis + (rectHeight / 2);
         let gridColor;
         if (index % 2 === 0) {
           gridColor = "#fff6e9"
@@ -52,13 +52,13 @@ export default function RenderGrid({
         height={rectHeight}
         fill={gridColor}
         stroke={strokeColor}
-        strokeWidth={1}
+        strokeWidth={.2}
       />
       <Text
         x={centerX}
         y={centerY}
         text={name}
-        fontSize={20}
+        fontSize={14}
       />
     </>
   )

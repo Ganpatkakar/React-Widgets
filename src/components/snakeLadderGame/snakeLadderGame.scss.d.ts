@@ -7,6 +7,7 @@ interface CssExports {
   'playerScores': string;
   'snakeLadderGameContainer': string;
   'snakeLadderGameControls': string;
+  'snakeLadderGameStage': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
