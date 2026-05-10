@@ -6,6 +6,8 @@ import { PlayerPositionRender } from './playerPositionRender';
 import { Layer, Stage } from 'react-konva';
 import PassaRender from './passaRender';
 import { ILadder, ISnake, SnakeLadderContext, SnakeLadderDispatcher, SnakeLadderReducer, initialValues, maxGridLayers } from './snakeLadderGameContext';
+import styles from "./snakeLadderGame.scss";
+import { IoMdInformationCircleOutline } from 'react-icons/io'
 
 interface ISnakeLadderGame {
   width?: number;
@@ -47,7 +49,7 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
 
   initialValues.snakesMouthScoreMap = React.useMemo(() => {
     const map: Map<number, number> = new Map();
-    initialValues.snakes.forEach(({mouthScore, tailScore}: ISnake) => {
+    initialValues.snakes.forEach(({ mouthScore, tailScore }: ISnake) => {
       map.set(mouthScore, tailScore);
     });
 
@@ -57,7 +59,7 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
 
   initialValues.laddersMap = React.useMemo(() => {
     const map: Map<number, number> = new Map();
-    initialValues.ladders.forEach(({startScore, endScore}: ILadder) => {
+    initialValues.ladders.forEach(({ startScore, endScore }: ILadder) => {
       map.set(startScore, endScore);
     });
 
@@ -67,34 +69,57 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
   const [state, dispatch] = useReducer(SnakeLadderReducer, initialValues);
 
   return (
-    <SnakeLadderContext.Provider value={state}>
-      <SnakeLadderDispatcher.Provider value={dispatch}>
-        <Stage width={width} height={height}>
-          <Layer>
-            <SnakeLadderContext.Provider value={state}>
-              <SnakeLadderGrid />
-              <SnakeRender />
-              <SnakeLadderRender />
-            </SnakeLadderContext.Provider>
-          </Layer>
-          <Layer>
-            <SnakeLadderContext.Provider value={state}>
-              <PlayerPositionRender />
-            </SnakeLadderContext.Provider>
-          </Layer>
-        </Stage>
+    <div className={styles.snakeLadderGameContainer}>
+      <SnakeLadderContext.Provider value={state}>
+        <SnakeLadderDispatcher.Provider value={dispatch}>
+          <Stage width={width} height={height}>
+            <Layer>
+              <SnakeLadderContext.Provider value={state}>
+                <SnakeLadderGrid />
+                <SnakeRender />
+                <SnakeLadderRender />
+              </SnakeLadderContext.Provider>
+            </Layer>
+            <Layer>
+              <SnakeLadderContext.Provider value={state}>
+                <PlayerPositionRender />
+              </SnakeLadderContext.Provider>
+            </Layer>
+          </Stage>
 
-        <div>Active player: {state.players[state.currentPlayer].name}</div>
-        <PassaRender />
+          <div className={styles.snakeLadderGameControls}>
+            <div className={styles.activePlayer}>
+              <h3>Next player's turn: {' '}
+                <span
+                  className={styles.activePlayerName}
+                  style={{ 'color': state.players[state.currentPlayer].color }}
+                  data-color={state.players[state.currentPlayer].color}
+                >
+                  {state.players[state.currentPlayer].name}
+                </span>
+              </h3>
+            </div>
+            <div>
+              <PassaRender />
+              <p className={styles.instructions}>
+                <span>
+                  <IoMdInformationCircleOutline color='green' fontSize={16}/>
+                </span>
 
-        <div>Players Score:
-          {state.players.map((player) => {
-            return <div key={player.name}>{player.name}: {player.score}</div>
-          })
-          }
-        </div>
-      </SnakeLadderDispatcher.Provider>
-    </SnakeLadderContext.Provider>
+                <span>Click on the dice to roll it</span></p>
+            </div>
+
+            <div className={styles.playerScores}>
+              Players Score:
+              {state.players.map((player) => {
+                return <div key={player.name}>{player.name}: {player.score}</div>
+              })
+              }
+            </div>
+          </div>
+        </SnakeLadderDispatcher.Provider>
+      </SnakeLadderContext.Provider>
+    </div>
   )
 }
 
