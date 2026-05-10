@@ -176,6 +176,7 @@ export default function PassaRender() {
   return (
     <div
       onClick={handlePassa}
+      onTouchEnd={handlePassa}
       style={{'cursor': 'pointer'}}
     >
       <ResponsiveDiceContainer

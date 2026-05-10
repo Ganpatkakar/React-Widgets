@@ -1,6 +1,6 @@
 import React from 'react';
 import { SnakeLadderContext } from './snakeLadderGameContext';
-import { Arc, Circle, Layer, Line, Stage, Group } from 'react-konva';
+import { Circle, Line, Group } from 'react-konva';
 
 export function PlayerPositionRender() {
   const state = React.useContext(SnakeLadderContext);
