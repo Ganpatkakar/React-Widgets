@@ -43,8 +43,8 @@ export const initialValues: IDefaultValues = {
   scoreWithGrid: {},
   passaValue: null,
   players: [
-    { name: "Gk", score: 1, color: "rgb(255 0 0 / 90%)" },
-    { name: "Nk", score: 1, color: "rgb(0 255 0 / 90%)" }
+    { name: "Gk", score: 1, color: "rgb(180, 2, 2)" },
+    { name: "Nk", score: 1, color: "rgb(5, 161, 5)" }
   ],
   currentPlayer: 0,
   ladders: [

@@ -35,14 +35,14 @@ export function SnakeLadderGame({ width, height }: ISnakeLadderGame) {
       if (!containerWidth || !containerHeight) {
         return;
       }
-      const size = Math.min(Math.floor(containerWidth), Math.floor(containerHeight));
+      const size = Math.min(Math.floor(containerWidth), Math.floor(containerHeight) - 30);
       setStageSize({ width: size, height: size });
     };
 
     updateSize();
     window.addEventListener('resize', updateSize);
     return () => window.removeEventListener('resize', updateSize);
-  }, [width]);
+  }, [width, height]);
 
   initialValues.scoreWithGrid = React.useMemo(() => {
     const rectWidth = stageSize.width / maxGridLayers;

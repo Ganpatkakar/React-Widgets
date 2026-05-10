@@ -49,9 +49,9 @@ export function PlayerPositionRender() {
               fillLinearGradientStartPoint={{ x: -radius, y: 0 }}
               fillLinearGradientEndPoint={{ x: radius, y: 0 }}
               fillLinearGradientColorStops={[0, color, 1, color]} // Glossy gradient
-              opacity={0.9}
+              opacity={1}
               closed={true}
-              tension={0.2} // Rounds the corners slightly
+              tension={0.4} // Rounds the corners slightly
             />
 
             {/* The Head with a "Rim" effect */}
