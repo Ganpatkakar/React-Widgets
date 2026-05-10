@@ -39,10 +39,17 @@ module.exports = {
         ],
         exclude: /node_modules/,
       },
+      {
+        test: /\.(mp3|wav|ogg|m4a)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/media/[name].[hash:8][ext]'
+        }
+      },
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.*'],
   },
   plugins: [
     new HtmlWebpackPlugin({

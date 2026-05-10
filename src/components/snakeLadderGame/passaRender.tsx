@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Actions, SnakeLadderContext, SnakeLadderDispatcher, maxGridLayers } from './snakeLadderGameContext';
 import { Stage, Layer, Group, Rect, Circle, Line } from 'react-konva';
+import diceRollSoundUrl from '../../assets/dice-roll.mp3';
+import snakeHiss from '../../assets/snake-hiss.mp3';
+import ladderSound from '../../assets/ladder-climb1.mp3';
+import { ModelPopover } from '../ModelPopOver';
+
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const maxPassaSides = 6;
 
@@ -43,42 +50,56 @@ export default function PassaRender() {
     setIsPassaActive(true);
   }, []);
 
-  const animateTillNextVal = React.useCallback((randomPassaValue, curr) => {
+  const animateTillNextVal = React.useCallback(async (randomPassaValue, curr) => {
     if (curr >= randomPassaValue) {
 
-      requestAnimationFrame(() => {
+      requestAnimationFrame(async () => {
         const currentPlayerScore = players[currentPlayer].score;
-        //console.log(currentPlayer, randomPassaValue, currentPlayerScore);
         if (state.snakesMouthScoreMap.has(currentPlayerScore)) {
-          //console.log(state.snakesMouthScoreMap);
-          setTimeout(() => {
+          setTimeout(async () => {
+            var shankeHissSound = new Audio(snakeHiss);
+
+            shankeHissSound.play();
+            shankeHissSound.currentTime = 0;
+
+            await sleep(300);
+
             dispatch(
               {
                 type: Actions.UpdateScore,
                 payload: state.snakesMouthScoreMap.get(currentPlayerScore)
               }
             )
+
+            await sleep(1000);
             resetNextPlayerSettings();
           }, 500);
 
           return;
         }
 
-        //console.log(currentPlayer, randomPassaValue, currentPlayerScore);
         if (state.laddersMap.has(currentPlayerScore)) {
-          //console.log(state.snakesMouthScoreMap);
-          setTimeout(() => {
+          setTimeout(async () => {
+            var ladderSoundSound = new Audio(ladderSound);
+
+            ladderSoundSound.play();
+            ladderSoundSound.currentTime = 0;
+
+            await sleep(300);
+
             dispatch(
               {
                 type: Actions.UpdateScore,
                 payload: state.laddersMap.get(currentPlayerScore)
               }
             )
+            await sleep(1000);
             resetNextPlayerSettings()
           }, 500);
           return;
         }
 
+        await sleep(1000);
         resetNextPlayerSettings();
       });
 
@@ -100,11 +121,18 @@ export default function PassaRender() {
   }, [state.currentPlayer]);
 
 
-  const handlePassa = React.useCallback((event: any) => {
+  const handlePassa = React.useCallback(async (event: any) => {
     event.preventDefault();
     if (!isPassaActive) {
       return;
     }
+
+    var diceRollSound = new Audio(diceRollSoundUrl);
+
+    diceRollSound.play();
+    diceRollSound.currentTime = 0;
+
+    await sleep(300);
 
     setIsPassaActive(false);
     const randomPassaValue = Math.ceil(Math.random() * maxPassaSides);
@@ -118,25 +146,22 @@ export default function PassaRender() {
     if (state.players[state.currentPlayer].score + randomPassaValue <= (maxGridLayers * maxGridLayers)) {
       animateTillNextVal(randomPassaValue, 0);
     } else {
-      const timer = setTimeout(() => {
-        dispatch({
-          type: Actions.NextPlayerTurn,
+      await sleep(1000);
+      dispatch({
+        type: Actions.NextPlayerTurn,
+        payload: null
+      })
+      dispatch(
+        {
+          type: Actions.PassaAction,
           payload: null
-        })
-        dispatch(
-          {
-            type: Actions.PassaAction,
-            payload: null
-          }
-        )
-        setIsPassaActive(true);
-        clearTimeout(timer);
-      }, 1000);
+        }
+      )
+      setIsPassaActive(true);
     }
 
   }, [state.currentPlayer]);
 
-  console.log(state?.passaValue);
   if (state?.passaValue) {
     return (
       <Stage width={150} height={150}>
