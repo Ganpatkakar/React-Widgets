@@ -89,7 +89,7 @@ export function NaarBakaldiGame() {
 
     // Rule: Movement constraints
     const isHorizontalOrVertical = (rowDiff === 0 || colDiff === 0);
-    const isSpecialDiagonal = (a === 0 && b === 1); // As per your specific requirement
+    const isSpecialDiagonal = (a === 0 && b === 1) || (prevA === 0 && prevB === 1); // As per your specific requirement
 
     if (!isHorizontalOrVertical && !isSpecialDiagonal) {
       return; // Invalid direction
@@ -98,6 +98,37 @@ export function NaarBakaldiGame() {
     // Rule: Jumping over coins (if distance > 1)
     if (rowDiff > 2 || colDiff > 2) {
       return; // Can't jump more than 2 spaces
+    }
+
+    const involvesApex = (a === 0 && b === 1) || (prevA === 0 && prevB === 1);
+
+    if (involvesApex) {
+      // 1. APEX JUMP (Kill Scenario)
+      // Moving from (2, x) to (0, 1) or (0, 1) to (2, x)
+      if (rowDiff === 2) {
+        // The midpoint is always on row 1, and the column depends on the destination/source column
+        const midA = 1;
+        const midB = (a === 0) ? prevB : b; // The column of the non-apex point
+        
+        const midCell = gameMatrix[midA][midB];
+
+        // Check if middle cell has an opponent's coin
+        if (midCell !== 0 && midCell - 1 !== currentPlayer) {
+          dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
+          dispatch({ type: Actions.PLAYER_KILL_COIN, payload: { a: midA, b: midB } });
+          dispatch({ type: Actions.NEXT_PLAYER_TURN });
+          return;
+        }
+        return; // Move invalid if no opponent coin to jump
+      }
+
+      // 2. APEX NORMAL MOVE (Distance 1)
+      // Moving from (1, x) to (0, 1) or (0, 1) to (1, x)
+      if (rowDiff === 1) {
+        dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
+        dispatch({ type: Actions.NEXT_PLAYER_TURN });
+        return;
+      }
     }
 
     // Kill scenario
@@ -110,12 +141,10 @@ export function NaarBakaldiGame() {
       if (midCell === 0 || midCell - 1 === currentPlayer) {
         return; // Can't move more than 1 space unless jumping an opponent
       }
-      dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
       dispatch({ type: Actions.PLAYER_KILL_COIN, payload: { a: midA, b: midB } });
-      return
     }
 
-    // 5. EXECUTE MOVE
+    // 5. FINAL EXECUTE FOR REMAINING NORMAL MOVES (Horizontal/Vertical distance 1)
     dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
     dispatch({ type: Actions.NEXT_PLAYER_TURN });
 
@@ -248,7 +277,6 @@ export function NaarBakaldiGame() {
                       x={x}
                       y={y}
                       radius={r}
-                      stroke={"red"}
                     />
                     {dice}
                   </div>
