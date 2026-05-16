@@ -1,14 +1,11 @@
 import React from "react";
-import { SnakeLadderGame } from "./components/snakeLadderGame";
-import WhackAMole from "./whackAMole";
-import { NaarBakaldiGame } from "./components/naarBakaldiGame";
-
+import {SixteenPabelsGame} from './components/SiteenPabelsGame';
 
 
 function App() {
   return (
     <>
-      <NaarBakaldiGame />
+      <SixteenPabelsGame />
 
       {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,</p>
       <p>molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum</p>
