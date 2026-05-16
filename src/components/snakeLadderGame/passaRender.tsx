@@ -12,9 +12,9 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export const maxPassaSides = 6;
 
 export default function PassaRender() {
-  const [isPassaActive, setIsPassaActive] = useState(true);
   const dispatch = React.useContext(SnakeLadderDispatcher);
   const state = React.useContext(SnakeLadderContext);
+  const isClicking = useRef(false);
   const { players, currentPlayer } = state;
 
   const containerRef = useRef(null);
@@ -47,7 +47,6 @@ export default function PassaRender() {
         payload: null
       }
     )
-    setIsPassaActive(true);
   }, []);
 
   const animateTillNextVal = React.useCallback(async (randomPassaValue, curr) => {
@@ -123,9 +122,9 @@ export default function PassaRender() {
 
   const handlePassa = React.useCallback(async (event: any) => {
     event.preventDefault();
-    if (!isPassaActive) {
-      return;
-    }
+    event.stopPropagation();
+    if (isClicking.current) return;
+    isClicking.current = true;
 
     var diceRollSound = new Audio(diceRollSoundUrl);
 
@@ -134,7 +133,6 @@ export default function PassaRender() {
 
     await sleep(300);
 
-    setIsPassaActive(false);
     const randomPassaValue = Math.ceil(Math.random() * maxPassaSides);
     dispatch(
       {
@@ -146,6 +144,7 @@ export default function PassaRender() {
     
     if (state.players[state.currentPlayer].score + randomPassaValue <= (maxGridLayers * maxGridLayers)) {
       animateTillNextVal(randomPassaValue, 0);
+      isClicking.current = false;
     } else {
       await sleep(1000);
       dispatch({
@@ -158,7 +157,7 @@ export default function PassaRender() {
           payload: null
         }
       )
-      setIsPassaActive(true);
+      isClicking.current = false;
     }
 
   }, [state.currentPlayer]);
@@ -175,8 +174,9 @@ export default function PassaRender() {
 
   return (
     <div
-      onClick={handlePassa}
-      onTouchEnd={handlePassa}
+      // onClick={handlePassa}
+      // onTouchEnd={handlePassa}
+      onPointerUp={handlePassa}
       style={{'cursor': 'pointer'}}
     >
       <ResponsiveDiceContainer
