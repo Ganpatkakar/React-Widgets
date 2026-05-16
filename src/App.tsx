@@ -1,5 +1,5 @@
 import React from "react";
-import {SixteenPabelsGame} from './components/SiteenPabelsGame';
+import {SixteenPabelsGame} from './components/SixteenPabelsGame';
 
 
 function App() {
