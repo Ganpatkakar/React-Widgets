@@ -31,7 +31,34 @@ const gameMatrix = [
 // top inverted triangle and bottom triangle can be accessed
 
 export function SixteenPabelsGame() {
-  const [containerWidth, containerHeight] = [500, 500];
+  const [dimensions, setDimensions] = useState({ containerWidth: 500, containerHeight: 500 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const width = containerRef.current.clientWidth;
+        const height = containerRef.current.clientHeight;
+        const minLen = Math.min(width - 60, height, 500);
+        const minHeight = Math.min(height, 400);
+        setDimensions({ containerWidth: minLen, containerHeight: minHeight }); // Assuming square aspect ratio
+      }
+    };
+
+    updateDimensions();
+
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+
+  const {containerWidth, containerHeight} = dimensions;
   const [upperTriangleWidth, upperTriangleHeight] = [containerWidth / 2, 120];
   const [lowerTriangleWidth, lowerTriangleHeight] = [containerWidth / 2, 120];
   const [squareWidth, squareHeight] = [containerWidth, containerHeight];
@@ -46,7 +73,7 @@ export function SixteenPabelsGame() {
 
   return (
     <div className={styles.gameContainer}>
-      <div style={{ width: '100%', }}>
+      <div ref={containerRef} style={{ width: '100%',}}>
         <Stage width={containerWidth + 60} height={upperTriangleHeight + squareHeight + lowerTriangleHeight + 60}>
           <Layer x={containerWidth / 4 + 30} y={30}>
             <Shape
