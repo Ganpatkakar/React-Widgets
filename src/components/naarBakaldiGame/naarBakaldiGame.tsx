@@ -33,7 +33,7 @@ export function NaarBakaldiGame() {
       if (containerRef.current) {
         const width = containerRef.current.clientWidth;
         const height = containerRef.current.clientHeight;
-        const minLen = Math.min(width, height, 500)
+        const minLen = Math.min(width - 60, height - 60, 500)
         setDimensions({ width: minLen, height: minLen }); // Assuming square aspect ratio
       }
     };
@@ -248,8 +248,8 @@ export function NaarBakaldiGame() {
   return (
     <div className={styles.gameContainer}>
       <div ref={containerRef} style={{ width: '100%',}}>
-        <Stage width={width} height={height}>
-          <Layer>
+        <Stage width={width + 60} height={height + 60}>
+          <Layer x={30} y={30}>
             <Shape
               sceneFunc={(ctx, shape) => {
                 ctx.beginPath();
