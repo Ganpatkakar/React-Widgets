@@ -1,14 +1,26 @@
 import React from 'react';
 import { Circle, Line, Group } from 'react-konva';
 
-export function PlayerPositionRender({xAxis, yAxis, radius, player}) {
+interface IPlayerPositionRender {
+  xAxis: number;
+  yAxis: number;
+  radius: number;
+  player: {
+    playerName: string;
+    color: string;
+  };
+  isCurrentPlayerPabelsActive: boolean;
+}
+
+export function PlayerPositionRender({xAxis, yAxis, radius, player, isCurrentPlayerPabelsActive}: IPlayerPositionRender) {
   const {color} = player;
   return (
     <Group
       shadowColor="black" 
       shadowBlur={8}
-      shadowOpacity={0.4} 
+      shadowOpacity={0.8} 
       shadowOffset={{ x: 2, y: 3 }}
+      opacity={isCurrentPlayerPabelsActive ? 1 : 0.6}
     >
       {/* Elegant Tapered Body using a Path for "Curves" */}
       <Line

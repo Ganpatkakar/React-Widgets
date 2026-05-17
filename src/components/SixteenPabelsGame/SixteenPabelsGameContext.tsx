@@ -1,49 +1,32 @@
 export enum Actions {
-  PLAYER_SELECT_COIN = "PLAYER_SELECT_COIN",
   NEXT_PLAYER_TURN = "NEXT_PLAYER_TURN",
   PLAYER_SELECT_SOURCE = "PLAYER_SELECT_SOURCE",
   PLAYER_SELECT_DESTINATION = "PLAYER_SELECT_DESTINATION",
   PLAYER_UNSELECT_SOURCE = "PLAYER_UNSELECT_SOURCE",
-  PLAYER_KILL_COIN = "PLAYER_KILL_COIN"
+  PLAYER_KILL_PABEL = "PLAYER_KILL_PABEL"
 }
 
 export interface IPlayer {
   playerName: string;
-  coins: number[];
   color: string;
 }
-
-// state data
-// player coins => [[0, 0, 0], [0, 0, 0]]
-// current player => index
-// matrix => Array<Array<numbers>>
-// selected coin => index
-// if player no select from the players data and select an existing coin then
-// source cordinates of matrix => {a, b}
 
 export interface IDefaultValues {
   currentPlayer: number;
   matrix: Array<Array<number>>;
-  selectedCoin: number | null;
   sourceCoordinates: { a: number, b: number } | null;
   destinationCordinates: { a: number, b: number } | null;
+  hasKilledThisTurn: boolean;
 }
 
 export const sixteenPabelsGameReducer = (state: IDefaultValues, { type, payload = null }: { type: Actions, payload?: any }) => {
-
-  // Player selects coin from the arsenal
-  if (type === Actions.PLAYER_SELECT_COIN) {
-    return {
-      ...state,
-      selectedCoin: payload,
-      sourceCoordinates: null,
-    }
-  }
 
   // Next player turn, once destination is selected
   if (type === Actions.NEXT_PLAYER_TURN) {
     return {
       ...state,
+      currentPlayer: state.currentPlayer === 1 ? 2 : 1,
+      hasKilledThisTurn: false,
     }
   }
 
@@ -52,7 +35,6 @@ export const sixteenPabelsGameReducer = (state: IDefaultValues, { type, payload 
     return {
       ...state,
       sourceCoordinates: payload,
-      selectedCoin: null,
     }
   }
 
@@ -65,25 +47,29 @@ export const sixteenPabelsGameReducer = (state: IDefaultValues, { type, payload 
 
   // expected payload data destinate cordinates {a, b}
   if (type === Actions.PLAYER_SELECT_DESTINATION) {
+    if (!state.sourceCoordinates) return state;
+
     const { a: prevA, b: prevB } = state.sourceCoordinates;
     const { a, b } = payload;
-    const matrix = [...state.matrix];
-    matrix[a][b] = state.currentPlayer + 1;
-    matrix[prevA][prevB] = 0;
+    const newMatrix = state.matrix.map(row => [...row]);
+    
+    newMatrix[a][b] = state.matrix[prevA][prevB];
+    newMatrix[prevA][prevB] = 0;
 
     return {
       ...state,
-      sourceCoordinates: null,
-      matrix: [...matrix],
+      sourceCoordinates: null, // Clear selection after move
+      matrix: newMatrix,
     }
   }
 
-  if (type === Actions.PLAYER_KILL_COIN) {
-    const matrix = [...state.matrix];
+  if (type === Actions.PLAYER_KILL_PABEL) {
+    const matrix = state.matrix.map(row => [...row]);
     matrix[payload.a][payload.b] = 0;
     return {
       ...state,
-      matrix: [...matrix],
+      matrix,
+      hasKilledThisTurn: true,
     }
   }
 
@@ -96,21 +82,21 @@ export const topTrianlgeCircles = (width: number, height: number) => [
   {
     x: 0,
     y: 0,
-    r: 30,
+    r: 20,
     a: 0,
     b: 1
   },
   {
     x: width / 2,
     y: 0,
-    r: 30,
+    r: 20,
     a: 0,
     b: 2
   },
   {
     x: width,
     y: 0,
-    r: 30,
+    r: 20,
     a: 0,
     b: 3
   },
@@ -118,21 +104,21 @@ export const topTrianlgeCircles = (width: number, height: number) => [
   {
     x: width / 4,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 1,
     b: 1
   },
   {
     x: width / 2,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 1,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 1,
     b: 3
   },
@@ -143,35 +129,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: 0,
-    r: 30,
+    r: 20,
     a: 2,
     b: 0
   },
   {
     x: width / 4,
     y: 0,
-    r: 30,
+    r: 20,
     a: 2,
     b: 1
   },
   {
     x: width / 2,
     y: 0,
-    r: 30,
+    r: 20,
     a: 2,
     b: 2
   },
   {
     x: width - width / 4,
     y: 0,
-    r: 30,
+    r: 20,
     a: 2,
     b: 3
   },
   {
     x: width,
     y: 0,
-    r: 30,
+    r: 20,
     a: 2,
     b: 4
   },
@@ -179,35 +165,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height / 4,
-    r: 30,
+    r: 20,
     a: 3,
     b: 0
   },
   {
     x: width / 4,
     y: height / 4,
-    r: 30,
+    r: 20,
     a: 3,
     b: 1
   },
   {
     x: width / 2,
     y: height / 4,
-    r: 30,
+    r: 20,
     a: 3,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 4,
-    r: 30,
+    r: 20,
     a: 3,
     b: 3
   },
   {
     x: width,
     y: height / 4,
-    r: 30,
+    r: 20,
     a: 3,
     b: 4
   },
@@ -215,35 +201,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 4,
     b: 0
   },
   {
     x: width / 4,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 4,
     b: 1
   },
   {
     x: width / 2,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 4,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 4,
     b: 3
   },
   {
     x: width,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 4,
     b: 4
   },
@@ -251,35 +237,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height - height / 4,
-    r: 30,
+    r: 20,
     a: 5,
     b: 0
   },
   {
     x: width / 4,
     y: height - height / 4,
-    r: 30,
+    r: 20,
     a: 5,
     b: 1
   },
   {
     x: width / 2,
     y: height - height / 4,
-    r: 30,
+    r: 20,
     a: 5,
     b: 2
   },
   {
     x: width - width / 4,
     y: height - height / 4,
-    r: 30,
+    r: 20,
     a: 5,
     b: 3
   },
   {
     x: width,
     y: height - height / 4,
-    r: 30,
+    r: 20,
     a: 5,
     b: 4
   },
@@ -287,35 +273,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height,
-    r: 30,
+    r: 20,
     a: 6,
     b: 0
   },
   {
     x: width / 4,
     y: height,
-    r: 30,
+    r: 20,
     a: 6,
     b: 1
   },
   {
     x: width / 2,
     y: height,
-    r: 30,
+    r: 20,
     a: 6,
     b: 2
   },
   {
     x: width - width / 4,
     y: height,
-    r: 30,
+    r: 20,
     a: 6,
     b: 3
   },
   {
     x: width,
     y: height,
-    r: 30,
+    r: 20,
     a: 6,
     b: 4
   },
@@ -326,21 +312,21 @@ export const bottomTrianlgeCircles = (width: number, height: number) => [
   {
     x: width / 4,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 7,
     b: 1
   },
   {
     x: width / 2,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 7,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 2,
-    r: 30,
+    r: 20,
     a: 7,
     b: 3
   },
@@ -348,21 +334,21 @@ export const bottomTrianlgeCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height,
-    r: 30,
+    r: 20,
     a: 8,
     b: 1
   },
   {
     x: width / 2,
     y: height,
-    r: 30,
+    r: 20,
     a: 8,
     b: 2
   },
   {
     x: width,
     y: height,
-    r: 30,
+    r: 20,
     a: 8,
     b: 3
   },
