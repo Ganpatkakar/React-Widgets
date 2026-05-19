@@ -1,5 +1,5 @@
 import React, { useReducer, useRef, useEffect, useState } from 'react';
-import { Shape, Stage, Layer, Circle, Group, Text } from 'react-konva';
+import { Shape, Stage, Layer, Circle, Group } from 'react-konva';
 import { PlayerPositionRender } from './playerPositionRender';
 import styles from './SixteenPabelsGamev2.scss';
 import { bottomTrianlgeCircles, topTrianlgeCircles, squareCircles, sixteenPabelsGameReducer, IDefaultValues, Actions, coordinatesPossibleMoves } from './SixteenPabelsGameContextv2';
@@ -33,8 +33,6 @@ const gameMatrix = [
 export function SixteenPabelsGamev2() {
   const [dimensions, setDimensions] = useState({ containerWidth: 500, containerHeight: 500 });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [possibleMoves, setPossibleMoves] = useState<any>(new Map());
-  const [possibleJumps, setPossibleJumps] = useState<any>(new Map());
 
   const initialValues: IDefaultValues = {
     currentPlayer: 1,
@@ -78,7 +76,6 @@ export function SixteenPabelsGamev2() {
   const squareCordinates = squareCircles(squareWidth, squareHeight);
 
   const handlePlayerClick = (a: number, b: number) => {
-    console.log("player click", a, b);
     const source = state.sourceCoordinates;
     const value = state.matrix[a][b];
     const currentPlayer = state.currentPlayer;
@@ -111,32 +108,22 @@ export function SixteenPabelsGamev2() {
 
     if (value !== 0) return;
 
-    const { oneStep, jump } = coordinatesPossibleMoves[sourceKey];
-
-    const singleStepMap = new Map();
-    oneStep.map(([aa, bb]) => {
-      singleStepMap.set(`${source.a + aa}_${source.b + bb}`, true);
-    });
+    const moves = coordinatesPossibleMoves[sourceKey] || { oneStep: [], jump: [] };
 
     if (!state.hasKilledThisTurn) {
-      const validSingleStepMove = singleStepMap.has(key);
-      if (validSingleStepMove) {
+      const isSingleStep = moves.oneStep.some(([da, db]) => (source.a + da) === a && (source.b + db) === b);
+      if (isSingleStep) {
         dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
         dispatch({ type: Actions.NEXT_PLAYER_TURN });
         return;
       }
     }
 
-    const jumpMap = new Map();
-    jump.map(([aa, bb]) => {
-      jumpMap.set(`${source.a + aa}_${source.b + bb}`, true);
-    });
-
-    const validJumpMove = jumpMap.has(key);
-    if (validJumpMove) {
+    const isJump = moves.jump.some(([da, db]) => (source.a + da) === a && (source.b + db) === b);
+    if (isJump) {
       let midA = (source.a + a) / 2;
       let midB = (source.b + b) / 2;
-      if (source.a === 2 && source.b === 2 || a === 2 && b === 2) {
+      if ((source.a === 2 && source.b === 2) || (a === 2 && b === 2)) {
         if (source.a === 2 && source.b === 2 && a === 0) {
           midA = 1;
           midB = b;
@@ -144,7 +131,7 @@ export function SixteenPabelsGamev2() {
           midA = 1;
           midB = source.b;
         }
-      } else if (source.a === 6 && source.b === 2 || a === 6 && b === 2) {
+      } else if ((source.a === 6 && source.b === 2) || (a === 6 && b === 2)) {
         if (source.a === 6 && source.b === 2 && a === 8) {
           midA = 7;
           midB = b;
@@ -296,14 +283,7 @@ const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefau
     const { x, y, r = 30, a = 0, b = 0 } = coordinate;
     const cellValue = state.matrix[a][b];
     let dice = null;
-    const key = `${a}_${b}`
     let color = "black";
-    // if (possibleMoves.has(key)) {
-    //   color = "red";
-    // }
-    // if (possibleJumps.has(key)) {
-    //   color = "blue";
-    // }
     if (cellValue > 0) {
       let radius = 10;
       if (state.sourceCoordinates?.a === a && state.sourceCoordinates?.b === b) {
