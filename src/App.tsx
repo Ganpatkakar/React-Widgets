@@ -1,11 +1,13 @@
 import React from "react";
 import {SixteenPabelsGamev2} from './components/SixteenPabelsGameV2';
+import {SixteenPabelsGame} from './components/SixteenPabelsGame';
 
 
 function App() {
   return (
     <>
       <SixteenPabelsGamev2 />
+      <SixteenPabelsGame />
 
       {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,</p>
       <p>molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum</p>

@@ -93,7 +93,7 @@ export function SixteenPabelsGamev2() {
     const sourceKey: string = `${source.a}_${source.b}`;
 
     // if user selects already selected pabel then deselct it
-    if (source.a === a && source.b === b) {
+    if (!state.hasKilledThisTurn && source.a === a && source.b === b) {
       dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
       return;
     }
@@ -144,6 +144,7 @@ export function SixteenPabelsGamev2() {
       if (state.matrix[midA][midB] === opponent) {
         dispatch({ type: Actions.PLAYER_KILL_PABEL, payload: { a: midA, b: midB } });
         dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
+        dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
       }
     }
   };
@@ -288,9 +289,7 @@ const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefau
       let radius = 10;
       if (state.sourceCoordinates?.a === a && state.sourceCoordinates?.b === b) {
         radius = 12;
-        console.log(radius);
       }
-      console.log(radius);
       const isCurrentPlayerPabelsActive = state.currentPlayer === cellValue;
       dice = (
         <PlayerPositionRender

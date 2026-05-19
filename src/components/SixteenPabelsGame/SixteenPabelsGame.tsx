@@ -136,7 +136,7 @@ export function SixteenPabelsGame() {
       return;
     }
 
-    if (source.a === a && source.b === b) {
+    if (!state.hasKilledThisTurn && source.a === a && source.b === b) {
       dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
       return;
     }
@@ -307,6 +307,9 @@ export function SixteenPabelsGame() {
             }
           </Layer>
         </Stage>
+      </div>
+      <div className={styles.passContainer}>
+        <button disabled={!state.hasKilledThisTurn} className={styles.passButton} onClick={() => dispatch({ type: Actions.NEXT_PLAYER_TURN })}>Pass Turn</button>
       </div>
     </div>
   )
