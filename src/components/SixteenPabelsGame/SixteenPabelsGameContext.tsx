@@ -82,21 +82,21 @@ export const topTrianlgeCircles = (width: number, height: number) => [
   {
     x: 0,
     y: 0,
-    r: 20,
+    r: 30,
     a: 0,
     b: 1
   },
   {
     x: width / 2,
     y: 0,
-    r: 20,
+    r: 30,
     a: 0,
     b: 2
   },
   {
     x: width,
     y: 0,
-    r: 20,
+    r: 30,
     a: 0,
     b: 3
   },
@@ -104,21 +104,21 @@ export const topTrianlgeCircles = (width: number, height: number) => [
   {
     x: width / 4,
     y: height / 2,
-    r: 20,
+    r: 24,
     a: 1,
     b: 1
   },
   {
     x: width / 2,
     y: height / 2,
-    r: 20,
+    r: 24,
     a: 1,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 2,
-    r: 20,
+    r: 24,
     a: 1,
     b: 3
   },
@@ -129,35 +129,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: 0,
-    r: 20,
+    r: 30,
     a: 2,
     b: 0
   },
   {
     x: width / 4,
     y: 0,
-    r: 20,
+    r: 30,
     a: 2,
     b: 1
   },
   {
     x: width / 2,
     y: 0,
-    r: 20,
+    r: 30,
     a: 2,
     b: 2
   },
   {
     x: width - width / 4,
     y: 0,
-    r: 20,
+    r: 30,
     a: 2,
     b: 3
   },
   {
     x: width,
     y: 0,
-    r: 20,
+    r: 30,
     a: 2,
     b: 4
   },
@@ -165,35 +165,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height / 4,
-    r: 20,
+    r: 30,
     a: 3,
     b: 0
   },
   {
     x: width / 4,
     y: height / 4,
-    r: 20,
+    r: 30,
     a: 3,
     b: 1
   },
   {
     x: width / 2,
     y: height / 4,
-    r: 20,
+    r: 30,
     a: 3,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 4,
-    r: 20,
+    r: 30,
     a: 3,
     b: 3
   },
   {
     x: width,
     y: height / 4,
-    r: 20,
+    r: 30,
     a: 3,
     b: 4
   },
@@ -201,35 +201,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height / 2,
-    r: 20,
+    r: 30,
     a: 4,
     b: 0
   },
   {
     x: width / 4,
     y: height / 2,
-    r: 20,
+    r: 30,
     a: 4,
     b: 1
   },
   {
     x: width / 2,
     y: height / 2,
-    r: 20,
+    r: 30,
     a: 4,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 2,
-    r: 20,
+    r: 30,
     a: 4,
     b: 3
   },
   {
     x: width,
     y: height / 2,
-    r: 20,
+    r: 30,
     a: 4,
     b: 4
   },
@@ -237,35 +237,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height - height / 4,
-    r: 20,
+    r: 30,
     a: 5,
     b: 0
   },
   {
     x: width / 4,
     y: height - height / 4,
-    r: 20,
+    r: 30,
     a: 5,
     b: 1
   },
   {
     x: width / 2,
     y: height - height / 4,
-    r: 20,
+    r: 30,
     a: 5,
     b: 2
   },
   {
     x: width - width / 4,
     y: height - height / 4,
-    r: 20,
+    r: 30,
     a: 5,
     b: 3
   },
   {
     x: width,
     y: height - height / 4,
-    r: 20,
+    r: 30,
     a: 5,
     b: 4
   },
@@ -273,35 +273,35 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height,
-    r: 20,
+    r: 30,
     a: 6,
     b: 0
   },
   {
     x: width / 4,
     y: height,
-    r: 20,
+    r: 30,
     a: 6,
     b: 1
   },
   {
     x: width / 2,
     y: height,
-    r: 20,
+    r: 30,
     a: 6,
     b: 2
   },
   {
     x: width - width / 4,
     y: height,
-    r: 20,
+    r: 30,
     a: 6,
     b: 3
   },
   {
     x: width,
     y: height,
-    r: 20,
+    r: 30,
     a: 6,
     b: 4
   },
@@ -312,21 +312,21 @@ export const bottomTrianlgeCircles = (width: number, height: number) => [
   {
     x: width / 4,
     y: height / 2,
-    r: 20,
+    r: 24,
     a: 7,
     b: 1
   },
   {
     x: width / 2,
     y: height / 2,
-    r: 20,
+    r: 24,
     a: 7,
     b: 2
   },
   {
     x: width - width / 4,
     y: height / 2,
-    r: 20,
+    r: 24,
     a: 7,
     b: 3
   },
@@ -334,21 +334,21 @@ export const bottomTrianlgeCircles = (width: number, height: number) => [
   {
     x: 0,
     y: height,
-    r: 20,
+    r: 30,
     a: 8,
     b: 1
   },
   {
     x: width / 2,
     y: height,
-    r: 20,
+    r: 30,
     a: 8,
     b: 2
   },
   {
     x: width,
     y: height,
-    r: 20,
+    r: 30,
     a: 8,
     b: 3
   },

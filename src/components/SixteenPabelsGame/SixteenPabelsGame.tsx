@@ -338,6 +338,7 @@ const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefau
     return (
       <Group key={`${a}-${b}`} onClick={() => clickHandler(a, b)} onTouchEnd={() => clickHandler(a, b)}>
         <Circle x={x} y={y} radius={r} fill="transparent" />
+        <Circle x={x} y={y} radius={2} fill="black" stroke={"black"}/>
         {dice}
       </Group>
     );
