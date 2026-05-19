@@ -1,8 +1,8 @@
 import React, { useReducer, useRef, useEffect, useState } from 'react';
-import { Shape, Stage, Layer, Circle, Line, Group } from 'react-konva';
+import { Shape, Stage, Layer, Circle, Group, Text } from 'react-konva';
 import { PlayerPositionRender } from './playerPositionRender';
 import styles from './SixteenPabelsGamev2.scss';
-import { bottomTrianlgeCircles, topTrianlgeCircles, squareCircles, sixteenPabelsGameReducer, IDefaultValues, Actions} from './SixteenPabelsGameContextv2';
+import { bottomTrianlgeCircles, topTrianlgeCircles, squareCircles, sixteenPabelsGameReducer, IDefaultValues, Actions, coordinatesPossibleMoves} from './SixteenPabelsGameContextv2';
 
 const players = [
   {
@@ -33,6 +33,8 @@ const gameMatrix = [
 export function SixteenPabelsGamev2() {
   const [dimensions, setDimensions] = useState({ containerWidth: 500, containerHeight: 500 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const [possibleMoves, setPossibleMoves] = useState<any>(new Map());
+  const [possibleJumps, setPossibleJumps] = useState<any>(new Map());
 
   const initialValues: IDefaultValues = {
     currentPlayer: 1,
@@ -67,8 +69,8 @@ export function SixteenPabelsGamev2() {
 
 
   const {containerWidth, containerHeight} = dimensions;
-  const [upperTriangleWidth, upperTriangleHeight] = [containerWidth / 1.5, 120];
-  const [lowerTriangleWidth, lowerTriangleHeight] = [containerWidth / 1.5, 120];
+  const [upperTriangleWidth, upperTriangleHeight] = [containerWidth / 1.5, 100];
+  const [lowerTriangleWidth, lowerTriangleHeight] = [containerWidth / 1.5, 100];
   const [squareWidth, squareHeight] = [containerWidth, containerHeight];
 
   const topTrianlgeCordinates = topTrianlgeCircles(upperTriangleWidth, upperTriangleHeight);
@@ -111,100 +113,22 @@ export function SixteenPabelsGamev2() {
 
   const handlePlayerClick = (a: number, b: number) => {
     console.log("player click", a, b);
-    const source = state.sourceCoordinates;
-    const value = state.matrix[a][b];
-    const currentPlayer = state.currentPlayer;
-    const opponent = currentPlayer === 1 ? 2 : 1;
-
-    // 1 DESELECT: If clicking the already selected source, unselect it.
-    // 2 SELECT: If clicked on the current playaers coin and make it source destination
-    // 3 Destination coordinates can only be horizontal or vertical
-    // 4 Special handling cases includes => upper triangle move and bottom triangle moves
-    // 4.1 condition to enter to upper triangle is only from {a: 2, b: 2}
-    // 4.2 condition to enter the bottom triangle is only from {a: 6 ,b: 2}
-    // 4.3 From these special cordinates only diagonal move is possible
-    // 5 Single place move is only going to move current selected source value to next selected destination
-    // 6 Double place move (jump to another pabel, so check the condition if there is another players pabel in between, if not then not valid move)
-    // 7 If jump to double is a valid move then kill another players pabel
-    // 8 Player can jump multiple times if they have killed previously, so in case of kill player choose to kill another or pass the turn to next player on each kill
-
-    // 1 & 2: Selection / Deselection Logic
-    if (!source) {
-      if (value === currentPlayer) {
-        dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
-      }
-      return;
-    }
-
-    if (source.a === a && source.b === b) {
-      if (state.hasKilledThisTurn) {
-        dispatch({ type: Actions.NEXT_PLAYER_TURN });
-      } else {
-        dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
-      }
-      return;
-    }
-
-    if (value === currentPlayer) {
-      if (!state.hasKilledThisTurn) {
-        dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
-      }
-      return;
-    }
-
-    // 3, 4, 5, 6, 7: Move Validation and Execution
-    if (value === 0) {
-      const distA = Math.abs(a - source.a);
-      const distB = Math.abs(b - source.b);
-
-      if (!state.hasKilledThisTurn) {
-        const isAdjacent = (distA === 1 && distB === 0) || (distA === 0 && distB === 1);
-        const isTransitionDiag = (
-          (source.a === 2 && source.b === 2 && a === 1 && (b === 1 || b === 3)) ||
-          (a === 2 && b === 2 && source.a === 1 && (source.b === 1 || source.b === 3)) ||
-          (source.a === 6 && source.b === 2 && a === 7 && (b === 1 || b === 3)) ||
-          (a === 6 && b === 2 && source.a === 7 && (source.b === 1 || source.b === 3))
-        );
-
-        const isForbiddenTransition = (
-          (source.a === 1 && a === 2 && b !== 2) || (source.a === 2 && a === 1 && source.b !== 2) ||
-          (source.a === 7 && a === 6 && b !== 2) || (source.a === 6 && a === 7 && source.b !== 2)
-        );
-
-        if ((isAdjacent || isTransitionDiag) && !isForbiddenTransition) {
-          dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
-          dispatch({ type: Actions.NEXT_PLAYER_TURN });
-          return;
-        }
-      }
-
-      let jumpMid: { a: number, b: number } | null = null;
-      if ((distA === 2 && distB === 0) || (distA === 0 && distB === 2)) {
-        jumpMid = { a: (source.a + a) / 2, b: (source.b + b) / 2 };
-      } else if (distA === 2 && distB === 1) {
-        if (a === 2 && b === 2 && source.a === 0 && (source.b === 1 || source.b === 3)) jumpMid = { a: 1, b: source.b };
-        else if (source.a === 2 && source.b === 2 && a === 0 && (b === 1 || b === 3)) jumpMid = { a: 1, b: b };
-        else if (a === 6 && b === 2 && source.a === 8 && (source.b === 1 || source.b === 3)) jumpMid = { a: 7, b: source.b };
-        else if (source.a === 6 && source.b === 2 && a === 8 && (b === 1 || b === 3)) jumpMid = { a: 7, b: b };
-      }
-
-      if (jumpMid && state.matrix[jumpMid.a][jumpMid.b] === opponent) {
-        const mid = jumpMid;
-        dispatch({ type: Actions.PLAYER_KILL_PABEL, payload: mid });
-        dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
-
-        const nextMatrix = state.matrix.map(r => [...r]);
-        nextMatrix[source.a][source.b] = 0;
-        nextMatrix[mid.a][mid.b] = 0;
-        nextMatrix[a][b] = currentPlayer;
-
-        if (checkFurtherJumps(a, b, nextMatrix)) {
-          dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
-        } else {
-          dispatch({ type: Actions.NEXT_PLAYER_TURN });
-        }
-      }
-    }
+    const key: string = `${a}_${b}`;
+    const { oneStep, jump } = coordinatesPossibleMoves[key];
+    const map = new Map();
+    const jumpMap = new Map();
+    const res: any[] = [];
+    oneStep.map(([aa, bb]) => {
+      map.set(`${a + aa}_${b +bb}`, true);
+      res.push([aa + aa, bb + bb]);
+    });
+    console.log(JSON.stringify(res));
+    jump.map(([aa, bb]) => {
+      jumpMap.set(`${a + aa}_${b +bb}`, true);
+    });
+    setPossibleMoves(map);
+    setPossibleJumps(jumpMap);
+    console.log(jump);
   };
 
   return (
@@ -236,7 +160,7 @@ export function SixteenPabelsGamev2() {
               strokeWidth={1}
             />
             {
-              renderPlayers(topTrianlgeCordinates, handlePlayerClick, state)
+              renderPlayers(topTrianlgeCordinates, handlePlayerClick, state, possibleMoves, possibleJumps)
             }
           </Layer>
           <Layer x={containerWidth / 6 + 30} y={upperTriangleHeight + squareHeight + 30}>
@@ -263,7 +187,7 @@ export function SixteenPabelsGamev2() {
               strokeWidth={1}
             />
             {
-              renderPlayers(bottomTrianlgeCordinates, handlePlayerClick, state)
+              renderPlayers(bottomTrianlgeCordinates, handlePlayerClick, state, possibleMoves, possibleJumps)
             }
           </Layer>
           <Layer x={30} y={upperTriangleHeight + 30}>
@@ -324,7 +248,7 @@ export function SixteenPabelsGamev2() {
               strokeWidth={1}
             />
             {
-              renderPlayers(squareCordinates, handlePlayerClick, state)
+              renderPlayers(squareCordinates, handlePlayerClick, state, possibleMoves, possibleJumps)
             }
           </Layer>
         </Stage>
@@ -333,31 +257,44 @@ export function SixteenPabelsGamev2() {
   )
 }
 
-const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefaultValues) => {
-  return coordinates.map((coordinate, index) => {
-    const { x, y, r = 30, a = 0, b = 0 } = coordinate;
-    const cellValue = state.matrix[a][b];
-    let dice = null;
+const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefaultValues, possibleMoves: Map<string, boolean>, possibleJumps: Map<string, boolean>) => {
 
-    if (cellValue > 0) {
-      const isPabelSelected = state.sourceCoordinates?.a === a && state.sourceCoordinates?.b === b;
-      const isCurrentPlayerPabelsActive =  state.currentPlayer === cellValue;
-      dice = (
-        <PlayerPositionRender
-          xAxis={x}
-          yAxis={y}
-          radius={isPabelSelected ? 12 : 10}
-          player={players[cellValue - 1]}
-          isCurrentPlayerPabelsActive={isCurrentPlayerPabelsActive}
-        />
-      )
-    }
-    return (
-      <Group key={`${a}-${b}`} onClick={() => clickHandler(a, b)} onTouchEnd={() => clickHandler(a, b)}>
-        <Circle x={x} y={y} radius={r} fill="transparent" />
-        <Circle x={x} y={y} radius={2} fill="black" stroke={"black"}/>
-        {dice}
-      </Group>
-    );
-  })
+  return coordinates.map((coordinate, index) => renderPlayer(coordinate, clickHandler, state, possibleMoves, possibleJumps));
+    
+}
+
+const renderPlayer = (coordinate: any, clickHandler: any, state: IDefaultValues, possibleMoves: Map<string, boolean>, possibleJumps: Map<string, boolean>) => {
+  
+  const { x, y, r = 30, a = 0, b = 0 } = coordinate;
+  const cellValue = state.matrix[a][b];
+  let dice = null;
+  const key = `${a}_${b}`
+  let color = "black";
+  if (possibleMoves.has(key)) {
+    color = "red";
+  }
+  if (possibleJumps.has(key)) {
+    color = "blue";
+  }
+  if (cellValue > 0) {
+    const isPabelSelected = state.sourceCoordinates?.a === a && state.sourceCoordinates?.b === b;
+    const isCurrentPlayerPabelsActive =  state.currentPlayer === cellValue;
+    dice = (
+      <PlayerPositionRender
+        xAxis={x}
+        yAxis={y}
+        radius={isPabelSelected ? 12 : 10}
+        player={players[cellValue - 1]}
+        isCurrentPlayerPabelsActive={isCurrentPlayerPabelsActive}
+      />
+    )
+  }
+  return (
+    <Group key={`${a}-${b}`} onClick={() => clickHandler(a, b)} onTouchEnd={() => clickHandler(a, b)}>
+      <Circle x={x} y={y} radius={r} fill="transparent"/>
+      <Circle x={x} y={y} radius={4} fill={color} stroke={color} />
+      <Text x={x} y={y} text={`${a}_${b}`} fontSize={15} fill="green"/>
+      {/* {dice} */}
+    </Group>
+  );
 }

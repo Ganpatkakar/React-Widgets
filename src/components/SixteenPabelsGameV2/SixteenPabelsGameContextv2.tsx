@@ -52,7 +52,7 @@ export const sixteenPabelsGameReducer = (state: IDefaultValues, { type, payload 
     const { a: prevA, b: prevB } = state.sourceCoordinates;
     const { a, b } = payload;
     const newMatrix = state.matrix.map(row => [...row]);
-    
+
     newMatrix[a][b] = state.matrix[prevA][prevB];
     newMatrix[prevA][prevB] = 0;
 
@@ -89,7 +89,7 @@ export const topTrianlgeCircles = (width: number, height: number) => [
   {
     x: width / 2,
     y: 0,
-    r: 30,
+    r: 25,
     a: 0,
     b: 2
   },
@@ -143,7 +143,7 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: width / 2,
     y: 0,
-    r: 30,
+    r: 25,
     a: 2,
     b: 2
   },
@@ -287,7 +287,7 @@ export const squareCircles = (width: number, height: number) => [
   {
     x: width / 2,
     y: height,
-    r: 30,
+    r: 25,
     a: 6,
     b: 2
   },
@@ -341,7 +341,7 @@ export const bottomTrianlgeCircles = (width: number, height: number) => [
   {
     x: width / 2,
     y: height,
-    r: 30,
+    r: 25,
     a: 8,
     b: 2
   },
@@ -353,3 +353,43 @@ export const bottomTrianlgeCircles = (width: number, height: number) => [
     b: 3
   },
 ]
+
+export const coordinatesPossibleMoves: Record<string, { oneStep: Array<Array<number>>, jump: Array<Array<number>> }> = {
+  "0_1": { oneStep: [[0, 1], [1, 0]], jump: [[2, 1], [0, 2]] },
+  "0_2": { oneStep: [[0, -1], [0, 1], [1, 0]], jump: [[2, 0]] },
+  "0_3": { oneStep: [[0, -1], [1, 0]], jump: [[0, -2], [2, -1]] },
+  "1_1": { oneStep: [[-1, 0], [0, 1], [1, 1]], jump: [[2, 2], [0, 2]] },
+  "1_2": { oneStep: [[0, -1], [-1, 0], [0, 1], [1, 0]], jump: [[2, 0]] },
+  "1_3": { oneStep: [[0, -1], [-1, 0], [1, -1]], jump: [[0, -2], [2, -2]] },
+  "7_1": { oneStep: [[1, 0], [0, 1], [-1, 1]], jump: [[0, 2], [-2, 2]] },
+  "7_2": { oneStep: [[0, -1], [-1, 0], [0, 1], [1, 0]], jump: [[-2, 0]] },
+  "7_3": { oneStep: [[1, 0], [0, -1], [-1, -1]], jump: [[-2, -2], [0, -2]] },
+  "8_1": { oneStep: [[0, 1], [-1, 0]], jump: [[-2, 1], [0, 2]] },
+  "8_2": { oneStep: [[0, -1], [0, 1], [-1, 0]], jump: [[-2, 0]] },
+  "8_3": { oneStep: [[0, -1], [-1, 0]], jump: [[0, -2], [-2, -1]] },
+  "2_0": { oneStep: [[0, 1], [1, 1], [1, 0]], jump: [[0, 2], [2, 2], [2, 0]] },
+  "2_1": { oneStep: [[0, -1], [0, 1], [1, 0]], jump: [[0, 2], [2, 0]] },
+  "2_2": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [[0, -2], [-2, -1], [-2, 0], [-2, 1], [0, 2], [2, 2], [2, 0], [2, -2]] },
+  "2_3": { oneStep: [[0, -1], [0, 1], [1, 0]], jump: [[0, -2], [2, 0]] },
+  "2_4": { oneStep: [[0, -1], [1, 0], [1, -1]], jump: [[0, -2], [2, 0], [2, -2]] },
+  "3_0": { oneStep: [[-1, 0], [0, 1], [1, 0]], jump: [] },
+  "3_1": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [] },
+  "3_2": { oneStep: [[0, -1], [-1, 0], [0, 1], [1, 0]], jump: [] },
+  "3_3": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [] },
+  "3_4": { oneStep: [[0, -1], [-1, 0], [1, 0]], jump: [] },
+  "4_0": { oneStep: [[-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0]], jump: [] },
+  "4_1": { oneStep: [[0, -1], [-1, 0], [0, 1], [1, 0]], jump: [] },
+  "4_2": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [] },
+  "4_3": { oneStep: [[0, -1], [-1, 0], [0, 1], [1, 0]], jump: [] },
+  "4_4": { oneStep: [[0, -1], [-1, -1], [-1, 0], [1, 0], [1, -1]], jump: [] },
+  "5_0": { oneStep: [[-1, 0], [0, 1], [1, 0]], jump: [] },
+  "5_1": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [] },
+  "5_2": { oneStep: [[0, -1], [-1, 0], [0, 1], [1, 0]], jump: [] },
+  "5_3": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [] },
+  "5_4": { oneStep: [[0, -1], [-1, 0], [1, 0]], jump: [] },
+  "6_0": { oneStep: [[-1, 0], [-1, 1], [0, 1]], jump: [] },
+  "6_1": { oneStep: [[0, -1], [-1, 0], [0, 1]], jump: [] },
+  "6_2": { oneStep: [[0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1]], jump: [] },
+  "6_3": { oneStep: [[0, -1], [-1, 0], [0, 1]], jump: [] },
+  "6_4": { oneStep: [[0, -1], [-1, -1], [-1, 0]], jump: [] },
+}
