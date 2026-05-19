@@ -67,8 +67,8 @@ export function SixteenPabelsGamev2() {
 
 
   const { containerWidth, containerHeight } = dimensions;
-  const [upperTriangleWidth, upperTriangleHeight] = [containerWidth / 1.5, 100];
-  const [lowerTriangleWidth, lowerTriangleHeight] = [containerWidth / 1.5, 100];
+  const [upperTriangleWidth, upperTriangleHeight] = [containerWidth / 1.5, containerWidth / 3];
+  const [lowerTriangleWidth, lowerTriangleHeight] = [containerWidth / 1.5, containerWidth / 3];
   const [squareWidth, squareHeight] = [containerWidth, containerHeight];
 
   const topTrianlgeCordinates = topTrianlgeCircles(upperTriangleWidth, upperTriangleHeight);
