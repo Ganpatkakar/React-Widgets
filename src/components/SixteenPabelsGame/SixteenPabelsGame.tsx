@@ -137,11 +137,7 @@ export function SixteenPabelsGame() {
     }
 
     if (source.a === a && source.b === b) {
-      if (state.hasKilledThisTurn) {
-        dispatch({ type: Actions.NEXT_PLAYER_TURN });
-      } else {
-        dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
-      }
+      dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
       return;
     }
 

@@ -26,4 +26,15 @@
       }
     }
   }
+
+  .passContainer {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    .passButton {
+      padding: 12px 24px;
+      border-radius: 4px;
+    }
+  }
 }

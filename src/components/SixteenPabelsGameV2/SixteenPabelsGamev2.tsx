@@ -2,7 +2,7 @@ import React, { useReducer, useRef, useEffect, useState } from 'react';
 import { Shape, Stage, Layer, Circle, Group, Text } from 'react-konva';
 import { PlayerPositionRender } from './playerPositionRender';
 import styles from './SixteenPabelsGamev2.scss';
-import { bottomTrianlgeCircles, topTrianlgeCircles, squareCircles, sixteenPabelsGameReducer, IDefaultValues, Actions, coordinatesPossibleMoves} from './SixteenPabelsGameContextv2';
+import { bottomTrianlgeCircles, topTrianlgeCircles, squareCircles, sixteenPabelsGameReducer, IDefaultValues, Actions, coordinatesPossibleMoves } from './SixteenPabelsGameContextv2';
 
 const players = [
   {
@@ -68,7 +68,7 @@ export function SixteenPabelsGamev2() {
   }, []);
 
 
-  const {containerWidth, containerHeight} = dimensions;
+  const { containerWidth, containerHeight } = dimensions;
   const [upperTriangleWidth, upperTriangleHeight] = [containerWidth / 1.5, 100];
   const [lowerTriangleWidth, lowerTriangleHeight] = [containerWidth / 1.5, 100];
   const [squareWidth, squareHeight] = [containerWidth, containerHeight];
@@ -77,63 +77,93 @@ export function SixteenPabelsGamev2() {
   const bottomTrianlgeCordinates = bottomTrianlgeCircles(lowerTriangleWidth, lowerTriangleHeight);
   const squareCordinates = squareCircles(squareWidth, squareHeight);
 
-  const checkFurtherJumps = (row: number, col: number, matrix: number[][]) => {
-    const opponent = state.currentPlayer === 1 ? 2 : 1;
-    const potentialJumps = [
-      { dr: 2, dc: 0, mr: row + 1, mc: col },
-      { dr: -2, dc: 0, mr: row - 1, mc: col },
-      { dr: 0, dc: 2, mr: row, mc: col + 1 },
-      { dr: 0, dc: -2, mr: row, mc: col - 1 },
-    ];
+  const handlePlayerClick = (a: number, b: number) => {
+    console.log("player click", a, b);
+    const source = state.sourceCoordinates;
+    const value = state.matrix[a][b];
+    const currentPlayer = state.currentPlayer;
+    const opponent = currentPlayer === 1 ? 2 : 1;
+    const key: string = `${a}_${b}`;
+    // if not player has selected own pabel then return
+    // if no selected value, then make current coordinates as selecte coordinates then return
+    if (!source) {
+      if (value === currentPlayer) {
+        dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
+      }
+      return;
+    }
 
-    for (const j of potentialJumps) {
-      const nr = row + j.dr, nc = col + j.dc;
-      if (nr >= 0 && nr < 9 && nc >= 0 && nc < 5) {
-        if (matrix[nr][nc] === 0 && matrix[j.mr][j.mc] === opponent) return true;
+    const sourceKey: string = `${source.a}_${source.b}`;
+
+    // if user selects already selected pabel then deselct it
+    if (source.a === a && source.b === b) {
+      dispatch({ type: Actions.PLAYER_UNSELECT_SOURCE });
+      return;
+    }
+
+    // if user one of his own pabel, and he didn't kill in previous turn then select other coin
+    if (value === currentPlayer) {
+      if (!state.hasKilledThisTurn) {
+        dispatch({ type: Actions.PLAYER_SELECT_SOURCE, payload: { a, b } });
+      }
+      return;
+    }
+
+    if (value !== 0) return;
+
+    const { oneStep, jump } = coordinatesPossibleMoves[sourceKey];
+
+    const singleStepMap = new Map();
+    oneStep.map(([aa, bb]) => {
+      singleStepMap.set(`${source.a + aa}_${source.b + bb}`, true);
+    });
+
+    if (!state.hasKilledThisTurn) {
+      const validSingleStepMove = singleStepMap.has(key);
+      if (validSingleStepMove) {
+        dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
+        dispatch({ type: Actions.NEXT_PLAYER_TURN });
+        return;
       }
     }
 
-    // Special diagonal transitions jumps
-    if (row === 2 && col === 2) {
-      if (matrix[0][1] === 0 && matrix[1][1] === opponent) return true;
-      if (matrix[0][3] === 0 && matrix[1][3] === opponent) return true;
-    }
-    if (row === 0 && col === 1 && matrix[2][2] === 0 && matrix[1][1] === opponent) return true;
-    if (row === 0 && col === 3 && matrix[2][2] === 0 && matrix[1][3] === opponent) return true;
-    
-    if (row === 6 && col === 2) {
-      if (matrix[8][1] === 0 && matrix[7][1] === opponent) return true;
-      if (matrix[8][3] === 0 && matrix[7][3] === opponent) return true;
-    }
-    if (row === 8 && col === 1 && matrix[6][2] === 0 && matrix[7][1] === opponent) return true;
-    if (row === 8 && col === 3 && matrix[6][2] === 0 && matrix[7][3] === opponent) return true;
-
-    return false;
-  };
-
-  const handlePlayerClick = (a: number, b: number) => {
-    console.log("player click", a, b);
-    const key: string = `${a}_${b}`;
-    const { oneStep, jump } = coordinatesPossibleMoves[key];
-    const map = new Map();
     const jumpMap = new Map();
-    const res: any[] = [];
-    oneStep.map(([aa, bb]) => {
-      map.set(`${a + aa}_${b +bb}`, true);
-      res.push([aa + aa, bb + bb]);
-    });
-    console.log(JSON.stringify(res));
     jump.map(([aa, bb]) => {
-      jumpMap.set(`${a + aa}_${b +bb}`, true);
+      jumpMap.set(`${source.a + aa}_${source.b + bb}`, true);
     });
-    setPossibleMoves(map);
-    setPossibleJumps(jumpMap);
-    console.log(jump);
+
+    const validJumpMove = jumpMap.has(key);
+    if (validJumpMove) {
+      let midA = (source.a + a) / 2;
+      let midB = (source.b + b) / 2;
+      if (source.a === 2 && source.b === 2 || a === 2 && b === 2) {
+        if (source.a === 2 && source.b === 2 && a === 0) {
+          midA = 1;
+          midB = b;
+        } else if (a === 2 && b === 2 && source.a === 0) {
+          midA = 1;
+          midB = source.b;
+        }
+      } else if (source.a === 6 && source.b === 2 || a === 6 && b === 2) {
+        if (source.a === 6 && source.b === 2 && a === 8) {
+          midA = 7;
+          midB = b;
+        } else if (a === 6 && b === 2 && source.a === 8) {
+          midA = 7;
+          midB = source.b;
+        }
+      }
+
+      if (state.matrix[midA][midB] === opponent) {
+        dispatch({ type: Actions.PLAYER_KILL_PABEL, payload: { a: midA, b: midB } });
+        dispatch({ type: Actions.PLAYER_SELECT_DESTINATION, payload: { a, b } });
+      }
+    }
   };
 
   return (
     <div className={styles.gameContainer}>
-      <div ref={containerRef} style={{ width: '100%',}}>
+      <div ref={containerRef} style={{ width: '100%', }}>
         <Stage width={containerWidth + 60} height={upperTriangleHeight + squareHeight + lowerTriangleHeight + 60}>
           <Layer x={containerWidth / 6 + 30} y={30}>
             <Shape
@@ -160,7 +190,7 @@ export function SixteenPabelsGamev2() {
               strokeWidth={1}
             />
             {
-              renderPlayers(topTrianlgeCordinates, handlePlayerClick, state, possibleMoves, possibleJumps)
+              renderPlayers(topTrianlgeCordinates, handlePlayerClick, state)
             }
           </Layer>
           <Layer x={containerWidth / 6 + 30} y={upperTriangleHeight + squareHeight + 30}>
@@ -187,7 +217,7 @@ export function SixteenPabelsGamev2() {
               strokeWidth={1}
             />
             {
-              renderPlayers(bottomTrianlgeCordinates, handlePlayerClick, state, possibleMoves, possibleJumps)
+              renderPlayers(bottomTrianlgeCordinates, handlePlayerClick, state)
             }
           </Layer>
           <Layer x={30} y={upperTriangleHeight + 30}>
@@ -248,53 +278,58 @@ export function SixteenPabelsGamev2() {
               strokeWidth={1}
             />
             {
-              renderPlayers(squareCordinates, handlePlayerClick, state, possibleMoves, possibleJumps)
+              renderPlayers(squareCordinates, handlePlayerClick, state)
             }
           </Layer>
         </Stage>
+        <div className={styles.passContainer}>
+          <button disabled={!state.hasKilledThisTurn} className={styles.passButton} onClick={() => dispatch({ type: Actions.NEXT_PLAYER_TURN })}>Pass Turn</button>
+        </div>
       </div>
     </div>
   )
 }
 
-const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefaultValues, possibleMoves: Map<string, boolean>, possibleJumps: Map<string, boolean>) => {
+const renderPlayers = (coordinates: Array<any>, clickHandler: any, state: IDefaultValues) => {
 
-  return coordinates.map((coordinate, index) => renderPlayer(coordinate, clickHandler, state, possibleMoves, possibleJumps));
-    
-}
+  return coordinates.map((coordinate) => {
+    const { x, y, r = 30, a = 0, b = 0 } = coordinate;
+    const cellValue = state.matrix[a][b];
+    let dice = null;
+    const key = `${a}_${b}`
+    let color = "black";
+    // if (possibleMoves.has(key)) {
+    //   color = "red";
+    // }
+    // if (possibleJumps.has(key)) {
+    //   color = "blue";
+    // }
+    if (cellValue > 0) {
+      let radius = 10;
+      if (state.sourceCoordinates?.a === a && state.sourceCoordinates?.b === b) {
+        radius = 12;
+        console.log(radius);
+      }
+      console.log(radius);
+      const isCurrentPlayerPabelsActive = state.currentPlayer === cellValue;
+      dice = (
+        <PlayerPositionRender
+          xAxis={x}
+          yAxis={y}
+          radius={radius}
+          player={players[cellValue - 1]}
+          isCurrentPlayerPabelsActive={isCurrentPlayerPabelsActive}
+        />
+      )
+    }
+    return (
+      <Group key={`${a}-${b}`} onClick={() => clickHandler(a, b)} onTouchEnd={() => clickHandler(a, b)}>
+        <Circle x={x} y={y} radius={r} fill="transparent" />
+        <Circle x={x} y={y} radius={1} fill={color} stroke={color} />
+        {/* <Text x={x} y={y} text={`${a}_${b}`} fontSize={15} fill="green"/> */}
+        {dice}
+      </Group>
+    );
+  });
 
-const renderPlayer = (coordinate: any, clickHandler: any, state: IDefaultValues, possibleMoves: Map<string, boolean>, possibleJumps: Map<string, boolean>) => {
-  
-  const { x, y, r = 30, a = 0, b = 0 } = coordinate;
-  const cellValue = state.matrix[a][b];
-  let dice = null;
-  const key = `${a}_${b}`
-  let color = "black";
-  if (possibleMoves.has(key)) {
-    color = "red";
-  }
-  if (possibleJumps.has(key)) {
-    color = "blue";
-  }
-  if (cellValue > 0) {
-    const isPabelSelected = state.sourceCoordinates?.a === a && state.sourceCoordinates?.b === b;
-    const isCurrentPlayerPabelsActive =  state.currentPlayer === cellValue;
-    dice = (
-      <PlayerPositionRender
-        xAxis={x}
-        yAxis={y}
-        radius={isPabelSelected ? 12 : 10}
-        player={players[cellValue - 1]}
-        isCurrentPlayerPabelsActive={isCurrentPlayerPabelsActive}
-      />
-    )
-  }
-  return (
-    <Group key={`${a}-${b}`} onClick={() => clickHandler(a, b)} onTouchEnd={() => clickHandler(a, b)}>
-      <Circle x={x} y={y} radius={r} fill="transparent"/>
-      <Circle x={x} y={y} radius={4} fill={color} stroke={color} />
-      <Text x={x} y={y} text={`${a}_${b}`} fontSize={15} fill="green"/>
-      {/* {dice} */}
-    </Group>
-  );
 }

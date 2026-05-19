@@ -2,6 +2,8 @@
 // Please do not change this file!
 interface CssExports {
   'gameContainer': string;
+  'passButton': string;
+  'passContainer': string;
   'playerCoin': string;
   'playerCoinsContainer': string;
   'playerContainer': string;
